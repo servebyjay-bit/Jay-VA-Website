@@ -224,11 +224,12 @@ const closeSuccess = document.getElementById("closeSuccess");
 
 if (contactForm) {
 
-    contactForm.addEventListener("submit", async function (e) {
+    contactForm.addEventListener("submit", async (e) => {
 
         e.preventDefault();
 
         submitBtn.classList.add("loading");
+        submitBtn.disabled = true;
 
         const formData = new FormData(contactForm);
 
@@ -236,48 +237,47 @@ if (contactForm) {
 
             const response = await fetch(contactForm.action, {
 
-                method: "POST",
-                body: formData,
-                headers: {
-                    Accept: "application/json"
+                method:"POST",
+
+                body:formData,
+
+                headers:{
+                    Accept:"application/json"
                 }
 
             });
 
-            if (response.ok) {
+            if(response.ok){
 
                 contactForm.reset();
 
-                submitBtn.classList.remove("loading");
-
                 successModal.classList.add("show");
 
-                if (typeof launchConfetti === "function") {
-                    launchConfetti();
-                }
-
-            } else {
-
-                submitBtn.classList.remove("loading");
+            }else{
 
                 alert("Something went wrong. Please try again.");
 
             }
 
-        } catch {
+        }catch{
 
-            submitBtn.classList.remove("loading");
-
-            alert("Unable to send your inquiry. Please try again.");
+            alert("Unable to send your message.");
 
         }
+
+        submitBtn.classList.remove("loading");
+        submitBtn.disabled = false;
 
     });
 
 }
 
-if (closeSuccess) {
-    closeSuccess.addEventListener("click", () => {
+if(closeSuccess){
+
+    closeSuccess.addEventListener("click",()=>{
+
         successModal.classList.remove("show");
+
     });
+
 }
