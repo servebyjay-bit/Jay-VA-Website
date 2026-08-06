@@ -128,6 +128,7 @@ function animateCounters() {
 
         document.querySelectorAll(".counter").forEach(counter => {
             const target = parseInt(counter.dataset.target, 10);
+            const suffix = counter.dataset.suffix || "+";
             let current = 0;
             const increment = Math.ceil(target / 100);
 
@@ -139,9 +140,9 @@ function animateCounters() {
                 }
 
                 if (target >= 1000) {
-                    counter.textContent = (current / 1000).toFixed(0) + "K+";
+                    counter.textContent = (current / 1000).toFixed(0) + "K" + suffix;
                 } else {
-                    counter.textContent = current + "+";
+                    counter.textContent = current + suffix;
                 }
 
                 if (current < target) {
@@ -162,7 +163,13 @@ document.querySelectorAll(".tool-card img").forEach(img => {
     img.addEventListener("error", () => {
         img.style.display = "none";
     });
-});(function () {
+});
+
+// ==========================================
+// PHOTO LIGHTBOX
+// ==========================================
+
+(function () {
     const lightbox = document.getElementById('photo-lightbox');
     if (!lightbox) return;
 

@@ -106,19 +106,6 @@
 
     <meta property="og:image:type"
           content="image/jpeg">
-    
-          <!-- ADD THIS -->
-    <meta property="og:image"
-      content="https://jay-va-website.vercel.app/images/og-cover.jpg">
-
-    <meta property="og:image:width"
-      content="1200">
-
-    <meta property="og:image:height"
-      content="630">
-
-    <meta property="og:image:type"
-      content="image/jpeg">      
 
     <!-- ==========================================
          TWITTER / X
@@ -135,11 +122,7 @@
 
     <meta name="twitter:image"
           content="https://jay-va-website.vercel.app/images/og-cover.jpg">
-    
-          <!-- ADD THIS -->
-    <meta name="twitter:image"
-      content="https://jay-va-website.vercel.app/images/og-cover.jpg">
-      
+
     <!-- ==========================================
          PERFORMANCE
     ========================================== -->
@@ -224,7 +207,7 @@
     <header class="header">
         <div class="container">
 
-            <nav class="navbar">
+            <nav class="navbar" id="navbar">
 
                 <a href="#home" class="logo">
                     Jay <span>VA</span>
@@ -238,14 +221,20 @@
                     <li><a href="#contact">Contact</a></li>
                 </ul>
 
-                <button type="button" class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-navigation">
+                <button
+    type="button"
+    class="hamburger"
+    aria-label="Open navigation menu"
+    aria-expanded="false"
+    aria-controls="primary-navigation">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
 
                 <a href="https://calendly.com/getintouchwithjay/quick-discovery-call" target="_blank" rel="noopener noreferrer" class="btn-primary">
-                    Book Your Free Strategy Call
+                    Book Your Free Discovery Call
+                    <span class="visually-hidden">(opens in a new tab)</span>
                 </a>
 
             </nav>
@@ -270,11 +259,11 @@
                 </span>
 
                 <h1>
-                    Build a Powerful Online Presence That Earns Trust and Drives Business Growth.
+                    Social Media Management & Digital Marketing That Turns Attention Into Business Growth.
                 </h1>
 
                 <p>
-                    I help businesses establish a professional digital presence through strategic marketing, premium content creation, and conversion-focused websites designed to attract the right audience and create meaningful opportunities.
+                    Helping businesses attract customers through strategic content, social media management, graphic design, video editing, and high-converting websites.
                 </p>
 
                 <div class="hero-buttons">
@@ -289,25 +278,29 @@
 
                 </div>
 
-
-                <!-- TRUST INDICATORS -->
-
-                <div class="hero-trust">
-
-                    
-
-                </div>
-
             </div>
-
 
             <!-- RIGHT SIDE -->
 
             <div class="profile-card">
 
-                <img src="images/Jay.png.jpg" alt="Jay VA" loading="eager" fetchpriority="high">
+                <img src="images/Jay.png.jpg" alt="Jay Boy Olan-Olan, digital marketing strategist" loading="eager" fetchpriority="high">
 
+                <div class="floating-card floating-card-1">
+                    <i class="fa-solid fa-star"></i>
+                    <div>
+                        <strong>5-Star Rated</strong>
+                        <span>Client satisfaction</span>
+                    </div>
+                </div>
 
+                <div class="floating-card floating-card-2">
+                    <i class="fa-solid fa-users"></i>
+                    <div>
+                        <strong>Growing Brands</strong>
+                        <span>Helping businesses stand out</span>
+                    </div>
+                </div>
 
                 <div class="profile-info">
 
@@ -319,13 +312,10 @@
                         Digital Marketing Strategist & Creative Partner
                     </p>
 
-                    <div class="status-badge">
-
-                        <span class="dot"></span>
-
-                        Currently Accepting New Client Projects
-
-                    </div>
+                    <p class="hero-availability">
+                        <i class="fa-solid fa-circle" style="color:#16a34a; font-size:.6rem;" aria-hidden="true"></i>
+                        Currently accepting 3 new client projects this month
+                    </p>
 
                 </div>
 
@@ -346,22 +336,22 @@
         <div class="results-grid">
 
             <div class="result-card">
-                <h3>3+</h3>
+                <h3 class="counter" data-target="3">0+</h3>
                 <p>Years Of Professional Experience</p>
             </div>
 
             <div class="result-card">
-                <h3>100+</h3>
+                <h3 class="counter" data-target="100">0+</h3>
                 <p>Creative Content Projects Delivered</p>
             </div>
 
             <div class="result-card">
-                <h3>400+</h3>
+                <h3 class="counter" data-target="400">0+</h3>
                 <p>Total Organic Views Generated</p>
             </div>
 
             <div class="result-card">
-                <h3>360°</h3>
+                <h3 class="counter" data-target="360" data-suffix="°">0°</h3>
                 <p>End-To-End Digital Marketing & Creative Support</p>
             </div>
 
@@ -579,7 +569,7 @@
 
         <div class="section-heading">
             <span>PORTFOLIO</span>
-            <h2>Featured Works & Projects</h2>
+            <h2>Case Studies & Featured Projects</h2>
             <p>A collection of strategic marketing and creative projects designed to help brands grow, build trust, and turn audiences into customers.</p>
         </div>
 
