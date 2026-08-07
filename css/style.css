@@ -144,6 +144,48 @@ button:focus-visible,
 
     --hover-border:#D6E9FF;
     --hover-shadow:rgba(10,102,194,.10);
+
+    /* ---------------------------------------------------
+       TYPE SCALE
+       One disciplined scale for the whole site instead of
+       ad-hoc decimals (.76rem, .82rem, .92rem, .98rem...).
+       Every font-size in this file should reference one of
+       these tokens.
+    --------------------------------------------------- */
+    --fs-2xs:   0.75rem;    /* 12px — micro labels, tags, badges        */
+    --fs-xs:    0.8125rem;  /* 13px — captions, meta text               */
+    --fs-sm:    0.875rem;   /* 14px — secondary text, buttons, nav      */
+    --fs-base:  1rem;       /* 16px — body copy                         */
+    --fs-md:    1.125rem;   /* 18px — lead paragraphs, small subheads   */
+    --fs-lg:    1.375rem;   /* 22px — card titles (h4-level)            */
+    --fs-xl:    1.75rem;    /* 28px — subsection headings (h3-level)    */
+    --fs-2xl:   2rem;       /* 32px — profile / name headings           */
+
+    --fs-section-title: clamp(1.875rem, 1rem + 3vw, 3.25rem);  /* h2 section titles   */
+    --fs-cta-title:     clamp(2rem, 1rem + 4vw, 3.75rem);      /* CTA emphasis moment */
+    --fs-hero:          clamp(2.75rem, 1.25rem + 4.5vw, 4.25rem); /* hero H1          */
+    --fs-stat:          clamp(2.25rem, 1rem + 4vw, 3.75rem);   /* result counters     */
+
+    --lh-tight:  1.15;
+    --lh-snug:   1.4;
+    --lh-normal: 1.7;
+    --lh-loose:  1.8;
+
+    /* ---------------------------------------------------
+       SPACING SCALE — 4px base unit
+    --------------------------------------------------- */
+    --space-1:4px;
+    --space-2:8px;
+    --space-3:12px;
+    --space-4:16px;
+    --space-5:20px;
+    --space-6:24px;
+    --space-8:32px;
+    --space-10:40px;
+    --space-12:48px;
+    --space-16:64px;
+    --space-20:80px;
+    --space-24:96px;
 }
 
 /* CONTAINER */
@@ -169,7 +211,7 @@ button:focus-visible,
     border-radius:999px;
     font-family:'Plus Jakarta Sans', sans-serif;
     font-weight:700;
-    font-size:.95rem;
+    font-size:var(--fs-base);
     line-height:1;
     text-decoration:none;
     white-space:nowrap;
@@ -264,7 +306,7 @@ button:focus-visible,
 
 .logo{
     text-decoration:none;
-    font-size:1.7rem;
+    font-size:var(--fs-xl);
     font-weight:900;
     color:var(--heading);
     white-space:nowrap;
@@ -563,7 +605,7 @@ button:focus-visible,
     color:var(--primary);
     font-weight:700;
     letter-spacing:.08em;
-    font-size:.82rem;
+    font-size:var(--fs-xs);
     text-transform:uppercase;
 }
 
@@ -579,7 +621,7 @@ button:focus-visible,
 
 .hero-content p{
     color:var(--body);
-    font-size:1.05rem;
+    font-size:var(--fs-base);
     line-height:1.8;
     margin-bottom:26px;
     max-width:520px;
@@ -650,14 +692,14 @@ button:focus-visible,
 }
 
 .profile-info h3{
-    font-size:2rem;
+    font-size:var(--fs-2xl);
     font-weight:800;
     line-height:1.15;
     color:var(--heading);
 }
 
 .profile-info p{
-    font-size:1.02rem;
+    font-size:var(--fs-base);
     color:var(--body);
     margin:0;
 }
@@ -707,7 +749,7 @@ button:focus-visible,
     width:16px;
     height:16px;
     color:#16a34a;
-    font-size:.9rem;
+    font-size:var(--fs-sm);
     flex-shrink:0;
 }
 
@@ -724,7 +766,7 @@ button:focus-visible,
 }
 
 .hero-availability span{
-    font-size:.92rem;
+    font-size:var(--fs-sm);
     color:var(--body);
 }
 
@@ -802,13 +844,13 @@ button:focus-visible,
 
 .floating-card strong{
     display:block;
-    font-size:.9rem;
+    font-size:var(--fs-sm);
     font-weight:700;
 }
 
 .floating-card span{
     display:block;
-    font-size:.76rem;
+    font-size:var(--fs-2xs);
     color:var(--body);
 }
 
@@ -874,7 +916,7 @@ button:focus-visible,
 }
 
 .hero-profile-info h3{
-    font-size:2rem;
+    font-size:var(--fs-2xl);
     margin-bottom:8px;
 }
 
@@ -907,12 +949,12 @@ button:focus-visible,
 
 .availability-card strong{
     display:block;
-    font-size:.98rem;
+    font-size:var(--fs-base);
 }
 
 .availability-card span{
     display:block;
-    font-size:.92rem;
+    font-size:var(--fs-sm);
     color:#666;
     margin-top:4px;
 }
@@ -976,7 +1018,7 @@ button:focus-visible,
 .section-heading span{
     color:var(--primary);
     font-weight:700;
-    font-size:.85rem;
+    font-size:var(--fs-sm);
     letter-spacing:1px;
 }
 
@@ -987,7 +1029,7 @@ button:focus-visible,
 
 .section-heading p{
     color:var(--body);
-    font-size:1.05rem;
+    font-size:var(--fs-base);
 }
 
 .section-heading::after{
@@ -1095,7 +1137,7 @@ button:focus-visible,
     padding:30px 34px;
     text-align:left;
     font-family:'Plus Jakarta Sans',sans-serif;
-    font-size:1.15rem;
+    font-size:var(--fs-md);
     font-weight:700;
     color:var(--heading);
     transition:
@@ -1221,7 +1263,7 @@ button:focus-visible,
     }
     .service-title{
         padding:32px 40px;
-        font-size:1.25rem;
+        font-size:var(--fs-md);
     }
     .service-title:hover{
         padding-left:44px;
@@ -1293,7 +1335,7 @@ button:focus-visible,
 /* PORTFOLIO */
 
 .portfolio{
-    padding:70px 0;
+    padding:var(--space-20) 0;
     background:var(--surface);
     transition-delay:.25s;
 }
@@ -1333,13 +1375,13 @@ button:focus-visible,
 }
 
 .portfolio-service-header h3{
-    font-size:1.2rem;
+    font-size:var(--fs-md);
     margin-bottom:6px;
 }
 
 .portfolio-service-header p{
     color:var(--body);
-    font-size:.95rem;
+    font-size:var(--fs-base);
     line-height:1.7;
 }
 
@@ -1355,7 +1397,7 @@ button:focus-visible,
     border-radius:999px;
     font-family:'Manrope',sans-serif;
     font-weight:700;
-    font-size:.9rem;
+    font-size:var(--fs-sm);
     cursor:pointer;
     transition:.3s ease;
     width:100%;
@@ -1441,14 +1483,14 @@ button:focus-visible,
 .project-content > span{
     color:var(--primary);
     font-weight:700;
-    font-size:.8rem;
+    font-size:var(--fs-xs);
     letter-spacing:.5px;
     text-transform:uppercase;
 }
 
 .project-content h4{
     font-family:'Plus Jakarta Sans',sans-serif;
-    font-size:1.3rem;
+    font-size:var(--fs-base);
     margin:10px 0 12px;
 }
 
@@ -1469,7 +1511,7 @@ button:focus-visible,
     background:var(--surface);
     border:1px solid var(--border);
     color:var(--heading);
-    font-size:.78rem;
+    font-size:var(--fs-2xs);
     font-weight:600;
     padding:6px 14px;
     border-radius:999px;
@@ -1484,7 +1526,7 @@ button:focus-visible,
 .project-buttons a{
     text-decoration:none;
     font-weight:700;
-    font-size:.9rem;
+    font-size:var(--fs-sm);
     padding:12px 20px;
     border-radius:999px;
     transition:.3s ease;
@@ -1564,7 +1606,7 @@ button:focus-visible,
     border:1px solid rgba(255,255,255,.5);
     padding:8px 14px;
     border-radius:999px;
-    font-size:.78rem;
+    font-size:var(--fs-2xs);
     font-weight:700;
     backdrop-filter:blur(10px);
 }
@@ -1588,7 +1630,7 @@ button:focus-visible,
 
 .deliverables h5,
 .project-highlights h5{
-    font-size:1rem;
+    font-size:var(--fs-sm);
     margin-bottom:14px;
     color:var(--heading);
 }
@@ -1618,7 +1660,7 @@ button:focus-visible,
     border:1px solid var(--border);
     padding:10px 16px;
     border-radius:999px;
-    font-size:.85rem;
+    font-size:var(--fs-sm);
     font-weight:600;
 }
 
@@ -1637,7 +1679,7 @@ button:focus-visible,
 
 .project-industry{
     color:var(--primary);
-    font-size:.8rem;
+    font-size:var(--fs-xs);
     font-weight:700;
     text-transform:uppercase;
     letter-spacing:.5px;
@@ -1646,7 +1688,7 @@ button:focus-visible,
 .website-project-header h4{
     margin-top:8px;
     margin-bottom:8px;
-    font-size:1.4rem;
+    font-size:var(--fs-base);
 }
 
 .website-project-header p{
@@ -1684,10 +1726,27 @@ SOCIAL MEDIA MANAGEMENT
     border-top:1px solid var(--border);
 }
 
+.social-hero-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:16px;
+    padding:28px;
+    border-top:1px solid var(--border);
+}
+
+.social-hero{
+    border-radius:18px;
+    overflow:hidden;
+    background:#fff;
+}
+
 .social-hero img{
     width:100%;
+    aspect-ratio:4/3;
     display:block;
-    object-fit:cover;
+    object-fit:contain;
+    background:#fff;
+    padding:4px;
 }
 
 .social-content,
@@ -1705,7 +1764,7 @@ SOCIAL MEDIA MANAGEMENT
 
 .social-content span{
     color:var(--primary);
-    font-size:.8rem;
+    font-size:var(--fs-xs);
     font-weight:700;
     text-transform:uppercase;
     letter-spacing:.5px;
@@ -1713,7 +1772,7 @@ SOCIAL MEDIA MANAGEMENT
 
 .social-content h4{
     margin:12px 0;
-    font-size:1.4rem;
+    font-size:var(--fs-base);
 }
 
 .social-content p{
@@ -1791,14 +1850,14 @@ SOCIAL MEDIA SHOWCASE
 
 .showcase-content span{
     color:var(--primary);
-    font-size:.8rem;
+    font-size:var(--fs-xs);
     font-weight:700;
     letter-spacing:.5px;
     text-transform:uppercase;
 }
 
 .showcase-content h4{
-    font-size:1.4rem;
+    font-size:var(--fs-base);
     margin:12px 0;
 }
 
@@ -1843,7 +1902,7 @@ SOCIAL MEDIA SHOWCASE
 }
 
 .stat-number{
-    font-size:3.6rem;
+    font-size:var(--fs-stat);
     font-weight:800;
     line-height:1;
     letter-spacing:-0.02em;
@@ -1857,7 +1916,7 @@ SOCIAL MEDIA SHOWCASE
 }
 
 .stat-label{
-    font-size:0.85rem;
+    font-size:var(--fs-sm);
     font-weight:500;
     color:var(--muted, #666);
     letter-spacing:0.03em;
@@ -1899,9 +1958,6 @@ SOCIAL MEDIA SHOWCASE
         padding-right:0;
         min-width:45%;
     }
-    .stat-number{
-        font-size:2.6rem;
-    }
 }
 
 .showcase-services h5,
@@ -1924,15 +1980,18 @@ SOCIAL MEDIA SHOWCASE
 
 .gallery-grid{
     display:grid;
-    grid-template-columns:repeat(2, 1fr);
+    grid-template-columns:repeat(2, minmax(0,1fr));
     gap:16px;
 }
 
 .gallery-grid img{
     width:100%;
+    aspect-ratio:4/3;
     border-radius:18px;
     display:block;
-    object-fit:cover;
+    object-fit:contain;
+    background:var(--surface);
+    padding:10px;
     transition:.35s ease;
 }
 
@@ -1972,12 +2031,16 @@ GRAPHIC DESIGN
 
 .graphic-grid{
     display:grid;
-    grid-template-columns:repeat(2, 1fr);
+    grid-template-columns:repeat(2, minmax(0,1fr));
     gap:16px;
 }
 
 .graphic-grid img{
     width:100%;
+    aspect-ratio:4/3;
+    object-fit:contain;
+    background:var(--surface);
+    padding:10px;
     display:block;
     border-radius:18px;
     transition:.35s ease;
@@ -2025,15 +2088,48 @@ VIDEO EDITING
 
 .video-grid{
     display:grid;
-    gap:24px;
+    grid-template-columns:1fr;
+    gap:var(--space-6);
+}
+
+/* Every item in the grid — the vimeo embed wrapper AND the native
+   <video> tags — is forced to the same 16:9 frame so featured
+   videos read as one balanced set instead of stacked, mismatched
+   blocks. */
+/* the Vimeo wrapper already forces 16:9 via its own inline
+   padding-hack — stacking aspect-ratio on top of that inflated
+   its height. Only round/clip it here; size the native <video>
+   tags (which have no padding-hack) with aspect-ratio instead. */
+.video-grid > div{
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.video-grid video{
+    aspect-ratio:16/9;
+    border-radius:20px;
+    overflow:hidden;
 }
 
 .video-grid video{
     width:100%;
+    height:100%;
     display:block;
-    border-radius:20px;
-    overflow:hidden;
+    object-fit:cover;
+    background:#0b1220;
     transition:.35s ease;
+}
+
+@media(min-width:700px){
+    .video-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+}
+
+@media(min-width:1200px){
+    .video-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+    }
 }
 
 .video-grid video:hover{
@@ -2111,6 +2207,32 @@ PHOTO EDITING
     object-fit:cover;
 }
 
+/* .photo-grid had no rules at all, so the 4 featured photo edits
+   were stacking as plain full-width blocks — huge and unbalanced
+   on both mobile and desktop. Give it a real, even grid. */
+.photo-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:var(--space-4);
+}
+
+@media(min-width:560px){
+    .photo-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:var(--space-5);
+    }
+}
+
+/* the --single modifier is for showcases with one hero photo
+   pinned across the top and the rest paired below it */
+.photo-grid--single .photo-card:first-child{
+    grid-column:1/-1;
+}
+
+.photo-grid--single .photo-card:first-child img{
+    aspect-ratio:16/9;
+}
+
 .photo-card{
     position:relative;
     margin:0;
@@ -2123,6 +2245,7 @@ PHOTO EDITING
 .photo-card img{
     display:block;
     width:100%;
+    aspect-ratio:4/3;
     height:auto;
     object-fit:cover;
     transition:transform 0.4s ease;
@@ -2263,7 +2386,7 @@ PHOTO EDITING
 
 .about-content span{
     color:var(--primary);
-    font-size:.85rem;
+    font-size:var(--fs-sm);
     font-weight:700;
     letter-spacing:1px;
 }
@@ -2414,7 +2537,7 @@ PHOTO EDITING
     font-weight:700;
     color:var(--heading);
     transition:color .3s ease;
-    font-size:.9rem;
+    font-size:var(--fs-sm);
 }
 
 .tool-card:hover span{
@@ -2449,7 +2572,7 @@ PHOTO EDITING
     padding:12px 20px;
     border-radius:999px;
     font-weight:600;
-    font-size:.9rem;
+    font-size:var(--fs-sm);
     transition:.3s ease;
 }
 
@@ -2550,7 +2673,7 @@ PHOTO EDITING
 }
 
 .advantage-icon{
-    font-size:2rem;
+    font-size:var(--fs-2xl);
     margin-bottom:20px;
 }
 
@@ -2594,7 +2717,7 @@ PHOTO EDITING
     opacity:.9;
     font-weight:700;
     letter-spacing:1px;
-    font-size:.85rem;
+    font-size:var(--fs-sm);
 }
 
 .cta-box h2{
@@ -2715,7 +2838,7 @@ PHOTO EDITING
     color:#fff;
     text-decoration:none;
     font-weight:700;
-    font-size:.9rem;
+    font-size:var(--fs-sm);
     border-radius:999px;
     z-index:998;
     box-shadow:0 15px 40px rgba(10,102,194,.25);
@@ -2909,12 +3032,12 @@ PHOTO EDITING
 
 .testimonial-author span{
     color:var(--body);
-    font-size:.9rem;
+    font-size:var(--fs-sm);
 }
 
 .testimonial-location{
     color:var(--body);
-    font-size:.85rem;
+    font-size:var(--fs-sm);
     margin-top:2px;
 }
 
@@ -2965,7 +3088,7 @@ PHOTO EDITING
     cursor:pointer;
     text-align:left;
     font-family:'Plus Jakarta Sans',sans-serif;
-    font-size:1.05rem;
+    font-size:var(--fs-base);
     font-weight:700;
     color:var(--heading);
 }
@@ -3244,7 +3367,7 @@ PHOTO EDITING
     }
 
     .case-left h3{
-        font-size:1.7rem;
+        font-size:var(--fs-xl);
     }
 
     .results{
@@ -3335,7 +3458,7 @@ PHOTO EDITING
 
     .faq-question{
         padding:28px 32px;
-        font-size:1.1rem;
+        font-size:var(--fs-md);
     }
 
     .faq-answer-inner p{
@@ -3350,7 +3473,7 @@ PHOTO EDITING
         transform:translateX(-50%);
         bottom:18px;
         padding:12px 18px;
-        font-size:.9rem;
+        font-size:var(--fs-sm);
         border-radius:50px;
         max-width:90%;
     }
@@ -3499,7 +3622,7 @@ PHOTO EDITING
 }
 
 .hero-content h1{
-    font-size:2rem;
+    font-size:var(--fs-2xl);
 }
 
 .floating-card{
@@ -3574,7 +3697,7 @@ PHOTO EDITING
 }
 
 .contact-connect h3{
-    font-size:1.4rem;
+    font-size:var(--fs-lg);
     margin-bottom:22px;
     color:var(--heading);
 }
@@ -3612,13 +3735,13 @@ PHOTO EDITING
     place-items:center;
     background:linear-gradient(135deg,#0A66C2,#4f8fe8);
     color:#fff;
-    font-size:1.1rem;
+    font-size:var(--fs-md);
     flex-shrink:0;
 }
 
 .connect-card span{
     display:block;
-    font-size:.85rem;
+    font-size:var(--fs-sm);
     color:#777;
     margin-bottom:4px;
 }
@@ -3698,7 +3821,7 @@ PHOTO EDITING
 .form-group input:not(:placeholder-shown)+label,
 .form-group textarea:not(:placeholder-shown)+label{
     top:-10px;
-    font-size:.78rem;
+    font-size:var(--fs-2xs);
     color:#0A66C2;
     font-weight:700;
 }
@@ -3709,7 +3832,7 @@ PHOTO EDITING
     justify-content:center;
     align-items:center;
     gap:8px;
-    font-size:.88rem;
+    font-size:var(--fs-sm);
     color:#6b7280;
     text-align:center;
 }
@@ -3804,7 +3927,7 @@ PHOTO EDITING
 }
 
 .success-card h2{
-    font-size:1.7rem;
+    font-size:var(--fs-xl);
     margin-bottom:18px;
 }
 
@@ -3840,7 +3963,7 @@ PHOTO EDITING
 
 .contact-socials h3{
     margin-bottom:24px;
-    font-size:1.2rem;
+    font-size:var(--fs-md);
 }
 
 .social-icons{
@@ -3914,7 +4037,7 @@ PHOTO EDITING
     .connect-card i{
         width:60px;
         height:60px;
-        font-size:1.3rem;
+        font-size:var(--fs-lg);
     }
 
     .contact-form-wrapper{
