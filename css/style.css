@@ -503,6 +503,7 @@ button:focus-visible,
     justify-content:flex-start;
 }
 
+.profile-info,
 .hero-availability{
     text-align:left;
     justify-content:flex-start;
@@ -540,6 +541,7 @@ button:focus-visible,
         justify-content:center;
     }
 
+    .profile-info,
     .hero-availability{
         text-align:center;
         justify-content:center;
@@ -589,19 +591,76 @@ button:focus-visible,
     gap:1rem;
 }
 
+.profile-card{
+    position:relative;
+    width:100%;
+    max-width:560px;
+    margin:0 auto;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
 
+.profile-card img{
+    width:100%;
+    max-width:485px;
+    aspect-ratio:4/5;
+    object-fit:cover;
+    border-radius:28px;
+    border:3px solid #ffffff;
+    box-shadow:
+        0 35px 80px rgba(10,102,194,.16),
+        0 18px 40px rgba(0,0,0,.12);
+    transition:
+        transform .45s ease,
+        box-shadow .45s ease;
+}
 
+.profile-card::before{
+    content:"";
+    position:absolute;
+    width:420px;
+    height:420px;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    background:
+        radial-gradient(circle,
+        rgba(10,102,194,.18) 0%,
+        rgba(10,102,194,.08) 45%,
+        transparent 75%);
+    filter:blur(40px);
+    z-index:-1;
+    pointer-events:none;
+}
 
+.profile-card:hover img{
+    transform:translateY(-8px);
+    box-shadow:
+        0 45px 100px rgba(10,102,194,.20),
+        0 22px 50px rgba(0,0,0,.15);
+}
 
+.profile-info{
+    margin-top:22px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    padding-left:8px;
+}
 
+.profile-info h3{
+    font-size:2rem;
+    font-weight:800;
+    line-height:1.15;
+    color:var(--heading);
+}
 
-
-
-
-
-
-
-
+.profile-info p{
+    font-size:1.02rem;
+    color:var(--body);
+    margin:0;
+}
 
 .hero-availability{
     margin-top:22px;
@@ -628,7 +687,23 @@ button:focus-visible,
         0 22px 45px rgba(10,102,194,.14);
 }
 
-.hero-availability i{
+.icon-svg{
+    width:1em;
+    height:1em;
+    fill:currentColor;
+    display:inline-block;
+    vertical-align:-0.125em;
+}
+
+@keyframes icon-spin{
+    100%{transform:rotate(360deg);}
+}
+
+.icon-spin{
+    animation:icon-spin 1s linear infinite;
+}
+
+.hero-availability .icon-svg{
     width:16px;
     height:16px;
     color:#16a34a;
@@ -662,11 +737,19 @@ button:focus-visible,
 
 @media(max-width:992px){
 
-    
+    .profile-card{
+        max-width:440px;
+    }
 
-    
+    .profile-card img{
+        max-width:390px;
+    }
 
-    
+    .profile-info{
+        text-align:center;
+        align-items:center;
+        padding-left:0;
+    }
 
     .hero-availability{
         margin-inline:auto;
@@ -677,9 +760,13 @@ button:focus-visible,
 
 @media(max-width:768px){
 
-    
+    .profile-card img{
+        max-width:320px;
+    }
 
-    
+    .profile-info h3{
+        font-size:1.6rem;
+    }
 
     .hero-availability{
         padding:16px;
@@ -708,7 +795,7 @@ button:focus-visible,
     animation:floatCard 4s ease-in-out infinite;
 }
 
-.floating-card i{
+.floating-card .icon-svg{
     color:var(--primary);
     font-size:1rem;
 }
@@ -746,7 +833,9 @@ button:focus-visible,
     .floating-card{
         animation:none;
     }
-    
+    .profile-card img{
+        transition:none;
+    }
 }
 
 /* ==========================
@@ -784,7 +873,7 @@ button:focus-visible,
     width:100%;
 }
 
-.hero-profile-info h2{
+.hero-profile-info h3{
     font-size:2rem;
     margin-bottom:8px;
 }
@@ -2813,7 +2902,7 @@ PHOTO EDITING
     margin-bottom:26px;
 }
 
-.testimonial-author h3{
+.testimonial-author h4{
     font-size:1rem;
     margin-bottom:4px;
 }
@@ -3037,7 +3126,10 @@ PHOTO EDITING
         justify-content:flex-start;
     }
 
-    
+    .profile-card{
+        max-width:none;
+        margin:0;
+    }
 
     .problem{
         padding:140px 0;
@@ -3622,7 +3714,7 @@ PHOTO EDITING
     text-align:center;
 }
 
-.form-note i{
+.form-note .icon-svg{
     color:#0A66C2;
 }
 
@@ -3711,7 +3803,7 @@ PHOTO EDITING
     font-size:3rem;
 }
 
-.success-card h3{
+.success-card h2{
     font-size:1.7rem;
     margin-bottom:18px;
 }
