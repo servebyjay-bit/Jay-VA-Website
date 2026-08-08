@@ -80,24 +80,6 @@ faqItems.forEach(item => {
     });
 });
 
-// SERVICES ACCORDION
-
-const serviceItems = document.querySelectorAll(".service-item");
-
-serviceItems.forEach(item => {
-    const title = item.querySelector(".service-title");
-
-    title.addEventListener("click", () => {
-        const isOpen = item.classList.contains("active");
-
-        serviceItems.forEach(other => other.classList.remove("active"));
-
-        if (!isOpen) {
-            item.classList.add("active");
-        }
-    });
-});
-
 // PORTFOLIO SERVICE TOGGLES
 
 document.querySelectorAll(".service-toggle").forEach(btn => {
