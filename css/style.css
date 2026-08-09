@@ -275,6 +275,15 @@ button:focus-visible,
     }
 }
 
+@media(prefers-reduced-motion:reduce){
+    html{
+        scroll-behavior:auto;
+    }
+    .floating-cta{
+        animation:none;
+    }
+}
+
 /* ==========================================================
    NAVBAR
 ========================================================== */
@@ -1227,39 +1236,44 @@ button:focus-visible,
 .process-card{
     background:white;
     border:1px solid var(--border);
-    border-radius:24px;
-    padding:32px 28px;
+    border-radius:20px;
+    padding:20px 18px;
     transition:transform .4s ease, border-color .4s ease, box-shadow .4s ease, background .4s ease;
     position:relative;
     transform:scale(1);
 }
 
-.process-card:hover{
-    transform:scale(1.015);
-    border-color:var(--hover-border);
-    background:#fbfdff;
-    box-shadow:0 20px 45px var(--hover-shadow);
+/* Desktop / real pointer devices only — untouched from before */
+@media(hover:hover) and (pointer:fine){
+    .process-card:hover{
+        transform:scale(1.015);
+        border-color:var(--hover-border);
+        background:#fbfdff;
+        box-shadow:0 20px 45px var(--hover-shadow);
+    }
+}
+
+/* Touch devices — tap feedback instead of a sticky :hover state */
+@media(hover:none){
+    .process-card:active{
+        border-color:var(--hover-border);
+        background:#fbfdff;
+        box-shadow:0 10px 25px var(--hover-shadow);
+    }
 }
 
 @media(prefers-reduced-motion:reduce){
-    .process-card:hover{
+    .process-card:hover,
+    .process-card:active{
         transform:none;
     }
 }
 
 .process-number{
-    font-size:2.6rem;
+    font-size:2.2rem;
     font-weight:800;
-    color:rgba(10,102,194,.15);
-    margin-bottom:16px;
-    transition:
-        color .35s ease,
-        transform .35s ease;
-}
-
-.process-card:hover .process-number{
     color:var(--primary);
-    transform:scale(1.08);
+    margin-bottom:12px;
 }
 
 .process-card h3{
@@ -2559,18 +2573,18 @@ PHOTO EDITING
 
 .results-grid{
     display:grid;
-    grid-template-columns:1fr;
-    gap:20px;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
 }
 
 .result-card{
     position:relative;
     overflow:hidden;
     text-align:center;
-    padding:40px 25px;
+    padding:22px 14px;
     background:#fff;
     border:1px solid var(--border);
-    border-radius:24px;
+    border-radius:18px;
     transition:transform .35s ease, border-color .35s ease, box-shadow .35s ease;
 }
 
@@ -2601,15 +2615,17 @@ PHOTO EDITING
 }
 
 .result-card h3{
-    font-size:clamp(2.2rem, 6vw, 4rem);
+    font-size:clamp(1.7rem, 8vw, 2.6rem);
     font-weight:800;
     color:var(--primary);
-    margin-bottom:12px;
+    margin-bottom:8px;
     line-height:1;
 }
 
 .result-card p{
     color:var(--body);
+    font-size:var(--fs-xs);
+    line-height:1.4;
 }
 
 /* ADVANTAGES + CLIENT FIT */
@@ -2847,6 +2863,10 @@ PHOTO EDITING
     color:#94a3b8;
 }
 
+.footer-bottom > span{
+    font-size:var(--fs-xs);
+}
+
 .footer-legal{
     display:flex;
     align-items:center;
@@ -2878,23 +2898,23 @@ PHOTO EDITING
     bottom:15px;
     display:flex;
     align-items:center;
-    gap:12px;
-    padding:14px 20px;
+    gap:8px;
+    padding:10px 16px;
     background:linear-gradient(135deg, var(--primary), #2D7FE0);
     color:#fff;
     text-decoration:none;
     font-weight:700;
-    font-size:var(--fs-sm);
+    font-size:var(--fs-xs);
     border-radius:999px;
     z-index:998;
-    box-shadow:0 15px 40px rgba(10,102,194,.25);
+    box-shadow:0 12px 30px rgba(10,102,194,.25);
     transition:transform .35s ease, box-shadow .35s ease, background .35s ease;
     animation:floatCTA 4s ease-in-out infinite;
 }
 
 .floating-cta img{
-    width:18px;
-    height:18px;
+    width:15px;
+    height:15px;
     object-fit:contain;
     transition:transform .35s ease;
 }
@@ -3127,14 +3147,14 @@ PHOTO EDITING
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:20px;
-    padding:24px 28px;
+    gap:16px;
+    padding:16px 20px;
     background:none;
     border:none;
     cursor:pointer;
     text-align:left;
     font-family:'Plus Jakarta Sans',sans-serif;
-    font-size:var(--fs-base);
+    font-size:var(--fs-sm);
     font-weight:700;
     color:var(--heading);
 }
@@ -3187,9 +3207,10 @@ PHOTO EDITING
 }
 
 .faq-answer-inner p{
-    padding:0 28px 24px;
+    padding:0 20px 16px;
     color:var(--body);
-    line-height:1.8;
+    font-size:var(--fs-sm);
+    line-height:1.6;
 }
 
 /* =========================================================
@@ -3208,6 +3229,13 @@ PHOTO EDITING
     }
     .about-features{
         grid-template-columns:1fr 1fr;
+    }
+    .form-row{
+        grid-template-columns:1fr 1fr;
+        gap:20px;
+    }
+    .contact-form-wrapper{
+        max-width:720px;
     }
 }
 
@@ -3432,6 +3460,12 @@ PHOTO EDITING
 
     .result-card h3{
         font-size:4rem;
+        margin-bottom:12px;
+    }
+
+    .result-card p{
+        font-size:var(--fs-base);
+        line-height:1.6;
     }
 
     .advantages{
@@ -3503,12 +3537,13 @@ PHOTO EDITING
     }
 
     .faq-question{
-        padding:28px 32px;
-        font-size:var(--fs-md);
+        padding:20px 26px;
+        font-size:var(--fs-base);
     }
 
     .faq-answer-inner p{
-        padding:0 32px 28px;
+        padding:0 26px 20px;
+        font-size:var(--fs-base);
     }
 }
 
@@ -3518,14 +3553,14 @@ PHOTO EDITING
         right:auto;
         transform:translateX(-50%);
         bottom:18px;
-        padding:12px 18px;
-        font-size:var(--fs-sm);
+        padding:9px 16px;
+        font-size:var(--fs-xs);
         border-radius:50px;
         max-width:90%;
     }
     .floating-cta img{
-        width:18px;
-        height:18px;
+        width:14px;
+        height:14px;
     }
 }
 
@@ -3558,11 +3593,22 @@ PHOTO EDITING
 }
 
 .problem-card:hover::before,
-.process-card:hover::before,
 .advantage-card:hover::before,
 .contact-card:hover::before,
 .testimonial-card:hover::before{
     opacity:1;
+}
+
+@media(hover:hover) and (pointer:fine){
+    .process-card:hover::before{
+        opacity:1;
+    }
+}
+
+@media(hover:none){
+    .process-card:active::before{
+        opacity:1;
+    }
 }
 
 /* ==========================================
@@ -4087,18 +4133,18 @@ PHOTO EDITING
     }
 
     .contact-form-wrapper{
-        max-width:720px;
+        max-width:820px;
         margin:60px auto 0;
         padding:0;
     }
 
     .contact-form{
-        padding:48px;
+        padding:52px 56px;
     }
 
     .form-row{
         grid-template-columns:repeat(2,1fr);
-        gap:22px;
+        gap:24px;
     }
 
     .social-icons a{

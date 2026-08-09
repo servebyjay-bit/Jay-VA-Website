@@ -13,9 +13,6 @@ function revealSections() {
     });
 }
 
-window.addEventListener("scroll", revealSections);
-window.addEventListener("load", revealSections);
-
 // HEADER SCROLL STATE
 
 const header = document.querySelector(".header");
@@ -27,9 +24,6 @@ function toggleHeaderScrolled() {
         header.classList.remove("scrolled");
     }
 }
-
-window.addEventListener("scroll", toggleHeaderScrolled);
-window.addEventListener("load", toggleHeaderScrolled);
 
 // MOBILE NAV (HAMBURGER)
 
@@ -137,8 +131,28 @@ function animateCounters() {
     }
 }
 
-window.addEventListener("scroll", animateCounters);
-window.addEventListener("load", animateCounters);
+// SCROLL PERFORMANCE
+// All three scroll-driven functions above (revealSections, toggleHeaderScrolled,
+// animateCounters) are batched into a single rAF-throttled, passive scroll
+// listener instead of three independent unthrottled ones — this keeps scrolling
+// smooth by doing at most one layout read/paint pass per animation frame.
+
+let scrollTicking = false;
+
+function onScroll() {
+    if (scrollTicking) return;
+    scrollTicking = true;
+
+    requestAnimationFrame(() => {
+        revealSections();
+        toggleHeaderScrolled();
+        animateCounters();
+        scrollTicking = false;
+    });
+}
+
+window.addEventListener("scroll", onScroll, { passive: true });
+window.addEventListener("load", onScroll);
 
 // Hide any tool icon that fails to load instead of showing a broken-image glyph
 document.querySelectorAll(".tool-card img").forEach(img => {
