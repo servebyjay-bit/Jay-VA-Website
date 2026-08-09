@@ -147,12 +147,31 @@ function onScroll() {
         revealSections();
         toggleHeaderScrolled();
         animateCounters();
+        toggleFloatingCta();
         scrollTicking = false;
     });
 }
 
 window.addEventListener("scroll", onScroll, { passive: true });
 window.addEventListener("load", onScroll);
+
+// FLOATING CTA
+// Hidden until the visitor scrolls roughly halfway into the About section,
+// then stays visible for the rest of the page (hides again if they scroll
+// back above that point). Folded into the existing rAF scroll loop below
+// rather than a separate listener.
+
+const floatingCta = document.querySelector(".floating-cta");
+const aboutSection = document.getElementById("about");
+
+function toggleFloatingCta() {
+    if (!floatingCta || !aboutSection) return;
+
+    const aboutTop = aboutSection.getBoundingClientRect().top + window.scrollY;
+    const shouldShow = window.scrollY >= aboutTop - window.innerHeight * 0.5;
+
+    floatingCta.classList.toggle("is-visible", shouldShow);
+}
 
 // Hide any tool icon that fails to load instead of showing a broken-image glyph
 document.querySelectorAll(".tool-card img").forEach(img => {
@@ -209,71 +228,75 @@ document.querySelectorAll(".tool-card img").forEach(img => {
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && lightbox.classList.contains('is-active')) closeLightbox();
     });
-})();/* ==========================================
-   CONTACT FORM
-========================================== */
+})();
 
-const contactForm = document.getElementById("contact-form");
-const submitBtn = document.querySelector(".form-submit");
-const successModal = document.getElementById("successModal");
-const closeSuccess = document.getElementById("closeSuccess");
+// ==========================================
+// CONTACT FORM + SUCCESS MODAL
+// ==========================================
 
-if (contactForm) {
+(function () {
+    const contactForm = document.getElementById("contact-form");
+    const submitBtn = document.querySelector(".form-submit");
+    const successModal = document.getElementById("successModal");
+    const closeSuccess = document.getElementById("closeSuccess");
 
-    contactForm.addEventListener("submit", async (e) => {
+    let lastFocusedBeforeModal = null;
 
-        e.preventDefault();
+    function openSuccessModal() {
+        if (!successModal) return;
+        lastFocusedBeforeModal = document.activeElement;
+        successModal.classList.add("show");
+        successModal.setAttribute("aria-hidden", "false");
+        if (closeSuccess) closeSuccess.focus();
+    }
 
-        submitBtn.classList.add("loading");
-        submitBtn.disabled = true;
+    function closeSuccessModal() {
+        if (!successModal) return;
+        successModal.classList.remove("show");
+        successModal.setAttribute("aria-hidden", "true");
+        if (lastFocusedBeforeModal) lastFocusedBeforeModal.focus();
+    }
 
-        const formData = new FormData(contactForm);
+    if (contactForm && submitBtn) {
+        contactForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
 
-        try {
+            submitBtn.classList.add("loading");
+            submitBtn.disabled = true;
 
-            const response = await fetch(contactForm.action, {
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: "POST",
+                    body: new FormData(contactForm),
+                    headers: { Accept: "application/json" }
+                });
 
-                method:"POST",
-
-                body:formData,
-
-                headers:{
-                    Accept:"application/json"
+                if (response.ok) {
+                    contactForm.reset();
+                    openSuccessModal();
+                } else {
+                    alert("Something went wrong. Please try again.");
                 }
-
-            });
-
-            if(response.ok){
-
-                contactForm.reset();
-
-                successModal.classList.add("show");
-
-            }else{
-
-                alert("Something went wrong. Please try again.");
-
+            } catch {
+                alert("Unable to send your message.");
             }
 
-        }catch{
+            submitBtn.classList.remove("loading");
+            submitBtn.disabled = false;
+        });
+    }
 
-            alert("Unable to send your message.");
+    if (successModal && closeSuccess) {
+        closeSuccess.addEventListener("click", closeSuccessModal);
 
-        }
+        successModal.addEventListener("click", (e) => {
+            if (e.target === successModal) closeSuccessModal();
+        });
 
-        submitBtn.classList.remove("loading");
-        submitBtn.disabled = false;
-
-    });
-
-}
-
-if(closeSuccess){
-
-    closeSuccess.addEventListener("click",()=>{
-
-        successModal.classList.remove("show");
-
-    });
-
-}
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && successModal.classList.contains("show")) {
+                closeSuccessModal();
+            }
+        });
+    }
+})();

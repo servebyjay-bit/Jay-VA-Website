@@ -39,6 +39,10 @@
     <meta name="theme-color"
           content="#0A66C2">
 
+    <meta name="theme-color"
+          content="#0B1220"
+          media="(prefers-color-scheme: dark)">
+
     <link rel="canonical"
           href="https://jay-va-website.vercel.app/">
 
@@ -1824,7 +1828,7 @@
 
     </main>
 
-<div class="success-modal" id="successModal">
+<div class="success-modal" id="successModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="successModalTitle">
 
     <div class="success-card">
 
@@ -1834,7 +1838,7 @@
 
         </div>
 
-        <h2>Message Sent Successfully!</h2>
+        <h2 id="successModalTitle">Message Sent Successfully!</h2>
 
         <p>
 
