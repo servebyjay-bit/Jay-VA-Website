@@ -136,9 +136,10 @@ button:focus-visible,
     --primary-dark:#004182;
 
     --heading:#111827;
-    --body:#6B7280;
+    --body:#475569;
 
-    --surface:#F8FAFC;
+    --surface:#E8F2FC;
+    --surface-strong:#DCEAFB;
 
     --border:#E5E7EB;
 
@@ -964,7 +965,7 @@ button:focus-visible,
 .availability-card span{
     display:block;
     font-size:var(--fs-sm);
-    color:#666;
+    color:var(--body);
     margin-top:4px;
 }
 
@@ -1290,6 +1291,7 @@ button:focus-visible,
 .portfolio{
     padding:var(--space-20) 0;
     background:var(--surface);
+    border-top:1px solid rgba(10,102,194,.10);
     transition-delay:.25s;
 }
 
@@ -2410,6 +2412,7 @@ PHOTO EDITING
 .tools{
     padding:58px 0;
     background:var(--surface);
+    border-top:1px solid rgba(10,102,194,.10);
 }
 
 .tools-groups{
@@ -2568,6 +2571,7 @@ PHOTO EDITING
 .results{
     padding:58px 0;
     background:var(--surface);
+    border-top:1px solid rgba(10,102,194,.10);
     transition-delay:.4s;
 }
 
@@ -2633,12 +2637,14 @@ PHOTO EDITING
 .advantages{
     padding:58px 0;
     background:var(--surface);
+    border-top:1px solid rgba(10,102,194,.10);
     transition-delay:.45s;
 }
 
 .client-fit{
     padding:58px 0;
     background:var(--surface);
+    border-top:1px solid rgba(10,102,194,.10);
 }
 
 .advantages-grid{
@@ -2697,7 +2703,7 @@ PHOTO EDITING
 }
 
 .cta-box span{
-    opacity:.9;
+    opacity:.95;
     font-weight:700;
     letter-spacing:1px;
     font-size:var(--fs-sm);
@@ -2712,7 +2718,7 @@ PHOTO EDITING
 .cta-box p{
     max-width:700px;
     margin:auto;
-    opacity:.9;
+    opacity:.95;
     line-height:1.8;
 }
 
@@ -2848,7 +2854,7 @@ PHOTO EDITING
 }
 
 .footer a:hover{
-    color:rgb(23, 45, 244);
+    color:#4F8FE8;
 }
 
 .footer-bottom{
@@ -3745,6 +3751,7 @@ PHOTO EDITING
 .contact{
     padding:58px 0;
     background:var(--surface);
+    border-top:1px solid rgba(10,102,194,.10);
 }
 
 .contact-grid{
@@ -3834,13 +3841,13 @@ PHOTO EDITING
 .connect-card span{
     display:block;
     font-size:var(--fs-sm);
-    color:#777;
+    color:var(--body);
     margin-bottom:4px;
 }
 
 .connect-card strong{
     font-size:1rem;
-    color:#111;
+    color:var(--heading);
     word-break:break-word;
 }
 
@@ -3901,7 +3908,7 @@ PHOTO EDITING
     top:18px;
     padding:0 6px;
     background:#fff;
-    color:#777;
+    color:var(--body);
     pointer-events:none;
     transition:.25s;
 }
@@ -3925,7 +3932,7 @@ PHOTO EDITING
     align-items:center;
     gap:8px;
     font-size:var(--fs-sm);
-    color:#6b7280;
+    color:var(--body);
     text-align:center;
 }
 
@@ -4024,7 +4031,7 @@ PHOTO EDITING
 }
 
 .success-card p{
-    color:#666;
+    color:var(--body);
     line-height:1.8;
 }
 
