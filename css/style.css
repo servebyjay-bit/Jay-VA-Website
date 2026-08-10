@@ -750,7 +750,7 @@ button:focus-visible,
     width:100%;
 }
 
-.hero-profile-info h3{
+.hero-profile-info h2{
     font-size:var(--fs-2xl);
     margin-bottom:8px;
 }
@@ -2371,7 +2371,7 @@ PHOTO EDITING
     margin-bottom:26px;
 }
 
-.testimonial-author h4{
+.testimonial-author h3{
     font-size:var(--fs-base);
     margin-bottom:4px;
 }
@@ -3036,6 +3036,10 @@ PHOTO EDITING
 .form-group input:focus,
 .form-group textarea:focus{
     border-color:#0A66C2;
+}
+
+.form-group input:focus-visible,
+.form-group textarea:focus-visible{
     box-shadow:0 0 0 4px rgba(10,102,194,.10);
 }
 
