@@ -118,8 +118,20 @@
     <link rel="dns-prefetch"
           href="//fonts.googleapis.com">
 
+    <link rel="preconnect"
+          href="https://player.vimeo.com">
+
+    <link rel="preconnect"
+          href="https://www.googletagmanager.com">
+
+    <link rel="preconnect"
+          href="https://www.clarity.ms">
+
     <!-- ==========================================
-         GOOGLE FONTS
+         GOOGLE FONTS (loaded non-render-blocking:
+         preloaded, then swapped to a stylesheet once
+         fetched, with a <noscript> fallback for
+         users/bots without JS)
     ========================================== -->
 
     <link rel="preload"
@@ -127,8 +139,19 @@
           href="images/Jay.webp"
           fetchpriority="high">
 
+    <link rel="preload"
+          as="style"
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&display=swap">
+
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&display=swap"
-          rel="stylesheet">
+          rel="stylesheet"
+          media="print"
+          onload="this.media='all'">
+
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&display=swap"
+              rel="stylesheet">
+    </noscript>
 
     <!-- ==========================================
          CSS
@@ -268,6 +291,8 @@
                             src="images/Jay.webp"
                             alt="Jay Boy Olan-Olan"
                             class="hero-image"
+                            width="490"
+                            height="613"
                             fetchpriority="high">
 
                         
@@ -613,7 +638,7 @@
 
                         <!-- FEATURED DESIGNS -->
                         <div class="graphic-gallery">
-                            <h5>Featured Designs</h5>
+                            <h4>Featured Designs</h4>
                             <div class="graphic-grid">
                                 <img src="graphic design/1.webp" alt="Jay VA graphic design sample 1" loading="lazy" decoding="async">
                                 <img src="graphic design/2.webp" alt="Jay VA graphic design sample 2" loading="lazy" decoding="async">
@@ -821,7 +846,7 @@
 
                 <button type="button" class="service-toggle" aria-expanded="false" aria-controls="service-video">
                     <span>View Featured Works</span>
-                    <span class="toggle-icon"></span>
+                    <span class="toggle-icon" aria-hidden="true"></span>
                 </button>
             </div>
 
@@ -832,7 +857,7 @@
 
                         <!-- FEATURED VIDEOS -->
                         <div class="video-gallery">
-                            <h5>Featured Videos</h5>
+                            <h4>Featured Videos</h4>
                     <p>
                         Shot and edited for a premier land development project in Mati
                         City, Davao Oriental — part of the client's promotional marketing
@@ -845,7 +870,7 @@
                                 <!-- VIDEO 1 -->
                                 <div class="media-item">
                                     <span class="media-index">1</span>
-                                    <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1215417093?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Land Development Project — Promotional Video"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+                                    <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1215417093?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" loading="lazy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Land Development Project — Promotional Video"></iframe></div>
                                 </div>
 
                                 <!-- VIDEO 2 -->
@@ -897,7 +922,7 @@
 
                 <button type="button" class="service-toggle" aria-expanded="false" aria-controls="service-photo">
                     <span>View Featured Works</span>
-                    <span class="toggle-icon"></span>
+                    <span class="toggle-icon" aria-hidden="true"></span>
                 </button>
             </div>
 
@@ -908,7 +933,7 @@
 
                         <!-- FEATURED EDITS -->
                         <div class="photo-gallery">
-                            <h5>Featured Edits</h5>
+                            <h4>Featured Edits</h4>
 
                             <div class="photo-grid photo-grid--single">
 
@@ -988,6 +1013,8 @@
 
                 <img src="images/Jay 2.webp"
                     alt="Jay Boy Olan-Olan"
+                    width="490"
+                    height="613"
                     loading="lazy"
                     decoding="async">
 
@@ -1361,7 +1388,7 @@
             <!-- TESTIMONIAL 1 -->
             <div class="testimonial-card">
 
-                <div class="testimonial-stars" aria-label="5 out of 5 stars">
+                <div class="testimonial-stars" role="img" aria-label="5 out of 5 stars">
                     <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18l1.4-6.3L1 7.4l6.4-.6L10 1z"/></svg>
                     <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18l1.4-6.3L1 7.4l6.4-.6L10 1z"/></svg>
                     <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18l1.4-6.3L1 7.4l6.4-.6L10 1z"/></svg>
@@ -1384,7 +1411,7 @@
             <!-- TESTIMONIAL 2 -->
             <div class="testimonial-card">
 
-                <div class="testimonial-stars" aria-label="5 out of 5 stars">
+                <div class="testimonial-stars" role="img" aria-label="5 out of 5 stars">
                     <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18l1.4-6.3L1 7.4l6.4-.6L10 1z"/></svg>
                     <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18l1.4-6.3L1 7.4l6.4-.6L10 1z"/></svg>
                     <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18l1.4-6.3L1 7.4l6.4-.6L10 1z"/></svg>
@@ -1407,7 +1434,7 @@
             <!-- TESTIMONIAL 3 -->
             <div class="testimonial-card">
 
-                <div class="testimonial-stars" aria-label="5 out of 5 stars">
+                <div class="testimonial-stars" role="img" aria-label="5 out of 5 stars">
                     <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18l1.4-6.3L1 7.4l6.4-.6L10 1z"/></svg>
                     <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18l1.4-6.3L1 7.4l6.4-.6L10 1z"/></svg>
                     <svg viewBox="0 0 20 20"><path d="M10 1l2.6 5.8 6.4.6-4.8 4.3 1.4 6.3L10 14.9 4.4 18l1.4-6.3L1 7.4l6.4-.6L10 1z"/></svg>
@@ -1832,7 +1859,7 @@
 
         </div>
 
-        <h2 id="successModalTitle">Message Sent Successfully!</h2>
+        <h3 id="successModalTitle">Message Sent Successfully!</h3>
 
         <p>
 

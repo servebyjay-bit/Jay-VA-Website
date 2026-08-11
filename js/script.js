@@ -2,15 +2,21 @@
 
 const reveals = document.querySelectorAll(".reveal");
 
+// Reads (getBoundingClientRect) and writes (classList.add) are batched
+// into two separate passes instead of interleaved per-section — reading
+// layout right after writing it forces a synchronous reflow on every
+// iteration, so all measurements happen first, then all DOM writes.
 function revealSections() {
-    reveals.forEach(section => {
-        const sectionTop = section.getBoundingClientRect().top;
-        const triggerPoint = window.innerHeight * 0.85;
+    const triggerPoint = window.innerHeight * 0.85;
+    const toActivate = [];
 
-        if (sectionTop < triggerPoint) {
-            section.classList.add("active");
+    reveals.forEach(section => {
+        if (section.getBoundingClientRect().top < triggerPoint) {
+            toActivate.push(section);
         }
     });
+
+    toActivate.forEach(section => section.classList.add("active"));
 }
 
 // HEADER SCROLL STATE
