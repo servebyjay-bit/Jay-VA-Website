@@ -301,4 +301,106 @@ document.querySelectorAll(".tool-card img").forEach(img => {
             }
         });
     }
+})();// ==========================================
+// RATES & PACKAGES → CONTACT FORM WIRING
+// ==========================================
+
+(function () {
+    const packageRadios = document.querySelectorAll('input[name="package"]');
+    if (!packageRadios.length) return;
+
+    const hiddenField = document.getElementById("selectedPackageField");
+    const statusText = document.getElementById("pricing-selected-text");
+    const addToMessageBtn = document.getElementById("pricingAddToMessage");
+    const contactForm = document.getElementById("contact-form");
+    const messageField = document.getElementById("message");
+
+    const MARK_START = "----- SELECTED PACKAGE -----";
+    const MARK_END = "----- END SELECTED PACKAGE -----";
+
+    function getSelectedRadio() {
+        return document.querySelector('input[name="package"]:checked');
+    }
+
+    // Auto-syncs the hidden form field the moment a package is chosen,
+    // so the data reaches the inbox even if the visitor never touches
+    // the "Add to message" button.
+    function syncHiddenField() {
+        const selected = getSelectedRadio();
+
+        if (!selected) {
+            if (hiddenField) hiddenField.value = "";
+            if (statusText) statusText.textContent = "No package selected yet.";
+            if (addToMessageBtn) addToMessageBtn.disabled = true;
+            return;
+        }
+
+        const label = `${selected.dataset.packageName} — ${selected.dataset.packagePrice}`;
+
+        if (hiddenField) hiddenField.value = label;
+        if (statusText) statusText.textContent = `Selected: ${label}`;
+        if (addToMessageBtn) addToMessageBtn.disabled = false;
+    }
+
+    // Inserts (or, on repeat clicks, replaces in place) a marked block
+    // in the Message textarea, so switching packages never duplicates
+    // text and never wipes out anything the visitor already typed.
+    function insertPackageIntoMessage(details) {
+        if (!messageField) return;
+
+        const block = `${MARK_START}\n${details}\n${MARK_END}`;
+        const value = messageField.value;
+        const startIdx = value.indexOf(MARK_START);
+        const endIdx = value.indexOf(MARK_END);
+
+        if (startIdx !== -1 && endIdx !== -1) {
+            const before = value.slice(0, startIdx);
+            const after = value.slice(endIdx + MARK_END.length);
+            messageField.value = `${before}${block}${after}`.trim();
+        } else {
+            const existing = value.trim();
+            messageField.value = existing ? `${existing}\n\n${block}` : block;
+        }
+
+        // The existing floating-label + submit-button-enable logic in
+        // this file listens for "input" — dispatch it so both react.
+        messageField.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+
+    packageRadios.forEach((radio) => {
+        radio.addEventListener("change", syncHiddenField);
+    });
+
+    if (addToMessageBtn) {
+        addToMessageBtn.addEventListener("click", () => {
+            const selected = getSelectedRadio();
+            if (!selected) return;
+
+            insertPackageIntoMessage(selected.dataset.packageDetails);
+
+            const original = addToMessageBtn.textContent;
+            addToMessageBtn.textContent = "Package Details Added ✓";
+            window.setTimeout(() => {
+                addToMessageBtn.textContent = original;
+            }, 2200);
+        });
+    }
+
+    // Safety net: if a package is selected but never added to the
+    // message, fold it in automatically right before submit. Capture
+    // phase guarantees this runs before the existing bubble-phase
+    // submit handler reads its FormData snapshot.
+    if (contactForm) {
+        contactForm.addEventListener(
+            "submit",
+            () => {
+                const selected = getSelectedRadio();
+                if (!selected || !messageField) return;
+                if (!messageField.value.includes(MARK_START)) {
+                    insertPackageIntoMessage(selected.dataset.packageDetails);
+                }
+            },
+            true
+        );
+    }
 })();
