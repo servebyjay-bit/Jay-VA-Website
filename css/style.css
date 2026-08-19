@@ -261,43 +261,10 @@ button:focus-visible,
     outline-offset:3px;
 }
 
-.btn-ghost{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:16px 10px;
-    font-family:'Plus Jakarta Sans', sans-serif;
-    font-weight:700;
-    font-size:var(--fs-base);
-    line-height:1;
-    color:var(--body);
-    text-decoration:none;
-    border-bottom:2px solid transparent;
-    white-space:nowrap;
-    cursor:pointer;
-    transition:color .3s ease, border-color .3s ease;
-}
-
-.btn-ghost:hover,
-.btn-ghost:focus-visible{
-    color:var(--primary);
-    border-color:var(--primary);
-}
-
-.btn-ghost:focus-visible{
-    outline:3px solid rgba(10,102,194,.45);
-    outline-offset:3px;
-    border-radius:4px;
-}
-
 @media(max-width:520px){
     .btn-primary,
     .btn-secondary{
         width:100%;
-    }
-
-    .btn-ghost{
-        padding:10px;
     }
 }
 
