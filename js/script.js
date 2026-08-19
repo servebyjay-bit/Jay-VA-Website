@@ -58,28 +58,6 @@ window.addEventListener("resize", () => {
     }
 });
 
-// FAQ ACCORDION
-
-const faqItems = document.querySelectorAll(".faq-item");
-
-faqItems.forEach(item => {
-    const question = item.querySelector(".faq-question");
-
-    question.addEventListener("click", () => {
-        const isOpen = item.classList.contains("active");
-
-        faqItems.forEach(other => {
-            other.classList.remove("active");
-            other.querySelector(".faq-question").setAttribute("aria-expanded", "false");
-        });
-
-        if (!isOpen) {
-            item.classList.add("active");
-            question.setAttribute("aria-expanded", "true");
-        }
-    });
-});
-
 // PORTFOLIO SERVICE TOGGLES
 
 document.querySelectorAll(".service-toggle").forEach(btn => {

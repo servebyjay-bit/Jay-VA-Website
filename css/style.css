@@ -261,10 +261,43 @@ button:focus-visible,
     outline-offset:3px;
 }
 
+.btn-ghost{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:16px 10px;
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-weight:700;
+    font-size:var(--fs-base);
+    line-height:1;
+    color:var(--body);
+    text-decoration:none;
+    border-bottom:2px solid transparent;
+    white-space:nowrap;
+    cursor:pointer;
+    transition:color .3s ease, border-color .3s ease;
+}
+
+.btn-ghost:hover,
+.btn-ghost:focus-visible{
+    color:var(--primary);
+    border-color:var(--primary);
+}
+
+.btn-ghost:focus-visible{
+    outline:3px solid rgba(10,102,194,.45);
+    outline-offset:3px;
+    border-radius:4px;
+}
+
 @media(max-width:520px){
     .btn-primary,
     .btn-secondary{
         width:100%;
+    }
+
+    .btn-ghost{
+        padding:10px;
     }
 }
 
@@ -1283,11 +1316,26 @@ button:focus-visible,
 }
 
 .site-project-bottom{
-    padding:8px 28px 32px;
+    padding:24px 28px 32px;
+    border-top:1px solid var(--border);
 }
 
 .site-project-bottom .deliverables{
     margin-top:8px;
+}
+
+@media(min-width:769px){
+    .site-project-bottom{
+        display:grid;
+        grid-template-columns:1.2fr 1fr;
+        gap:40px;
+        align-items:start;
+    }
+
+    .site-project-bottom .deliverables,
+    .site-project-bottom .project-highlights{
+        margin-top:0;
+    }
 }
 
 @media(min-width:993px){
@@ -1531,9 +1579,9 @@ VIDEO EDITING
 
 .video-grid{
     display:grid;
-    grid-template-columns:1fr;
+    grid-template-columns:repeat(2, minmax(0,1fr));
     gap:var(--space-4);
-    max-width:760px;
+    max-width:920px;
     margin:0 auto;
 }
 
@@ -1624,6 +1672,11 @@ VIDEO EDITING
     .video-highlights{
         padding:18px;
     }
+
+    .video-grid{
+        grid-template-columns:1fr;
+        max-width:560px;
+    }
 }
 
 /************************************
@@ -1644,25 +1697,21 @@ PHOTO EDITING
     margin-bottom:18px;
 }
 
-/* .photo-grid had no rules at all, so the 4 featured photo edits
-   were stacking as plain full-width blocks — huge and unbalanced
-   on both mobile and desktop. Give it a real, even grid. */
+/* Balanced 2x2 grid so the 4 featured photo edits read as one
+   even, professionally arranged set instead of stacked blocks. */
 .photo-grid{
     display:grid;
-    grid-template-columns:1fr;
+    grid-template-columns:repeat(2, minmax(0,1fr));
     gap:var(--space-4);
-    max-width:640px;
+    max-width:760px;
     margin:0 auto;
 }
 
-/* the --single modifier keeps every featured edit as one full-width,
-   centered column so the set reads as one balanced, even stack */
-.photo-grid--single .photo-card:first-child{
-    grid-column:1/-1;
-}
-
-.photo-grid--single .photo-card:first-child img{
-    aspect-ratio:16/9;
+@media(max-width:576px){
+    .photo-grid{
+        grid-template-columns:1fr;
+        max-width:460px;
+    }
 }
 
 .photo-card{
@@ -2385,8 +2434,7 @@ PHOTO EDITING
 .portfolio-card,
 .advantage-card,
 .process-card,
-.testimonial-card,
-.faq-item{
+.testimonial-card{
     opacity:0;
     transform:translateY(24px) scale(.97);
 }
@@ -2397,8 +2445,7 @@ PHOTO EDITING
 .reveal.active .portfolio-card,
 .reveal.active .advantage-card,
 .reveal.active .process-card,
-.reveal.active .testimonial-card,
-.reveal.active .faq-item{
+.reveal.active .testimonial-card{
     animation:cardIn .6s cubic-bezier(.16,1,.3,1) forwards;
 }
 
@@ -2415,8 +2462,7 @@ PHOTO EDITING
 .reveal.active .portfolio-card:nth-child(1),
 .reveal.active .advantage-card:nth-child(1),
 .reveal.active .process-card:nth-child(1),
-.reveal.active .testimonial-card:nth-child(1),
-.reveal.active .faq-item:nth-child(1){ animation-delay:.05s; }
+.reveal.active .testimonial-card:nth-child(1){ animation-delay:.05s; }
 
 .reveal.active .result-card:nth-child(2),
 .reveal.active .problem-card:nth-child(2),
@@ -2424,28 +2470,22 @@ PHOTO EDITING
 .reveal.active .portfolio-card:nth-child(2),
 .reveal.active .advantage-card:nth-child(2),
 .reveal.active .process-card:nth-child(2),
-.reveal.active .testimonial-card:nth-child(2),
-.reveal.active .faq-item:nth-child(2){ animation-delay:.12s; }
+.reveal.active .testimonial-card:nth-child(2){ animation-delay:.12s; }
 
 .reveal.active .result-card:nth-child(3),
 .reveal.active .problem-card:nth-child(3),
 .reveal.active .service-item:nth-child(3),
 .reveal.active .advantage-card:nth-child(3),
 .reveal.active .process-card:nth-child(3),
-.reveal.active .testimonial-card:nth-child(3),
-.reveal.active .faq-item:nth-child(3){ animation-delay:.19s; }
+.reveal.active .testimonial-card:nth-child(3){ animation-delay:.19s; }
 
 .reveal.active .result-card:nth-child(4),
 .reveal.active .problem-card:nth-child(4),
 .reveal.active .service-item:nth-child(4),
 .reveal.active .advantage-card:nth-child(4),
-.reveal.active .process-card:nth-child(4),
-.reveal.active .faq-item:nth-child(4){ animation-delay:.26s; }
+.reveal.active .process-card:nth-child(4){ animation-delay:.26s; }
 
-.reveal.active .service-item:nth-child(5),
-.reveal.active .faq-item:nth-child(5){ animation-delay:.33s; }
-
-.reveal.active .faq-item:nth-child(6){ animation-delay:.40s; }
+.reveal.active .service-item:nth-child(5){ animation-delay:.33s; }
 
 @media(prefers-reduced-motion:reduce){
     .reveal{
@@ -2457,8 +2497,7 @@ PHOTO EDITING
 .portfolio-card,
 .advantage-card,
 .process-card,
-.testimonial-card,
-.faq-item{
+.testimonial-card{
         opacity:1;
         transform:none;
         animation:none;
@@ -2530,108 +2569,6 @@ PHOTO EDITING
     color:var(--body);
     font-size:var(--fs-sm);
     margin-top:2px;
-}
-
-/* =========================================================
-   FAQ ACCORDION
-   ========================================================= */
-
-.faq{
-    padding:58px 0;
-    background:#fff;
-}
-
-.faq-list{
-    max-width:820px;
-    margin:0 auto;
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-}
-
-.faq-heading{
-    margin:0;
-    font-weight:inherit;
-}
-
-.faq-item{
-    border-bottom:1px solid var(--border);
-    transition:border-color .3s ease;
-}
-
-.faq-item.active{
-    border-color:var(--primary);
-}
-
-.faq-question{
-    width:100%;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:16px;
-    padding:18px 0;
-    background:none;
-    border:none;
-    cursor:pointer;
-    text-align:left;
-    font-family:'Plus Jakarta Sans',sans-serif;
-    font-size:var(--fs-md);
-    font-weight:700;
-    color:var(--heading);
-}
-
-.faq-icon{
-    position:relative;
-    flex-shrink:0;
-    width:22px;
-    height:22px;
-}
-
-.faq-icon::before,
-.faq-icon::after{
-    content:"";
-    position:absolute;
-    top:50%;
-    left:50%;
-    background:var(--primary);
-    transition:transform .3s ease;
-}
-
-.faq-icon::before{
-    width:14px;
-    height:2px;
-    transform:translate(-50%,-50%);
-}
-
-.faq-icon::after{
-    width:2px;
-    height:14px;
-    transform:translate(-50%,-50%);
-}
-
-.faq-item.active .faq-icon::after{
-    transform:translate(-50%,-50%) rotate(90deg) scaleY(0);
-}
-
-.faq-answer{
-    display:grid;
-    grid-template-rows:0fr;
-    transition:grid-template-rows .35s ease;
-}
-
-.faq-item.active .faq-answer{
-    grid-template-rows:1fr;
-}
-
-.faq-answer-inner{
-    overflow:hidden;
-}
-
-.faq-answer-inner p{
-    padding:0 0 18px;
-    color:var(--body);
-    font-size:var(--fs-base);
-    line-height:1.6;
 }
 
 /* =========================================================
@@ -2952,19 +2889,6 @@ PHOTO EDITING
         margin-bottom:30px;
     }
 
-    .faq{
-        padding:104px 0;
-    }
-
-    .faq-question{
-        padding:20px 26px;
-        font-size:var(--fs-base);
-    }
-
-    .faq-answer-inner p{
-        padding:0 26px 20px;
-        font-size:var(--fs-base);
-    }
 }
 
 @media (max-width:768px){
