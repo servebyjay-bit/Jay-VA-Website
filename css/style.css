@@ -528,64 +528,33 @@ button:focus-visible,
 }
 
 .hero-grid{
-    display:grid;
-    grid-template-columns:minmax(0,1.08fr) minmax(470px,.92fr);
-    align-items:center;
-    gap:clamp(70px,8vw,120px);
+    display:flex;
+    justify-content:center;
 }
 
 .hero-content{
     display:flex;
     flex-direction:column;
-    align-items:flex-start;
-    text-align:left;
+    align-items:center;
+    text-align:center;
+    max-width:800px;
     padding-top:18px;
 }
 
 .hero-content h1,
 .hero-content p{
-    margin-left:0;
-    margin-right:0;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 .hero-buttons{
-    justify-content:flex-start;
-}
-.profile-info{
-    text-align:left;
-    justify-content:flex-start;
+    justify-content:center;
 }
 
 @media (max-width:992px){
 
     .hero{
         padding:104px 0 72px;
-    }
-
-    .hero-grid{
-        grid-template-columns:1fr;
-        align-items:center;
-        gap:50px;
-    }
-
-    .hero-content{
-        align-items:center;
-        text-align:center;
-        padding-top:0;
-    }
-
-    .hero-content h1,
-    .hero-content p{
-        margin-left:auto;
-        margin-right:auto;
-    }
-
-    .hero-buttons{
-        justify-content:center;
-    }
-.profile-info{
-        text-align:center;
-        justify-content:center;
     }
 }
 
@@ -611,7 +580,7 @@ button:focus-visible,
     line-height:1.05;
     letter-spacing:-0.04em;
     margin-bottom:20px;
-    max-width:620px;
+    max-width:720px;
 }
 
 .hero-content p{
@@ -619,34 +588,13 @@ button:focus-visible,
     font-size:var(--fs-base);
     line-height:1.8;
     margin-bottom:26px;
-    max-width:520px;
+    max-width:600px;
 }
 
 .hero-buttons{
     display:flex;
     flex-wrap:wrap;
     gap:1rem;
-}
-
-.profile-info{
-    margin-top:22px;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    padding-left:8px;
-}
-
-.profile-info h3{
-    font-size:var(--fs-2xl);
-    font-weight:800;
-    line-height:1.15;
-    color:var(--heading);
-}
-
-.profile-info p{
-    font-size:var(--fs-base);
-    color:var(--body);
-    margin:0;
 }
 
 .icon-svg{
@@ -665,49 +613,6 @@ button:focus-visible,
     animation:icon-spin 1s linear infinite;
 }
 
-.hero-availability .icon-svg{
-    width:16px;
-    height:16px;
-    color:#16a34a;
-    font-size:var(--fs-sm);
-    flex-shrink:0;
-}
-
-.hero-right{
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    height:100%;
-}
-
-@media(max-width:992px){
-
-    .profile-info{
-        text-align:center;
-        align-items:center;
-        padding-left:0;
-    }
-
-}
-
-@media(max-width:768px){
-
-    .profile-info h3{
-        font-size:var(--fs-profile-name);
-    }
-
-}
-
-.floating-card .icon-svg{
-    color:var(--primary);
-    font-size:var(--fs-base);
-}
-
-@keyframes floatCard{
-    0%,100%{ transform:translateY(0); }
-    50%{ transform:translateY(-10px); }
-}
-
 @media (prefers-reduced-motion: reduce){
 .hero::before,
 .hero::after{
@@ -715,50 +620,13 @@ button:focus-visible,
     }
 }
 
-/* ==========================
-   HERO PROFILE
-========================== */
-
-.hero-profile{
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    height:100%;
-}
-
-.hero-image-wrapper{
-    position:relative;
-    max-width:490px;
-    margin:auto;
-}
-
+/* Note: .hero-image is no longer used in the hero (that column was
+   removed) — it's kept here because the About section's portrait
+   <img> reuses the class. Its cascade only supplies the white
+   border/shadow; sizing comes from .image-wrapper img below. */
 .hero-image{
-    width:100%;
-    aspect-ratio:490/613;
-    object-fit:cover;
     border:3px solid #fff;
-    border-radius:28px;
-    display:block;
     box-shadow:0 30px 70px rgba(0,0,0,.15);
-}
-
-.hero-profile-info{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    margin-top:28px;
-    width:100%;
-}
-
-.hero-profile-info h2{
-    font-size:var(--fs-2xl);
-    margin-bottom:8px;
-}
-
-.hero-profile-info p{
-    margin-bottom:18px;
 }
 
 /* SECTION HEADING */
@@ -1617,6 +1485,33 @@ VIDEO EDITING
     transform:translateY(-4px);
 }
 
+/* Empty "coming soon" slots — same 16:9 frame as a populated
+   .media-item so the grid stays a clean 2x2 while these are
+   waiting for real embeds. */
+.media-item--empty .media-placeholder{
+    width:100%;
+    aspect-ratio:16/9;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    border-radius:20px;
+    border:2px dashed var(--border);
+    background:var(--surface);
+    color:var(--body);
+}
+
+.media-item--empty .media-placeholder .icon-svg{
+    color:var(--primary);
+    opacity:.6;
+}
+
+.media-item--empty .media-placeholder span{
+    font-size:var(--fs-sm);
+    font-weight:600;
+}
+
 .video-embed-wrap{
     position:absolute;
     inset:0;
@@ -1856,6 +1751,13 @@ PHOTO EDITING
     color:var(--body);
     margin-bottom:20px;
     line-height:1.9;
+}
+
+.about-buttons{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:1rem;
 }
 
 .feature{
@@ -2625,34 +2527,6 @@ PHOTO EDITING
         padding:116px 0 78px;
     }
 
-    .hero-grid{
-        grid-template-columns:1fr 1fr;
-        gap:4rem;
-    }
-
-    .hero-content{
-        text-align:left;
-    }
-
-    .hero-content h1,
-    .hero-content p{
-        margin-left:0;
-        margin-right:0;
-    }
-
-    .hero-buttons{
-        justify-content:flex-start;
-    }
-
-    .hero-trust{
-        justify-content:flex-start;
-    }
-
-    .profile-card{
-        max-width:none;
-        margin:0;
-    }
-
     .problem{
         padding:104px 0;
     }
@@ -2913,21 +2787,6 @@ PHOTO EDITING
     padding:92px 0 54px;
 }
 
-.hero-grid{
-    display:flex;
-    flex-direction:column;
-    gap:32px;
-    text-align:center;
-}
-
-.hero-content{
-    order:1;
-}
-
-.hero-right{
-    order:2;
-}
-
 .hero-content h1{
     line-height:1.2;
 }
@@ -2948,53 +2807,9 @@ PHOTO EDITING
     justify-content:center;
 }
 
-.hero-profile{
-    align-items:center;
-}
-
-.hero-image-wrapper{
-    width:min(360px, 92vw);
-    margin:0 auto;
-}
-
-.hero-image{
-    width:100%;
-    height:auto;
-    display:block;
-    border-radius:28px;
-}
-
-.hero-profile-info{
-    margin-top:28px;
-    text-align:center;
-}
-
-.hero-availability{
-    margin:18px auto 0;
-    max-width:300px;
-}
-
-.card-top{
-    top:20px;
-    left:-12px;
-}
-
-.card-bottom{
-    bottom:20px;
-    right:-12px;
-}
-
-.floating-card{
-    width:145px;
-}
-
 }
 
 @media (max-width:480px){
-
-.hero-image-wrapper{
-    width:min(330px,94vw);
-}
 
 .hero-content h1{
     font-size:var(--fs-2xl);
@@ -3157,6 +2972,17 @@ PHOTO EDITING
 
 .form-submit.loading .btn-loading{
     display:flex;
+}
+
+.form-submit:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+    box-shadow:none;
+}
+
+.form-submit:disabled:hover{
+    transform:none;
+    box-shadow:none;
 }
 
 /* ---------- SUCCESS MODAL ---------- */

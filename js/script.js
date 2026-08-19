@@ -140,19 +140,19 @@ window.addEventListener("scroll", onScroll, { passive: true });
 window.addEventListener("load", onScroll);
 
 // FLOATING CTA
-// Hidden until the visitor scrolls roughly halfway into the About section,
-// then stays visible for the rest of the page (hides again if they scroll
-// back above that point). Folded into the existing rAF scroll loop below
-// rather than a separate listener.
+// Hidden until the visitor scrolls roughly halfway into the Portfolio
+// section, then stays visible for the rest of the page (hides again if
+// they scroll back above that point). Folded into the existing rAF
+// scroll loop below rather than a separate listener.
 
 const floatingCta = document.querySelector(".floating-cta");
-const aboutSection = document.getElementById("about");
+const portfolioSection = document.getElementById("portfolio");
 
 function toggleFloatingCta() {
-    if (!floatingCta || !aboutSection) return;
+    if (!floatingCta || !portfolioSection) return;
 
-    const aboutTop = aboutSection.getBoundingClientRect().top + window.scrollY;
-    const shouldShow = window.scrollY >= aboutTop - window.innerHeight * 0.5;
+    const portfolioTop = portfolioSection.getBoundingClientRect().top + window.scrollY;
+    const shouldShow = window.scrollY >= portfolioTop - window.innerHeight * 0.5;
 
     floatingCta.classList.toggle("is-visible", shouldShow);
 }
@@ -226,6 +226,24 @@ document.querySelectorAll(".tool-card img").forEach(img => {
 
     let lastFocusedBeforeModal = null;
 
+    // REQUIRED-FIELD GATING
+    // "Send Message" stays disabled until First Name, Last Name, Email,
+    // and Message all have valid values. Phone Number has no "required"
+    // attribute, so it never factors into checkValidity() here.
+    function updateSubmitState() {
+        if (!contactForm || !submitBtn) return;
+        submitBtn.disabled = !contactForm.checkValidity();
+    }
+
+    if (contactForm && submitBtn) {
+        contactForm.querySelectorAll("[required]").forEach(field => {
+            field.addEventListener("input", updateSubmitState);
+            field.addEventListener("blur", updateSubmitState);
+        });
+
+        updateSubmitState();
+    }
+
     function openSuccessModal() {
         if (!successModal) return;
         lastFocusedBeforeModal = document.activeElement;
@@ -266,7 +284,7 @@ document.querySelectorAll(".tool-card img").forEach(img => {
             }
 
             submitBtn.classList.remove("loading");
-            submitBtn.disabled = false;
+            updateSubmitState();
         });
     }
 
