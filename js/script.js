@@ -19,6 +19,7 @@ function revealSections() {
     toActivate.forEach(section => section.classList.add("active"));
 }
 
+
 // HEADER SCROLL STATE
 
 const header = document.querySelector(".header");
@@ -30,6 +31,7 @@ function toggleHeaderScrolled() {
         header.classList.remove("scrolled");
     }
 }
+
 
 // MOBILE NAV (HAMBURGER)
 
@@ -58,19 +60,28 @@ window.addEventListener("resize", () => {
     }
 });
 
+
 // PORTFOLIO SERVICE TOGGLES
 
 document.querySelectorAll(".service-toggle").forEach(btn => {
     btn.addEventListener("click", () => {
         const isOpen = btn.getAttribute("aria-expanded") === "true";
-        btn.setAttribute("aria-expanded", isOpen ? "false" : "true");
+
+        btn.setAttribute(
+            "aria-expanded",
+            isOpen ? "false" : "true"
+        );
 
         const label = btn.querySelector("span:first-child");
+
         if (label) {
-            label.textContent = isOpen ? "View Featured Works" : "Hide Featured Works";
+            label.textContent = isOpen
+                ? "View Featured Works"
+                : "Hide Featured Works";
         }
     });
 });
+
 
 // RESULTS COUNTER
 
@@ -89,6 +100,7 @@ function animateCounters() {
         document.querySelectorAll(".counter").forEach(counter => {
             const target = parseInt(counter.dataset.target, 10);
             const suffix = counter.dataset.suffix || "+";
+
             let current = 0;
             const increment = Math.ceil(target / 100);
 
@@ -100,9 +112,11 @@ function animateCounters() {
                 }
 
                 if (target >= 1000) {
-                    counter.textContent = (current / 1000).toFixed(0) + "K" + suffix;
+                    counter.textContent =
+                        (current / 1000).toFixed(0) + "K" + suffix;
                 } else {
-                    counter.textContent = current + suffix;
+                    counter.textContent =
+                        current + suffix;
                 }
 
                 if (current < target) {
@@ -115,16 +129,16 @@ function animateCounters() {
     }
 }
 
+
 // SCROLL PERFORMANCE
-// All three scroll-driven functions above (revealSections, toggleHeaderScrolled,
-// animateCounters) are batched into a single rAF-throttled, passive scroll
-// listener instead of three independent unthrottled ones — this keeps scrolling
-// smooth by doing at most one layout read/paint pass per animation frame.
+// All scroll-driven functions are batched into a single
+// requestAnimationFrame-throttled passive listener.
 
 let scrollTicking = false;
 
 function onScroll() {
     if (scrollTicking) return;
+
     scrollTicking = true;
 
     requestAnimationFrame(() => {
@@ -132,18 +146,19 @@ function onScroll() {
         toggleHeaderScrolled();
         animateCounters();
         toggleFloatingCta();
+
         scrollTicking = false;
     });
 }
 
-window.addEventListener("scroll", onScroll, { passive: true });
+window.addEventListener("scroll", onScroll, {
+    passive: true
+});
+
 window.addEventListener("load", onScroll);
 
+
 // FLOATING CTA
-// Hidden until the visitor scrolls roughly halfway into the Portfolio
-// section, then stays visible for the rest of the page (hides again if
-// they scroll back above that point). Folded into the existing rAF
-// scroll loop below rather than a separate listener.
 
 const floatingCta = document.querySelector(".floating-cta");
 const portfolioSection = document.getElementById("portfolio");
@@ -151,256 +166,762 @@ const portfolioSection = document.getElementById("portfolio");
 function toggleFloatingCta() {
     if (!floatingCta || !portfolioSection) return;
 
-    const portfolioTop = portfolioSection.getBoundingClientRect().top + window.scrollY;
-    const shouldShow = window.scrollY >= portfolioTop - window.innerHeight * 0.5;
+    const portfolioTop =
+        portfolioSection.getBoundingClientRect().top +
+        window.scrollY;
 
-    floatingCta.classList.toggle("is-visible", shouldShow);
+    const shouldShow =
+        window.scrollY >=
+        portfolioTop - window.innerHeight * 0.5;
+
+    floatingCta.classList.toggle(
+        "is-visible",
+        shouldShow
+    );
 }
 
-// Hide any tool icon that fails to load instead of showing a broken-image glyph
+
+// Hide any tool icon that fails to load instead of showing
+// a broken-image glyph.
+
 document.querySelectorAll(".tool-card img").forEach(img => {
     img.addEventListener("error", () => {
         img.style.display = "none";
     });
 });
 
+
 // ==========================================
 // PHOTO LIGHTBOX
 // ==========================================
 
 (function () {
-    const lightbox = document.getElementById('photo-lightbox');
+    const lightbox =
+        document.getElementById("photo-lightbox");
+
     if (!lightbox) return;
 
-    const lightboxImg = lightbox.querySelector('.photo-lightbox-img');
-    const closeBtn = lightbox.querySelector('.photo-lightbox-close');
+    const lightboxImg =
+        lightbox.querySelector(".photo-lightbox-img");
+
+    const closeBtn =
+        lightbox.querySelector(".photo-lightbox-close");
+
     let lastFocused = null;
+
 
     function openLightbox(imgEl) {
         lastFocused = document.activeElement;
+
         lightboxImg.src = imgEl.src;
-        lightboxImg.alt = imgEl.alt || '';
-        lightbox.classList.add('is-active');
-        lightbox.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
+        lightboxImg.alt = imgEl.alt || "";
+
+        lightbox.classList.add("is-active");
+
+        lightbox.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        document.body.style.overflow = "hidden";
+
         closeBtn.focus();
     }
 
+
     function closeLightbox() {
-        lightbox.classList.remove('is-active');
-        lightbox.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-        lightboxImg.src = '';
-        if (lastFocused) lastFocused.focus();
+        lightbox.classList.remove("is-active");
+
+        lightbox.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        document.body.style.overflow = "";
+
+        lightboxImg.src = "";
+
+        if (lastFocused) {
+            lastFocused.focus();
+        }
     }
 
-    document.querySelectorAll('.photo-card').forEach((card) => {
-        const img = card.querySelector('img');
-        const zoomBtn = card.querySelector('.photo-zoom-btn');
 
-        card.addEventListener('click', () => openLightbox(img));
-        zoomBtn.addEventListener('click', (e) => {
+    document.querySelectorAll(".photo-card").forEach(card => {
+        const img = card.querySelector("img");
+        const zoomBtn = card.querySelector(".photo-zoom-btn");
+
+        card.addEventListener("click", () => {
+            openLightbox(img);
+        });
+
+        zoomBtn.addEventListener("click", e => {
             e.stopPropagation();
             openLightbox(img);
         });
     });
 
-    closeBtn.addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox || e.target === lightboxImg) closeLightbox();
+
+    closeBtn.addEventListener(
+        "click",
+        closeLightbox
+    );
+
+
+    lightbox.addEventListener("click", e => {
+        if (
+            e.target === lightbox ||
+            e.target === lightboxImg
+        ) {
+            closeLightbox();
+        }
     });
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && lightbox.classList.contains('is-active')) closeLightbox();
+
+
+    document.addEventListener("keydown", e => {
+        if (
+            e.key === "Escape" &&
+            lightbox.classList.contains("is-active")
+        ) {
+            closeLightbox();
+        }
     });
+
 })();
+
+
+// ==========================================
+// CONFETTI
+// A small, dependency-free canvas burst — no external library,
+// no extra network request, respects prefers-reduced-motion.
+// ==========================================
+
+const fireConfetti = (function () {
+
+    const canvas = document.getElementById("confetti-canvas");
+    if (!canvas) return function () {};
+
+    const ctx = canvas.getContext("2d");
+
+    const reduceMotion =
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const colors = [
+        "#0A66C2", "#2D7FE0", "#4f9cf9",
+        "#f5a524", "#f78b1f", "#ffffff"
+    ];
+
+    let particles = [];
+    let animationId = null;
+    let stopTimer = null;
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    function makeParticle() {
+        return {
+            x: Math.random() * canvas.width,
+            y: -20 - Math.random() * canvas.height * 0.3,
+            size: 6 + Math.random() * 6,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            speedY: 2.5 + Math.random() * 3.5,
+            speedX: (Math.random() - 0.5) * 2.5,
+            rotation: Math.random() * 360,
+            rotationSpeed: (Math.random() - 0.5) * 10,
+            shape: Math.random() > 0.5 ? "rect" : "circle",
+            opacity: 1
+        };
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particles.forEach(p => {
+            ctx.save();
+            ctx.globalAlpha = p.opacity;
+            ctx.translate(p.x, p.y);
+            ctx.rotate((p.rotation * Math.PI) / 180);
+            ctx.fillStyle = p.color;
+
+            if (p.shape === "rect") {
+                ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
+            } else {
+                ctx.beginPath();
+                ctx.arc(0, 0, p.size / 2.5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            ctx.restore();
+        });
+    }
+
+    function update() {
+        particles.forEach(p => {
+            p.y += p.speedY;
+            p.x += p.speedX;
+            p.rotation += p.rotationSpeed;
+
+            if (p.y > canvas.height * 0.75) {
+                p.opacity -= 0.02;
+            }
+        });
+
+        particles = particles.filter(p => p.opacity > 0 && p.y < canvas.height + 40);
+    }
+
+    function loop() {
+        update();
+        draw();
+
+        if (particles.length > 0) {
+            animationId = requestAnimationFrame(loop);
+        } else {
+            cancelAnimationFrame(animationId);
+            animationId = null;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+
+    return function fireConfetti() {
+
+        if (reduceMotion) return;
+
+        resizeCanvas();
+
+        const burst = [];
+        for (let i = 0; i < 140; i++) {
+            burst.push(makeParticle());
+        }
+        particles = burst;
+
+        if (!animationId) {
+            animationId = requestAnimationFrame(loop);
+        }
+
+        clearTimeout(stopTimer);
+        stopTimer = setTimeout(() => {
+            particles = [];
+        }, 3200);
+    };
+
+})();
+
+window.addEventListener("resize", () => {
+    const canvas = document.getElementById("confetti-canvas");
+    if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+});
+
 
 // ==========================================
 // CONTACT FORM + SUCCESS MODAL
 // ==========================================
 
 (function () {
-    const contactForm = document.getElementById("contact-form");
-    const submitBtn = document.querySelector(".form-submit");
-    const successModal = document.getElementById("successModal");
-    const closeSuccess = document.getElementById("closeSuccess");
+
+    const contactForm =
+        document.getElementById("contact-form");
+
+    const submitBtn =
+        document.querySelector(".form-submit");
+
+    const successModal =
+        document.getElementById("successModal");
+
+    const closeSuccess =
+        document.getElementById("closeSuccess");
 
     let lastFocusedBeforeModal = null;
 
+
     // REQUIRED-FIELD GATING
-    // "Send Message" stays disabled until First Name, Last Name, Email,
-    // and Message all have valid values. Phone Number has no "required"
-    // attribute, so it never factors into checkValidity() here.
+
     function updateSubmitState() {
+
         if (!contactForm || !submitBtn) return;
-        submitBtn.disabled = !contactForm.checkValidity();
+
+        submitBtn.disabled =
+            !contactForm.checkValidity();
     }
 
+
     if (contactForm && submitBtn) {
-        contactForm.querySelectorAll("[required]").forEach(field => {
-            field.addEventListener("input", updateSubmitState);
-            field.addEventListener("blur", updateSubmitState);
-        });
+
+        contactForm
+            .querySelectorAll("[required]")
+            .forEach(field => {
+
+                field.addEventListener(
+                    "input",
+                    updateSubmitState
+                );
+
+                field.addEventListener(
+                    "blur",
+                    updateSubmitState
+                );
+
+            });
 
         updateSubmitState();
     }
 
+
     function openSuccessModal() {
+
         if (!successModal) return;
-        lastFocusedBeforeModal = document.activeElement;
+
+        lastFocusedBeforeModal =
+            document.activeElement;
+
         successModal.classList.add("show");
-        successModal.setAttribute("aria-hidden", "false");
-        if (closeSuccess) closeSuccess.focus();
+
+        successModal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        // Fires in the same moment the modal appears, not after,
+        // so the celebration and the confirmation land together.
+        fireConfetti();
+
+        if (closeSuccess) {
+            closeSuccess.focus();
+        }
     }
+
 
     function closeSuccessModal() {
+
         if (!successModal) return;
+
         successModal.classList.remove("show");
-        successModal.setAttribute("aria-hidden", "true");
-        if (lastFocusedBeforeModal) lastFocusedBeforeModal.focus();
+
+        successModal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        if (lastFocusedBeforeModal) {
+            lastFocusedBeforeModal.focus();
+        }
     }
+
 
     if (contactForm && submitBtn) {
-        contactForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
 
-            submitBtn.classList.add("loading");
-            submitBtn.disabled = true;
+        contactForm.addEventListener(
+            "submit",
+            async e => {
 
-            try {
-                const response = await fetch(contactForm.action, {
-                    method: "POST",
-                    body: new FormData(contactForm),
-                    headers: { Accept: "application/json" }
-                });
+                e.preventDefault();
 
-                if (response.ok) {
-                    contactForm.reset();
-                    openSuccessModal();
-                } else {
-                    alert("Something went wrong. Please try again.");
+                submitBtn.classList.add("loading");
+
+                submitBtn.disabled = true;
+
+
+                try {
+
+                    const response = await fetch(
+                        contactForm.action,
+                        {
+                            method: "POST",
+
+                            body:
+                                new FormData(
+                                    contactForm
+                                ),
+
+                            headers: {
+                                Accept:
+                                    "application/json"
+                            }
+                        }
+                    );
+
+
+                    if (response.ok) {
+
+                        contactForm.reset();
+
+                        openSuccessModal();
+
+                    } else {
+
+                        alert(
+                            "Something went wrong. Please try again."
+                        );
+                    }
+
+                } catch {
+
+                    alert(
+                        "Unable to send your message."
+                    );
                 }
-            } catch {
-                alert("Unable to send your message.");
-            }
 
-            submitBtn.classList.remove("loading");
-            updateSubmitState();
-        });
+
+                submitBtn.classList.remove(
+                    "loading"
+                );
+
+                updateSubmitState();
+
+            }
+        );
     }
+
 
     if (successModal && closeSuccess) {
-        closeSuccess.addEventListener("click", closeSuccessModal);
 
-        successModal.addEventListener("click", (e) => {
-            if (e.target === successModal) closeSuccessModal();
-        });
+        closeSuccess.addEventListener(
+            "click",
+            closeSuccessModal
+        );
 
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape" && successModal.classList.contains("show")) {
-                closeSuccessModal();
+
+        successModal.addEventListener(
+            "click",
+            e => {
+
+                if (e.target === successModal) {
+                    closeSuccessModal();
+                }
+
             }
-        });
+        );
+
+
+        document.addEventListener(
+            "keydown",
+            e => {
+
+                if (
+                    e.key === "Escape" &&
+                    successModal.classList.contains("show")
+                ) {
+                    closeSuccessModal();
+                }
+
+            }
+        );
     }
-})();// ==========================================
+
+})();
+
+
+// ==========================================
 // RATES & PACKAGES → CONTACT FORM WIRING
+// Two independent selections (social media package +
+// website/landing service) so a visitor can pick one of
+// each — every group gets its own hidden form field and
+// its own "Selected ..." box in the contact form.
 // ==========================================
 
 (function () {
-    const packageRadios = document.querySelectorAll('input[name="package"]');
-    if (!packageRadios.length) return;
 
-    const hiddenField = document.getElementById("selectedPackageField");
-    const statusText = document.getElementById("pricing-selected-text");
-    const addToMessageBtn = document.getElementById("pricingAddToMessage");
-    const contactForm = document.getElementById("contact-form");
-    const messageField = document.getElementById("message");
+    const contactForm =
+        document.getElementById(
+            "contact-form"
+        );
 
-    const MARK_START = "----- SELECTED PACKAGE -----";
-    const MARK_END = "----- END SELECTED PACKAGE -----";
+    function escapeHtml(value) {
 
-    function getSelectedRadio() {
-        return document.querySelector('input[name="package"]:checked');
+        return String(value)
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
     }
 
-    // Auto-syncs the hidden form field the moment a package is chosen,
-    // so the data reaches the inbox even if the visitor never touches
-    // the "Add to message" button.
-    function syncHiddenField() {
-        const selected = getSelectedRadio();
 
-        if (!selected) {
-            if (hiddenField) hiddenField.value = "";
-            if (statusText) statusText.textContent = "No package selected yet.";
-            if (addToMessageBtn) addToMessageBtn.disabled = true;
-            return;
+    function wirePackageGroup(config) {
+
+        const radios =
+            document.querySelectorAll(
+                `input[name="${config.radioName}"]`
+            );
+
+        if (!radios.length) return;
+
+
+        const hiddenField =
+            document.getElementById(config.hiddenFieldId);
+
+        const statusText =
+            config.statusTextId ?
+                document.getElementById(config.statusTextId) :
+                null;
+
+        const addToMessageBtn =
+            config.addToMessageBtnId ?
+                document.getElementById(config.addToMessageBtnId) :
+                null;
+
+        const box =
+            document.getElementById(config.boxId);
+
+        const display =
+            document.getElementById(config.displayId);
+
+        const status =
+            document.getElementById(config.statusId);
+
+
+        function getSelectedRadio() {
+
+            return document.querySelector(
+                `input[name="${config.radioName}"]:checked`
+            );
+
         }
 
-        const label = `${selected.dataset.packageName} — ${selected.dataset.packagePrice}`;
 
-        if (hiddenField) hiddenField.value = label;
-        if (statusText) statusText.textContent = `Selected: ${label}`;
-        if (addToMessageBtn) addToMessageBtn.disabled = false;
-    }
+        function sync() {
 
-    // Inserts (or, on repeat clicks, replaces in place) a marked block
-    // in the Message textarea, so switching packages never duplicates
-    // text and never wipes out anything the visitor already typed.
-    function insertPackageIntoMessage(details) {
-        if (!messageField) return;
+            const selected =
+                getSelectedRadio();
 
-        const block = `${MARK_START}\n${details}\n${MARK_END}`;
-        const value = messageField.value;
-        const startIdx = value.indexOf(MARK_START);
-        const endIdx = value.indexOf(MARK_END);
 
-        if (startIdx !== -1 && endIdx !== -1) {
-            const before = value.slice(0, startIdx);
-            const after = value.slice(endIdx + MARK_END.length);
-            messageField.value = `${before}${block}${after}`.trim();
-        } else {
-            const existing = value.trim();
-            messageField.value = existing ? `${existing}\n\n${block}` : block;
+            if (!selected) {
+
+                if (hiddenField) {
+                    hiddenField.value = "";
+                }
+
+                if (statusText) {
+                    statusText.textContent =
+                        config.emptyStatusText;
+                }
+
+                if (status) {
+                    status.textContent =
+                        "Not selected";
+                }
+
+                if (display) {
+
+                    display.innerHTML =
+                        `<span class="selected-package-placeholder">${config.emptyPlaceholder}</span>`;
+
+                }
+
+                if (box) {
+                    box.classList.remove(
+                        "has-selection"
+                    );
+                }
+
+                if (addToMessageBtn) {
+                    addToMessageBtn.disabled = true;
+                }
+
+                return;
+            }
+
+
+            const name =
+                selected.dataset.packageName ||
+                config.defaultName;
+
+            const price =
+                selected.dataset.packagePrice ||
+                "";
+
+            const details =
+                selected.dataset.packageDetails ||
+                `${name} — ${price}`;
+
+
+            // Keep each selection completely separate
+            // from the visitor's main message.
+
+            if (hiddenField) {
+                hiddenField.value = details;
+            }
+
+
+            if (statusText) {
+
+                statusText.textContent =
+                    `${name} selected`;
+
+            }
+
+
+            if (status) {
+
+                status.textContent =
+                    "Selected";
+
+            }
+
+
+            if (display) {
+
+                display.innerHTML = `
+
+                    <div class="selected-package-value">
+
+                        <span class="selected-package-name">
+                            ${escapeHtml(name)}
+                        </span>
+
+                        <span class="selected-package-price">
+                            ${escapeHtml(price)}
+                        </span>
+
+                        <span class="selected-package-description">
+                            ${config.confirmationText}
+                        </span>
+
+                    </div>
+
+                `;
+            }
+
+
+            if (box) {
+                box.classList.add(
+                    "has-selection"
+                );
+            }
+
+
+            if (addToMessageBtn) {
+                addToMessageBtn.disabled = false;
+            }
+
         }
 
-        // The existing floating-label + submit-button-enable logic in
-        // this file listens for "input" — dispatch it so both react.
-        messageField.dispatchEvent(new Event("input", { bubbles: true }));
+
+        radios.forEach(radio => {
+
+            radio.addEventListener(
+                "change",
+                sync
+            );
+
+        });
+
+
+        // "Continue to Inquiry" moves the visitor
+        // to the contact form without modifying
+        // the Message field.
+
+        if (addToMessageBtn) {
+
+            addToMessageBtn.addEventListener(
+                "click",
+                () => {
+
+                    const selected =
+                        getSelectedRadio();
+
+                    if (!selected) return;
+
+
+                    sync();
+
+
+                    const contactSection =
+                        document.getElementById(
+                            "contact"
+                        );
+
+
+                    if (contactSection) {
+
+                        contactSection.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start"
+                        });
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        // Synchronize this group immediately before
+        // form submission.
+
+        if (contactForm) {
+
+            contactForm.addEventListener(
+                "submit",
+                sync,
+                true
+            );
+
+        }
+
+
+        // Initialize this group's state.
+
+        sync();
+
     }
 
-    packageRadios.forEach((radio) => {
-        radio.addEventListener("change", syncHiddenField);
+
+    // SOCIAL MEDIA MONTHLY PACKAGE
+
+    wirePackageGroup({
+        radioName: "package",
+        hiddenFieldId: "selectedPackageField",
+        statusTextId: "pricing-selected-text",
+        addToMessageBtnId: "pricingAddToMessage",
+        boxId: "selectedPackageBox",
+        displayId: "selectedPackageDisplay",
+        statusId: "selectedPackageStatus",
+        defaultName: "Selected Package",
+        emptyStatusText: "Select a package to continue.",
+        emptyPlaceholder: "No package selected yet",
+        confirmationText: "This package will be submitted separately from your project message."
     });
 
-    if (addToMessageBtn) {
-        addToMessageBtn.addEventListener("click", () => {
-            const selected = getSelectedRadio();
-            if (!selected) return;
 
-            insertPackageIntoMessage(selected.dataset.packageDetails);
+    // WEBSITE / LANDING PAGE SERVICE
 
-            const original = addToMessageBtn.textContent;
-            addToMessageBtn.textContent = "Package Details Added ✓";
-            window.setTimeout(() => {
-                addToMessageBtn.textContent = original;
-            }, 2200);
-        });
-    }
+    wirePackageGroup({
+        radioName: "website-package",
+        hiddenFieldId: "selectedWebsitePackageField",
+        boxId: "selectedWebsitePackageBox",
+        displayId: "selectedWebsitePackageDisplay",
+        statusId: "selectedWebsitePackageStatus",
+        defaultName: "Selected Service",
+        emptyStatusText: "Select a service to continue.",
+        emptyPlaceholder: "No service selected yet",
+        confirmationText: "This service will be submitted separately from your project message."
+    });
 
-    // Safety net: if a package is selected but never added to the
-    // message, fold it in automatically right before submit. Capture
-    // phase guarantees this runs before the existing bubble-phase
-    // submit handler reads its FormData snapshot.
-    if (contactForm) {
-        contactForm.addEventListener(
-            "submit",
-            () => {
-                const selected = getSelectedRadio();
-                if (!selected || !messageField) return;
-                if (!messageField.value.includes(MARK_START)) {
-                    insertPackageIntoMessage(selected.dataset.packageDetails);
-                }
-            },
-            true
-        );
-    }
 })();
