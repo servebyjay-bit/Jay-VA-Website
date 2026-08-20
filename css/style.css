@@ -308,15 +308,22 @@ button:focus-visible,
     left:0;
     width:100%;
     z-index:1000;
-    backdrop-filter:blur(18px);
-    background:rgba(255,255,255,.82);
-    border-bottom:1px solid rgba(0,0,0,.06);
-    transition:.35s ease;
+    backdrop-filter:blur(2px);
+    -webkit-backdrop-filter:blur(2px);
+    background:rgba(255,255,255,.1);
+    border-bottom:1px solid rgba(0,0,0,0);
+    transition:background .35s ease, backdrop-filter .35s ease, border-color .35s ease, box-shadow .35s ease;
 }
 
+/* Glass-morphism state — kicks in once the page scrolls past the
+   hero, so the navbar reads as a frosted card floating over the
+   content instead of a flat, fully-opaque bar. */
 .header.scrolled{
-    background:rgba(255,255,255,.95);
-    box-shadow:0 12px 40px rgba(0,0,0,.08);
+    background:rgba(255,255,255,.6);
+    backdrop-filter:blur(20px) saturate(180%);
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    border-bottom:1px solid rgba(255,255,255,.5);
+    box-shadow:0 12px 40px rgba(10,102,194,.10);
 }
 
 .navbar{
@@ -585,7 +592,7 @@ button:focus-visible,
     letter-spacing:.08em;
     font-size:var(--fs-xs);
     text-transform:uppercase;
-    margin-bottom:28px;
+    margin-bottom:48px;
     animation:heroFadeUp .7s cubic-bezier(.22,.61,.36,1) both;
 }
 
@@ -606,7 +613,7 @@ button:focus-visible,
     font-size:var(--fs-md);
     line-height:1.85;
     max-width:760px;
-    margin-bottom:40px;
+    margin-bottom:60px;
     text-wrap:balance;
     animation:heroFadeUp .7s .16s cubic-bezier(.22,.61,.36,1) both;
 }
@@ -1461,6 +1468,19 @@ VIDEO EDITING
     gap:var(--space-4);
     max-width:920px;
     margin:0 auto;
+}
+
+/* CONV-FIX #2 — while only one real video is published, the grid
+   collapses to a single centered column instead of leaving empty
+   "Coming Soon" tiles beside it. Placeholder items also carry the
+   native `hidden` attribute as a belt-and-braces fallback. */
+.video-grid--single{
+    grid-template-columns:minmax(0,1fr);
+    max-width:560px;
+}
+
+.media-item--empty[hidden]{
+    display:none;
 }
 
 .media-item{
@@ -2359,35 +2379,37 @@ PHOTO EDITING
 .advantages-grid{
     display:grid;
     grid-template-columns:1fr;
-    gap:20px;
+    gap:16px;
 }
 
 .advantage-card{
     background:white;
     border:1px solid var(--border);
-    border-radius:24px;
-    padding:32px;
+    border-radius:18px;
+    padding:24px;
     transition:.35s ease;
 }
 
 .advantage-icon{
-    font-size:var(--fs-2xl);
-    margin-bottom:20px;
+    font-size:var(--fs-xl);
+    margin-bottom:14px;
 }
 
 .advantage-icon img{
-    width:2rem;
-    height:2rem;
+    width:1.625rem;
+    height:1.625rem;
     object-fit:contain;
 }
 
 .advantage-card h3{
-    margin-bottom:15px;
+    font-size:var(--fs-md);
+    margin-bottom:10px;
 }
 
 .advantage-card p{
     color:var(--body);
-    line-height:1.8;
+    font-size:var(--fs-sm);
+    line-height:1.7;
 }
 
 .client-fit .advantage-card h3{
@@ -2397,7 +2419,7 @@ PHOTO EDITING
 /* CTA */
 
 .cta{
-    padding:58px 0;
+    padding:58px 0 34px;
     transition-delay:.5s;
 }
 
@@ -2506,6 +2528,169 @@ PHOTO EDITING
 .btn-outline-light:hover{
     background:rgba(255,255,255,.1);
     transform:translateY(-3px);
+}
+
+/* CONV-FIX #3 — secondary-path microcopy under the CTA buttons */
+.cta-subnote{
+    margin-top:18px !important;
+    max-width:none !important;
+    opacity:.85;
+    font-size:var(--fs-sm);
+}
+
+.cta-subnote a{
+    color:#fff;
+    font-weight:700;
+    text-decoration:underline;
+    text-underline-offset:3px;
+}
+
+.cta-subnote a:hover{
+    opacity:.85;
+}
+
+/* =========================================================
+   FAQ (CONV-FIX #4)
+   ========================================================= */
+
+.faq{
+    padding:80px 0;
+    background:#fff;
+}
+
+.faq-list{
+    max-width:760px;
+    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+.faq-item{
+    border:1px solid var(--border);
+    border-radius:18px;
+    background:var(--surface, #E8F2FC);
+    background:#fff;
+    overflow:hidden;
+    transition:border-color .25s ease, box-shadow .25s ease;
+}
+
+.faq-item:has(.faq-question[aria-expanded="true"]){
+    border-color:var(--hover-border);
+    box-shadow:0 10px 28px rgba(10,102,194,.08);
+}
+
+.faq-question{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:20px 24px;
+    background:none;
+    border:0;
+    cursor:pointer;
+    text-align:left;
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-weight:700;
+    font-size:var(--fs-md);
+    color:var(--heading);
+}
+
+.faq-icon{
+    position:relative;
+    flex-shrink:0;
+    width:22px;
+    height:22px;
+    transition:transform .3s var(--ease-smooth);
+}
+
+.faq-icon::before,
+.faq-icon::after{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:50%;
+    background:var(--primary);
+    transform:translate(-50%,-50%);
+    transition:transform .25s ease, opacity .25s ease;
+}
+
+.faq-icon::before{
+    width:14px;
+    height:2px;
+}
+
+.faq-icon::after{
+    width:2px;
+    height:14px;
+}
+
+.faq-question[aria-expanded="true"] .faq-icon::after{
+    transform:translate(-50%,-50%) rotate(90deg);
+    opacity:0;
+}
+
+.faq-question[aria-expanded="true"] .faq-icon{
+    transform:rotate(180deg);
+}
+
+/* Smooth open/close via an animatable grid row (0fr -> 1fr) instead
+   of the old [hidden] attribute, which could only snap the answer
+   open/closed with no transition. .faq-answer is the grid track;
+   .faq-answer-inner is clipped by overflow:hidden so its content
+   never pokes through while the row is collapsed. */
+.faq-answer{
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows .4s var(--ease-smooth);
+    color:var(--body);
+    font-size:var(--fs-sm);
+    line-height:var(--lh-normal);
+}
+
+.faq-answer-inner{
+    overflow:hidden;
+    min-height:0;
+}
+
+.faq-answer-inner p{
+    padding:0 24px 22px;
+    transform:translateY(-6px);
+    opacity:0;
+    transition:transform .3s ease .05s, opacity .3s ease .05s;
+}
+
+.faq-answer.is-open{
+    grid-template-rows:1fr;
+}
+
+.faq-answer.is-open .faq-answer-inner p{
+    transform:translateY(0);
+    opacity:1;
+}
+
+@media (prefers-reduced-motion: reduce){
+    .faq-answer,
+    .faq-answer-inner p,
+    .faq-icon{
+        transition:none;
+    }
+}
+
+@media(max-width:768px){
+    .faq{
+        padding:60px 0;
+    }
+
+    .faq-question{
+        padding:18px 20px;
+        font-size:var(--fs-base);
+    }
+
+    .faq-answer-inner p{
+        padding:0 20px 20px;
+    }
 }
 
 /* LEGAL PAGES (Privacy / Terms) */
@@ -3091,16 +3276,16 @@ PHOTO EDITING
 
     .advantages-grid{
         grid-template-columns:1fr 1fr;
-        gap:25px;
+        gap:18px;
     }
 
     .advantage-card{
-        border-radius:28px;
-        padding:40px;
+        border-radius:20px;
+        padding:26px;
     }
 
     .cta{
-        padding:104px 0;
+        padding:104px 0 60px;
     }
 
     .cta-box{
@@ -3204,7 +3389,7 @@ PHOTO EDITING
 }
 
 .hero-tag{
-    margin-bottom:18px;
+    margin-bottom:28px;
 }
 
 .hero-content h1{
@@ -3493,7 +3678,7 @@ PHOTO EDITING
 .contact-socials{
     text-align:center;
     margin-top:35px;
-    padding-bottom:20px;
+    padding-bottom:0;
 }
 
 .contact-socials h3{
@@ -3527,6 +3712,18 @@ PHOTO EDITING
     height:22px;
     object-fit:contain;
     transition:.3s ease;
+}
+
+/* CONV-FIX #6 — inline WhatsApp SVG sized/animated to match the
+   existing image-based social icons above */
+.social-icons svg{
+    width:22px;
+    height:22px;
+    transition:.3s ease;
+}
+
+.social-icons a:hover svg{
+    transform:scale(1.1);
 }
 
 .social-icons a:hover{
@@ -3598,6 +3795,10 @@ PHOTO EDITING
     .social-icons img{
         width:28px;
         height:28px;
+    }
+
+    .contact-socials{
+        margin-top:44px;
     }
 }
 
@@ -4437,6 +4638,41 @@ iframe{
     line-height:1.4 !important;
 }
 
+/* CONV-FIX #7 — client headshot, tucked into the card's lower-right
+   inside corner. Kept small and quiet on purpose: it reinforces
+   "this is a real person" without competing with the quote or the
+   star rating for attention. Author text gets right-padding so it
+   never runs under the photo. */
+.testimonial-author{
+    padding-right:58px;
+}
+
+.testimonial-avatar{
+    position:absolute;
+    right:32px;
+    bottom:30px;
+    z-index:3;
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid #fff;
+    box-shadow:0 4px 14px rgba(15,23,42,.14);
+}
+
+@media(max-width:768px){
+    .testimonial-author{
+        padding-right:50px;
+    }
+
+    .testimonial-avatar{
+        width:40px;
+        height:40px;
+        right:22px;
+        bottom:24px;
+    }
+}
+
 @media(max-width:992px){
     .testimonials{
         padding:82px 0 88px;
@@ -4628,6 +4864,15 @@ section[id]{scroll-margin-top:90px}
  .hero{padding-top:120px}
 }
 
+/* Four advantage cards fit one compact row at this width instead of
+   a bulky 2x2 grid — keeps each card visually small and lets the
+   row read as a single feature strip rather than four big tiles. */
+@media(min-width:1200px){
+ .advantages-grid{grid-template-columns:repeat(4,1fr);gap:18px}
+ .advantage-card{padding:22px}
+ .advantage-card h3{font-size:var(--fs-base)}
+}
+
 @media(max-width:1199px){
  .nav-links{gap:clamp(16px,1.8vw,26px)}
  .hero-content{max-width:860px}
@@ -4655,7 +4900,7 @@ section[id]{scroll-margin-top:90px}
  .hero{min-height:auto;padding:108px 0 70px}
  .hero-content{width:100%}
  .hero-content h1{font-size:clamp(2.35rem,8vw,4rem);line-height:1.1}
- .hero-content p{max-width:620px;font-size:1rem;margin-bottom:28px}
+ .hero-content p{max-width:620px;font-size:1rem;margin-bottom:38px}
  .hero-buttons{width:100%;justify-content:center}
  .hero-buttons .btn-primary,.hero-buttons .btn-secondary{width:auto;min-width:190px}
  .services,.process,.portfolio,.pricing,.testimonials{padding-top:72px;padding-bottom:78px}
@@ -4699,6 +4944,8 @@ section[id]{scroll-margin-top:90px}
  .testimonial-card{min-height:0;padding:26px 20px 22px;border-radius:20px}
  .testimonial-card>p{font-size:.9rem;line-height:1.75}
  .testimonial-stars svg{width:17px;height:17px;flex-basis:17px}
+ .testimonial-author{padding-right:44px}
+ .testimonial-avatar{width:36px;height:36px;right:18px;bottom:20px}
  .btn-primary,.btn-secondary{width:100%;min-height:48px;padding:14px 20px}
  .pricing-summary .btn-secondary{width:100%}
  .pricing-note{padding:18px}

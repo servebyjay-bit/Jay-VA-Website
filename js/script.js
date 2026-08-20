@@ -83,6 +83,22 @@ document.querySelectorAll(".service-toggle").forEach(btn => {
 });
 
 
+// FAQ ACCORDION (CONV-FIX #4)
+
+document.querySelectorAll(".faq-question").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const isOpen = btn.getAttribute("aria-expanded") === "true";
+        const answer = document.getElementById(btn.getAttribute("aria-controls"));
+
+        btn.setAttribute("aria-expanded", isOpen ? "false" : "true");
+
+        if (answer) {
+            answer.classList.toggle("is-open", !isOpen);
+        }
+    });
+});
+
+
 // RESULTS COUNTER
 
 const resultsSection = document.querySelector(".results");
