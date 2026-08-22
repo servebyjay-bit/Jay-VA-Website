@@ -132,6 +132,18 @@ body::after{
     top:16px;
 }
 
+.sr-only{
+    position:absolute;
+    width:1px;
+    height:1px;
+    padding:0;
+    margin:-1px;
+    overflow:hidden;
+    clip:rect(0,0,0,0);
+    white-space:nowrap;
+    border:0;
+}
+
 a:focus-visible,
 button:focus-visible,
 .hamburger:focus-visible{
@@ -1990,374 +2002,6 @@ PHOTO EDITING
     }
 }
 
-/* =========================================================
-   PRICING / RATES & PACKAGES
-========================================================= */
-
-.pricing{
-    padding:58px 0;
-    background:#fff;
-}
-
-.pricing-fieldset{
-    border:0;
-    margin:0;
-    padding:0;
-    min-width:0; /* fieldsets default to min-width:min-content and can overflow grids */
-}
-
-.sr-only{
-    position:absolute;
-    width:1px;
-    height:1px;
-    padding:0;
-    margin:-1px;
-    overflow:hidden;
-    clip:rect(0,0,0,0);
-    white-space:nowrap;
-    border:0;
-}
-
-.pricing-grid{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:var(--space-6);
-    max-width:1000px;
-    margin:0 auto;
-}
-
-@media(min-width:769px){
-    .pricing-grid{
-        grid-template-columns:repeat(3, 1fr);
-        align-items:stretch;
-    }
-}
-
-.pricing-option{
-    display:flex;
-}
-
-/* Visually hidden but focusable/operable — do NOT use display:none,
-   it would remove the radio from the tab order in most browsers. */
-.pricing-radio{
-    position:absolute;
-    width:1px;
-    height:1px;
-    margin:-1px;
-    padding:0;
-    overflow:hidden;
-    clip:rect(0,0,0,0);
-    white-space:nowrap;
-    border:0;
-}
-
-.pricing-card{
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    width:100%;
-    background:#fff;
-    border:2px solid var(--border);
-    border-radius:24px;
-    padding:var(--space-8) var(--space-6);
-    cursor:pointer;
-    transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease, background .3s ease;
-}
-
-.pricing-card:hover{
-    transform:translateY(-6px);
-    border-color:var(--hover-border);
-    box-shadow:0 20px 45px var(--hover-shadow);
-}
-
-/* Keyboard focus ring lives on the label since the input is visually hidden */
-.pricing-radio:focus-visible + .pricing-card{
-    outline:3px solid var(--primary);
-    outline-offset:3px;
-}
-
-.pricing-radio:checked + .pricing-card{
-    border-color:var(--primary);
-    background:var(--surface);
-    box-shadow:0 20px 45px var(--hover-shadow);
-}
-
-.pricing-card--featured{
-    border-color:var(--primary);
-}
-
-@media(min-width:769px){
-    .pricing-card--featured{
-        transform:scale(1.04);
-    }
-    .pricing-card--featured:hover{
-        transform:scale(1.04) translateY(-6px);
-    }
-}
-
-.pricing-badge{
-    position:absolute;
-    top:-14px;
-    left:50%;
-    transform:translateX(-50%);
-    background:linear-gradient(135deg, var(--primary), #2D7FE0);
-    color:#fff;
-    font-family:'Plus Jakarta Sans',sans-serif;
-    font-size:var(--fs-2xs);
-    font-weight:800;
-    letter-spacing:.05em;
-    text-transform:uppercase;
-    padding:6px 16px;
-    border-radius:999px;
-    white-space:nowrap;
-}
-
-.pricing-card-name{
-    font-family:'Plus Jakarta Sans',sans-serif;
-    font-size:var(--fs-lg);
-    font-weight:800;
-    color:var(--heading);
-}
-
-.pricing-card-price{
-    font-family:'Plus Jakarta Sans',sans-serif;
-    font-size:var(--fs-2xl);
-    font-weight:800;
-    color:var(--primary);
-    margin:var(--space-2) 0 var(--space-3);
-}
-
-.pricing-card-price span{
-    font-size:var(--fs-sm);
-    font-weight:600;
-    color:var(--body);
-}
-
-.pricing-card-tagline{
-    color:var(--body);
-    font-size:var(--fs-sm);
-    line-height:var(--lh-snug);
-    margin-bottom:var(--space-5);
-}
-
-.pricing-features{
-    list-style:none;
-    display:flex;
-    flex-direction:column;
-    gap:var(--space-3);
-    margin-bottom:var(--space-6);
-    flex-grow:1;
-}
-
-.pricing-features li{
-    position:relative;
-    padding-left:26px;
-    font-size:var(--fs-sm);
-    color:var(--heading);
-    line-height:var(--lh-snug);
-}
-
-.pricing-features li::before{
-    content:"";
-    position:absolute;
-    left:0;
-    top:6px;
-    width:16px;
-    height:16px;
-    border-radius:50%;
-    background:var(--surface-strong);
-    border:1px solid var(--hover-border);
-}
-
-.pricing-features li::after{
-    content:"✓";
-    position:absolute;
-    left:3px;
-    top:2px;
-    font-size:11px;
-    font-weight:800;
-    color:var(--primary);
-}
-
-.pricing-select-cta{
-    display:block;
-    text-align:center;
-    font-family:'Plus Jakarta Sans',sans-serif;
-    font-weight:700;
-    font-size:var(--fs-sm);
-    color:var(--primary);
-    border:2px solid var(--primary);
-    border-radius:999px;
-    padding:12px;
-    transition:.3s ease;
-}
-
-.pricing-radio:checked + .pricing-card .pricing-select-cta{
-    background:var(--primary);
-    color:#fff;
-}
-
-.pricing-summary{
-    max-width:1000px;
-    margin:var(--space-8) auto 0;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:var(--space-4);
-    text-align:center;
-}
-
-.pricing-selected-text{
-    font-weight:700;
-    color:var(--heading);
-}
-
-@media(prefers-reduced-motion:reduce){
-    .pricing-card,
-    .pricing-card--featured{
-        transition:none;
-    }
-    .pricing-card:hover,
-    .pricing-card--featured:hover{
-        transform:none;
-    }
-}
-
-/* PRICING — FULL COMPARISON TABLE */
-
-.pricing-compare{
-    max-width:1000px;
-    margin:var(--space-16) auto 0;
-}
-
-.pricing-compare-title{
-    font-family:'Plus Jakarta Sans',sans-serif;
-    font-size:var(--fs-md);
-    font-weight:800;
-    color:var(--heading);
-    text-align:center;
-    margin-bottom:var(--space-6);
-}
-
-/* Horizontal scroll on narrow viewports instead of squeezing columns
-   unreadably thin — the table keeps its natural width and the
-   container scrolls. tabindex+role on the wrapper (in the HTML)
-   makes the scroll region reachable and announced by keyboard/AT. */
-.pricing-table-wrap{
-    overflow-x:auto;
-    border:1px solid var(--border);
-    border-radius:16px;
-    -webkit-overflow-scrolling:touch;
-}
-
-.pricing-table-wrap:focus-visible{
-    outline:3px solid var(--primary);
-    outline-offset:2px;
-}
-
-.pricing-table{
-    width:100%;
-    min-width:640px;
-    border-collapse:collapse;
-    font-size:var(--fs-sm);
-}
-
-.pricing-table th,
-.pricing-table td{
-    padding:var(--space-3) var(--space-4);
-    text-align:center;
-    border-bottom:1px solid var(--border);
-    white-space:nowrap;
-}
-
-.pricing-table thead th{
-    font-family:'Plus Jakarta Sans',sans-serif;
-    font-weight:800;
-    color:var(--heading);
-    background:var(--surface);
-    position:sticky;
-    top:0;
-}
-
-.pricing-table tbody th{
-    text-align:left;
-    font-weight:600;
-    color:var(--heading);
-    background:#fff;
-    position:sticky;
-    left:0;
-    white-space:normal;
-}
-
-.pricing-table tbody td{
-    color:var(--body);
-}
-
-.pricing-table tbody tr:last-child th,
-.pricing-table tbody tr:last-child td{
-    border-bottom:0;
-}
-
-/* Highlight the Growth column to match the featured card above it */
-.pricing-table th.is-featured,
-.pricing-table td.is-featured{
-    background:var(--surface);
-    color:var(--heading);
-    font-weight:700;
-}
-
-/* PRICING — ADD-ONS */
-
-.pricing-addons{
-    max-width:1000px;
-    margin:var(--space-12) auto 0;
-    background:var(--surface);
-    border-radius:20px;
-    padding:var(--space-6) var(--space-8);
-}
-
-.pricing-addons-title{
-    font-family:'Plus Jakarta Sans',sans-serif;
-    font-size:var(--fs-md);
-    font-weight:800;
-    color:var(--heading);
-    margin-bottom:var(--space-4);
-}
-
-.pricing-addons-list{
-    list-style:none;
-    display:grid;
-    grid-template-columns:1fr;
-    gap:var(--space-3) var(--space-6);
-}
-
-@media(min-width:640px){
-    .pricing-addons-list{
-        grid-template-columns:1fr 1fr;
-    }
-}
-
-.pricing-addons-list li{
-    display:flex;
-    justify-content:space-between;
-    align-items:baseline;
-    gap:var(--space-3);
-    padding-bottom:var(--space-3);
-    border-bottom:1px dashed var(--hover-border);
-    font-size:var(--fs-sm);
-}
-
-.pricing-addon-name{
-    color:var(--heading);
-    font-weight:600;
-}
-
-.pricing-addon-price{
-    color:var(--primary);
-    font-weight:700;
-    white-space:nowrap;
-}
-
 /* RESULTS */
 
 .results{
@@ -2975,69 +2619,6 @@ PHOTO EDITING
 }
 }
 
-/* TESTIMONIALS */
-
-.testimonials{
-    padding:58px 0;
-    background:#fff;
-    transition-delay:.55s;
-}
-
-.testimonial-grid{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:20px;
-}
-
-.testimonial-card{
-    position:relative;
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:22px;
-    padding:32px;
-    transition:.35s ease;
-}
-
-.testimonial-card:hover{
-    transform:translateY(-10px);
-    border-color:var(--hover-border);
-    box-shadow:0 25px 50px var(--hover-shadow);
-}
-
-.testimonial-stars{
-    display:flex;
-    gap:4px;
-    margin-bottom:16px;
-}
-
-.testimonial-stars svg{
-    width:18px;
-    height:18px;
-    fill:#F5A623;
-}
-
-.testimonial-card p{
-    color:var(--body);
-    line-height:1.8;
-    margin-bottom:26px;
-}
-
-.testimonial-author h3{
-    font-size:var(--fs-base);
-    margin-bottom:4px;
-}
-
-.testimonial-author span{
-    color:var(--body);
-    font-size:var(--fs-sm);
-}
-
-.testimonial-location{
-    color:var(--body);
-    font-size:var(--fs-sm);
-    margin-top:2px;
-}
-
 /* =========================================================
    TABLET AND UP  (>= 577px)
    ========================================================= */
@@ -3316,20 +2897,6 @@ PHOTO EDITING
         padding:104px 0;
     }
 
-    .testimonial-grid{
-        grid-template-columns:repeat(auto-fit, minmax(320px,1fr));
-        gap:25px;
-    }
-
-    .testimonial-card{
-        border-radius:24px;
-        padding:40px;
-    }
-
-    .testimonial-card p{
-        margin-bottom:30px;
-    }
-
 }
 
 @media (max-width:768px){
@@ -3349,13 +2916,11 @@ PHOTO EDITING
     }
 }
 .advantage-card,
-.testimonial-card,
 .tool-card{
     position:relative;
     overflow:hidden;
 }
-.advantage-card::before,
-.testimonial-card::before{
+.advantage-card::before{
     content:"";
     position:absolute;
     inset:0;
@@ -3363,8 +2928,7 @@ PHOTO EDITING
     opacity:0;
     transition:.35s ease;
 }
-.advantage-card:hover::before,
-.testimonial-card:hover::before{
+.advantage-card:hover::before{
     opacity:1;
 }
 
@@ -3904,10 +3468,9 @@ iframe{
     box-shadow:0 12px 40px rgba(15,23,42,.055);
     cursor:pointer;
     overflow:hidden;
-    transition:transform .35s cubic-bezier(.16,1,.3,1),
-               border-color .35s ease,
-               box-shadow .35s ease,
-               background .35s ease;
+    transition:border-color .3s ease,
+               box-shadow .3s ease,
+               background .3s ease;
 }
 
 .pricing-card::after{
@@ -3921,9 +3484,9 @@ iframe{
 }
 
 .pricing-card:hover{
-    transform:translateY(-8px);
+    /* No lift/shift — border + shadow shift only, layout stays put */
     border-color:#c5dcf4;
-    box-shadow:0 28px 60px rgba(10,102,194,.13);
+    box-shadow:0 20px 46px rgba(10,102,194,.16);
 }
 
 .pricing-card:hover::after{
@@ -3964,13 +3527,6 @@ iframe{
 .pricing-radio:checked + .pricing-card--featured{
     border-color:#67aaf0;
     box-shadow:0 32px 75px rgba(10,102,194,.30);
-}
-
-/* Once a card is chosen it settles in place — no more hover-lift
-   bounce — and gets a persistent checkmark instead, so "selected"
-   reads as a stable state rather than a hover effect. */
-.pricing-radio:checked + .pricing-card:hover{
-    transform:none;
 }
 
 .pricing-radio:checked + .pricing-card::before{
@@ -4175,6 +3731,10 @@ iframe{
     color:#fff;
 }
 
+/* Always visible, bottom-center on every card — .pricing-includes{flex:1}
+   above pushes this to the same baseline regardless of card content
+   length, so it lines up across the whole row without needing to be
+   hidden-until-hover (which would be unreachable on touch devices). */
 .pricing-select-cta{
     position:relative;
     z-index:1;
@@ -4192,11 +3752,18 @@ iframe{
     font-family:'Plus Jakarta Sans',sans-serif;
     font-size:var(--fs-sm);
     font-weight:800;
-    transition:transform .3s ease,background .3s ease,color .3s ease,box-shadow .3s ease;
+    transform:scale(1);
+    transition:transform .25s ease,background .25s ease,color .25s ease,box-shadow .25s ease;
 }
 
 .pricing-select-cta span{
-    transition:transform .3s ease;
+    transition:transform .25s ease;
+}
+
+/* Hover reacts on the BUTTON only — the card itself never moves */
+.pricing-card:hover .pricing-select-cta{
+    transform:scale(1.03);
+    box-shadow:0 10px 22px rgba(10,102,194,.18);
 }
 
 .pricing-card:hover .pricing-select-cta span{
@@ -4482,6 +4049,7 @@ iframe{
     }
 
     .pricing-card:hover,
+    .pricing-card:hover .pricing-select-cta,
     .pricing-card:hover .pricing-select-cta span{
         transform:none;
     }
@@ -4525,12 +4093,15 @@ iframe{
     box-shadow:0 12px 38px rgba(15,23,42,.05);
     overflow:hidden;
     isolation:isolate;
+    /* No transform in the transition list — the card never lifts or shifts */
     transition:
-        transform .35s cubic-bezier(.16,1,.3,1),
         border-color .35s ease,
         box-shadow .35s ease;
 }
 
+/* Minimal blue-light glow in the back of the card, same treatment as
+   .pricing-card::after and .advantage-card::before — fades in on hover,
+   never moves or resizes the card itself. */
 .testimonial-card::before{
     content:"";
     position:absolute;
@@ -4554,9 +4125,9 @@ iframe{
 }
 
 .testimonial-card:hover{
-    transform:translateY(-7px);
+    /* No translateY — border + shadow shift only, glow fades in below */
     border-color:#c8dcef;
-    box-shadow:0 26px 58px rgba(10,102,194,.11);
+    box-shadow:0 20px 44px rgba(10,102,194,.14);
 }
 
 .testimonial-card:hover::before{
