@@ -171,20 +171,22 @@ button:focus-visible,
     --hover-shadow:rgba(10,102,194,.10);
 
     /* ---------------------------------------------------
-       TYPE SCALE
-       One disciplined scale for the whole site instead of
-       ad-hoc decimals (.76rem, .82rem, .92rem, .98rem...).
+       TYPE SCALE — fluid
+       Every token scales smoothly from a mobile floor up to
+       the exact desktop value below, and is pinned to that
+       desktop value (unchanged from before) at 993px+ — the
+       same breakpoint the rest of the site treats as "desktop".
        Every font-size in this file should reference one of
        these tokens.
     --------------------------------------------------- */
-    --fs-2xs:   0.75rem;    /* 12px — micro labels, tags, badges        */
-    --fs-xs:    0.8125rem;  /* 13px — captions, meta text               */
-    --fs-sm:    0.875rem;   /* 14px — secondary text, buttons, nav      */
-    --fs-base:  1rem;       /* 16px — body copy                         */
-    --fs-md:    1.125rem;   /* 18px — lead paragraphs, small subheads   */
-    --fs-lg:    1.375rem;   /* 22px — card titles (h4-level)            */
-    --fs-xl:    1.75rem;    /* 28px — subsection headings (h3-level)    */
-    --fs-2xl:   2rem;       /* 32px — profile / name headings           */
+    --fs-2xs:   clamp(0.7rem,   0.7rem   + 0.08vw, 0.75rem);   /* 11.2px → 12px  — micro labels, tags, badges        */
+    --fs-xs:    clamp(0.75rem,  0.75rem  + 0.1vw,  0.8125rem); /* 12px   → 13px  — captions, meta text               */
+    --fs-sm:    clamp(0.8125rem,0.8125rem+ 0.1vw,  0.875rem);  /* 13px   → 14px  — secondary text, buttons, nav      */
+    --fs-base:  clamp(0.9375rem,0.9375rem+ 0.1vw,  1rem);      /* 15px   → 16px  — body copy                         */
+    --fs-md:    clamp(1rem,     1rem     + 0.2vw,  1.125rem);  /* 16px   → 18px  — lead paragraphs, small subheads   */
+    --fs-lg:    clamp(1.125rem, 1.125rem + 0.4vw,  1.375rem);  /* 18px   → 22px  — card titles (h4-level)            */
+    --fs-xl:    clamp(1.375rem, 1.375rem + 0.6vw,  1.75rem);   /* 22px   → 28px  — subsection headings (h3-level)    */
+    --fs-2xl:   clamp(1.5rem,   1.5rem   + 0.8vw,  2rem);      /* 24px   → 32px  — profile / name headings           */
 
     --fs-section-title: clamp(1.875rem, 1rem + 3vw, 3.25rem);  /* h2 section titles   */
     --fs-cta-title:     clamp(2rem, 1rem + 4vw, 3.75rem);      /* CTA emphasis moment */
@@ -909,6 +911,7 @@ button:focus-visible,
 }
 
 .portfolio-service{
+    position:relative;
     background:#fff;
     border:none;
     border-radius:24px;
@@ -1164,6 +1167,7 @@ button:focus-visible,
 }
 
 .site-project-card{
+    position:relative;
     background:#fff;
     border:1px solid var(--border);
     border-radius:20px;
@@ -1173,6 +1177,7 @@ button:focus-visible,
 }
 
 .site-project-top{
+    position:relative;
     padding:32px 28px 8px;
 }
 
@@ -4509,9 +4514,8 @@ section[id]{scroll-margin-top:90px}
  .stat-item{border-right:0;padding-right:0;min-width:0}
  .stat-number{font-size:clamp(1.9rem,8vw,2.7rem)}
  .pricing-card{padding:26px 20px 22px;border-radius:20px}
- .pricing-card-price{font-size:clamp(2rem,10vw,2.5rem)}
- .pricing-features li{padding-left:27px;font-size:.86rem}
- .pricing-badge{right:18px;font-size:.65rem;padding:7px 11px}
+ .pricing-features li{padding-left:27px}
+ .pricing-badge{right:18px;padding:7px 11px}
  .testimonial-card{min-height:0;padding:26px 20px 22px;border-radius:20px}
  .testimonial-card>p{font-size:.9rem;line-height:1.75}
  .testimonial-stars svg{width:17px;height:17px;flex-basis:17px}
@@ -4529,7 +4533,6 @@ section[id]{scroll-margin-top:90px}
  .section-heading h2{font-size:1.7rem}
  .logo{font-size:1.4rem}
  .pricing-card,.testimonial-card{padding-left:17px;padding-right:17px}
- .pricing-card-price{font-size:2rem}
  .result-stats{grid-template-columns:1fr}
 }
 
@@ -4691,25 +4694,12 @@ p,li,h1,h2,h3,h4,h5,h6,a,span,button{overflow-wrap:anywhere}
     .selected-package-display{
         min-height:54px;
         padding:13px 14px;
-        font-size:.86rem;
-    }
-
-    .selected-package-name{
-        font-size:.94rem;
-    }
-
-    .selected-package-price{
-        font-size:.84rem;
     }
 }
 
 @media(max-width:380px){
     .selected-package-field{
         padding:14px;
-    }
-
-    .selected-package-helper{
-        font-size:.72rem;
     }
 }
 
