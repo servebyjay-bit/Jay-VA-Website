@@ -1103,16 +1103,27 @@ button:focus-visible,
 .highlight-tags{
     display:flex;
     flex-wrap:wrap;
-    gap:10px;
+    gap:8px;
 }
 
 .highlight-tags span{
     background:var(--surface);
     border:1px solid var(--border);
-    padding:10px 16px;
+    padding:7px 13px;
     border-radius:999px;
-    font-size:var(--fs-sm);
+    font-size:var(--fs-2xs);
     font-weight:600;
+}
+
+/* Consistent, smaller "Highlights" heading across every portfolio
+   sub-section (previously unset and inheriting the browser's
+   default h5 size, which looked oversized next to the tags). */
+.graphic-highlights h5,
+.video-highlights h5,
+.photo-highlights h5,
+.social-highlights h5{
+    font-size:var(--fs-sm);
+    margin-bottom:12px;
 }
 
 /* LIVE WEBSITE PROJECT CARDS */
@@ -1140,6 +1151,7 @@ button:focus-visible,
 .media-badge--static{
     position:static;
     display:inline-flex;
+    margin-top:20px;
     margin-bottom:16px;
     backdrop-filter:none;
     background:var(--surface);
@@ -1156,10 +1168,31 @@ button:focus-visible,
     margin-bottom:10px;
 }
 
+/* Name + "Visit Live Site" button share a row, same baseline. */
+.site-project-title-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px 20px;
+    margin-bottom:14px;
+}
+
 .site-project-top h4{
     font-family:'Plus Jakarta Sans',sans-serif;
     font-size:var(--fs-lg, var(--fs-base));
-    margin:0 0 14px;
+    margin:0;
+}
+
+.site-project-title-row .site-visit-btn{
+    flex-shrink:0;
+}
+
+@media(max-width:480px){
+    .site-project-title-row{
+        flex-direction:column;
+        align-items:flex-start;
+    }
 }
 
 .site-project-top > p{
@@ -1214,10 +1247,17 @@ SOCIAL MEDIA MANAGEMENT
 
 .social-hero-grid{
     display:grid;
-    grid-template-columns:1fr;
-    gap:10px;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:14px;
     padding:22px;
     border-top:1px solid var(--border);
+}
+
+@media(max-width:576px){
+    .social-hero-grid{
+        grid-template-columns:1fr;
+        gap:10px;
+    }
 }
 
 .social-hero{
@@ -1239,10 +1279,17 @@ SOCIAL MEDIA MANAGEMENT
     padding:22px;
 }
 .social-highlights{
+    padding:16px 22px;
     border-top:1px solid var(--border);
 }
 
+/* ITEM #5 — labels, headings and descriptions centered */
+.social-content{
+    text-align:center;
+}
+
 .social-content span{
+    display:inline-block;
     color:var(--primary);
     font-size:var(--fs-xs);
     font-weight:700;
@@ -1258,6 +1305,9 @@ SOCIAL MEDIA MANAGEMENT
 .social-content p{
     color:var(--body);
     line-height:1.8;
+    max-width:640px;
+    margin-left:auto;
+    margin-right:auto;
 }
 .social-highlights h5{
     margin-bottom:18px;
@@ -1367,6 +1417,10 @@ GRAPHIC DESIGN
     padding:22px;
 }
 
+.graphic-highlights{
+    padding:16px 22px;
+}
+
 .graphic-services,
 .graphic-highlights{
     border-top:1px solid var(--border);
@@ -1414,6 +1468,43 @@ GRAPHIC DESIGN
     gap:14px;
 }
 
+/* ITEM #1 — center-aligned niche row (text, labels, description) */
+.niche-row--center .niche-row-header{
+    text-align:center;
+}
+
+.niche-row--center .niche-row-header p{
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.niche-row--center .niche-grid{
+    justify-content:center;
+}
+
+/* ITEM #2 — this row now shows a single showcase image at the
+   same full row width as the poster-format rows above, displayed
+   uncropped (object-fit:contain, natural aspect ratio) rather than
+   the previous 4-up 9:16 crop grid. */
+.niche-grid--single{
+    grid-template-columns:1fr;
+}
+
+.niche-grid--single .niche-grid-item{
+    aspect-ratio:auto;
+    background:var(--surface);
+}
+
+.niche-grid--single .niche-grid-item.media-pending{
+    aspect-ratio:16/9;
+}
+
+.niche-grid--single .niche-grid-item img{
+    width:100%;
+    height:auto;
+    object-fit:contain;
+}
+
 .niche-grid-item{
     position:relative;
     width:100%;
@@ -1443,6 +1534,49 @@ GRAPHIC DESIGN
 }
 
 .niche-grid-item.media-pending .media-pending-label{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    position:absolute;
+    inset:0;
+    padding:10px;
+    border:1.5px dashed var(--border);
+    border-radius:16px;
+    background:var(--surface);
+    color:var(--body);
+    font-size:var(--fs-2xs);
+    font-weight:600;
+}
+
+/* LANDSCAPE SHOWCASE — one full-width feature image per row,
+   maximized within the gallery's padding. */
+.landscape-row{
+    margin-top:36px;
+}
+
+.landscape-card{
+    position:relative;
+    width:100%;
+    aspect-ratio:16/9;
+    border-radius:16px;
+    overflow:hidden;
+    background:var(--surface);
+    border:1px solid var(--border);
+}
+
+.landscape-card img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+}
+
+.landscape-card.media-pending img{
+    display:none;
+}
+
+.landscape-card.media-pending .media-pending-label{
     display:flex;
     align-items:center;
     justify-content:center;
@@ -1490,6 +1624,7 @@ VIDEO EDITING
 }
 
 .video-highlights{
+    padding:16px 22px;
     border-top:1px solid var(--border);
 }
 
@@ -1592,6 +1727,7 @@ PHOTO EDITING
 }
 
 .photo-highlights{
+    padding:16px 22px;
     border-top:1px solid var(--border);
 }
 
@@ -1606,14 +1742,14 @@ PHOTO EDITING
     display:grid;
     grid-template-columns:repeat(2, minmax(0,1fr));
     gap:var(--space-4);
-    max-width:760px;
-    margin:0 auto;
+    max-width:none;
+    width:100%;
 }
 
 @media(max-width:576px){
     .photo-grid{
         grid-template-columns:1fr;
-        max-width:460px;
+        max-width:none;
     }
 }
 
@@ -1624,14 +1760,14 @@ PHOTO EDITING
     border-radius:18px;
     cursor:zoom-in;
     isolation:isolate;
+    background:var(--surface);
 }
 
 .photo-card img{
     display:block;
     width:100%;
-    aspect-ratio:4/3;
     height:auto;
-    object-fit:cover;
+    object-fit:contain;
 }
 
 .photo-zoom-btn{
@@ -3260,9 +3396,8 @@ PHOTO EDITING
 .footer-socials-label{
     display:inline-block;
     color:#cbd5e1;
-    font-size:var(--fs-2xs);
+    font-size:1rem;
     font-weight:600;
-    order:-1;
 }
 
 /* =========================================================
@@ -3752,7 +3887,6 @@ section[id]{scroll-margin-top:90px}
  .services,.process,.portfolio,.testimonials{padding-top:72px;padding-bottom:78px}
  .testimonial-grid,.site-project-grid,.portfolio-video-grid{grid-template-columns:1fr}
  .testimonial-card:last-child,.video-showcase--featured{grid-column:auto;width:100%;max-width:none}
- .social-hero-grid{grid-template-columns:1fr}
  .portfolio-service-header,.project-content,.video-showcase .project-content,.site-project-top,.site-project-bottom,.social-content,.social-highlights,.graphic-gallery,.graphic-highlights,.graphic-services{padding-left:16px;padding-right:16px}
  .result-stats{gap:22px 28px}
 }

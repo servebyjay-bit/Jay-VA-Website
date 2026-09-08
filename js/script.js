@@ -156,6 +156,7 @@ window.addEventListener("load", onScroll);
 
 const floatingCta = document.querySelector(".floating-cta");
 const portfolioSection = document.getElementById("portfolio");
+const siteFooter = document.querySelector(".footer");
 
 function toggleFloatingCta() {
     if (!floatingCta || !portfolioSection) return;
@@ -164,13 +165,25 @@ function toggleFloatingCta() {
         portfolioSection.getBoundingClientRect().top +
         window.scrollY;
 
-    const shouldShow =
+    const pastPortfolio =
         window.scrollY >=
         portfolioTop - window.innerHeight * 0.5;
 
+    // Once the footer starts entering the viewport, hide the CTA so
+    // the copyright/legal row stays visible instead of being covered.
+    // Scrolling back up moves the footer out of view again, so the
+    // same check naturally brings the CTA back.
+    let footerInView = false;
+
+    if (siteFooter) {
+        footerInView =
+            siteFooter.getBoundingClientRect().top <
+            window.innerHeight;
+    }
+
     floatingCta.classList.toggle(
         "is-visible",
-        shouldShow
+        pastPortfolio && !footerInView
     );
 }
 
