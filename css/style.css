@@ -674,6 +674,22 @@ button:focus-visible,
     animation:heroFadeUp .7s .24s cubic-bezier(.22,.61,.36,1) both;
 }
 
+/* ITEM #1 — narrower, evenly-matched CTAs that stay side by side
+   (parallel) on desktop instead of stretching wide. */
+.hero-buttons .btn-primary,
+.hero-buttons .btn-secondary,
+.about-buttons .btn-primary,
+.about-buttons .btn-secondary{
+    padding:14px 24px;
+}
+
+@media(min-width:769px){
+    .hero-buttons,
+    .about-buttons{
+        flex-wrap:nowrap;
+    }
+}
+
 @keyframes heroFadeUp{
     from{ opacity:0; transform:translateY(14px); }
     to{ opacity:1; transform:translateY(0); }
@@ -760,15 +776,6 @@ button:focus-visible,
     line-height:var(--lh-snug);
 }
 
-.section-heading::after{
-    content:"";
-    display:block;
-    width:56px;
-    height:3px;
-    border-radius:999px;
-    background:linear-gradient(90deg,transparent,var(--primary),transparent);
-    margin:18px auto 0;
-}
 .advantage-card:hover{
     transform:translateY(-10px);
     border-color:var(--hover-border);
@@ -1168,13 +1175,16 @@ button:focus-visible,
     margin-bottom:10px;
 }
 
-/* Name + "Visit Live Site" button share a row, same baseline. */
+/* Name + "Visit Live Site" button share a row, same baseline.
+   ITEM #1 — flex-start (not space-between) so the button sits
+   close beside the project name instead of pinned to the far
+   edge of the card on wide rows. */
 .site-project-title-row{
     display:flex;
     align-items:center;
-    justify-content:space-between;
+    justify-content:flex-start;
     flex-wrap:wrap;
-    gap:12px 20px;
+    gap:12px 16px;
     margin-bottom:14px;
 }
 
@@ -1188,22 +1198,18 @@ button:focus-visible,
     flex-shrink:0;
 }
 
-@media(max-width:480px){
-    .site-project-title-row{
-        flex-direction:column;
-        align-items:flex-start;
-    }
-}
-
 .site-project-top > p{
     color:var(--body);
     line-height:1.8;
     margin-bottom:22px;
 }
 
+/* ITEM #3 — smaller, tighter button so it comfortably sits right
+   beside the project name on every screen size, mobile-first. */
 .site-visit-btn{
-    padding:14px 26px;
-    font-size:var(--fs-sm);
+    padding:8px 14px;
+    font-size:var(--fs-xs);
+    gap:6px;
 }
 
 .site-project-bottom{
@@ -1447,7 +1453,7 @@ GRAPHIC DESIGN
     margin-bottom:16px;
 }
 
-.niche-row-header h6{
+.niche-row-header h4{
     color:var(--heading);
     font-family:'Plus Jakarta Sans',sans-serif;
     font-size:var(--fs-base);
@@ -1465,7 +1471,7 @@ GRAPHIC DESIGN
 .niche-grid{
     display:grid;
     grid-template-columns:repeat(4, minmax(0,1fr));
-    gap:14px;
+    gap:18px;
 }
 
 /* ITEM #1 — center-aligned niche row (text, labels, description) */
@@ -1480,29 +1486,6 @@ GRAPHIC DESIGN
 
 .niche-row--center .niche-grid{
     justify-content:center;
-}
-
-/* ITEM #2 — this row now shows a single showcase image at the
-   same full row width as the poster-format rows above, displayed
-   uncropped (object-fit:contain, natural aspect ratio) rather than
-   the previous 4-up 9:16 crop grid. */
-.niche-grid--single{
-    grid-template-columns:1fr;
-}
-
-.niche-grid--single .niche-grid-item{
-    aspect-ratio:auto;
-    background:var(--surface);
-}
-
-.niche-grid--single .niche-grid-item.media-pending{
-    aspect-ratio:16/9;
-}
-
-.niche-grid--single .niche-grid-item img{
-    width:100%;
-    height:auto;
-    object-fit:contain;
 }
 
 .niche-grid-item{
@@ -1606,11 +1589,15 @@ GRAPHIC DESIGN
 @media (max-width:768px){
     .niche-grid{
         grid-template-columns:repeat(2, minmax(0,1fr));
-        gap:8px;
+        gap:12px;
     }
 
     .niche-row{
-        margin-bottom:28px;
+        margin-bottom:32px;
+    }
+
+    .niche-row-header{
+        margin-bottom:16px;
     }
 }
 
@@ -1766,8 +1753,10 @@ PHOTO EDITING
 .photo-card img{
     display:block;
     width:100%;
+    aspect-ratio:4/3;
     height:auto;
     object-fit:contain;
+    background:var(--surface);
 }
 
 .photo-zoom-btn{
@@ -2481,6 +2470,11 @@ PHOTO EDITING
     padding:46px 0 24px;
 }
 
+/* ITEM #3 — the old left-only padding hack made the footer's
+   inner margin uneven (24px on the left, 20px on the right from
+   .container). Removed so the footer lines up with every other
+   section on the page. */
+
 .footer-content{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -2545,7 +2539,7 @@ PHOTO EDITING
     display:flex;
     align-items:center;
     gap:10px;
-    font-size:var(--fs-sm);
+    font-size:var(--fs-xs);
 }
 
 .footer-legal a{
@@ -2976,7 +2970,7 @@ PHOTO EDITING
     }
 
     .footer-content{
-        grid-template-columns:2fr 1fr 1fr;
+        grid-template-columns:1.6fr 1fr 1fr;
         gap:50px;
         margin-bottom:50px;
     }
@@ -3097,11 +3091,15 @@ PHOTO EDITING
 
 /* ---------- CONTACT FORM ---------- */
 
+/* ITEM #2 — no extra side padding here: the .container already
+   provides the page gutter, so the form now spans the same width
+   as the "Let's Build Something Meaningful Together" CTA box on
+   mobile instead of sitting noticeably narrower. */
 .contact-form-wrapper{
     width:100%;
     max-width:650px;
     margin:40px auto 0;
-    padding:0 20px;
+    padding:0;
 }
 
 .contact-form{
@@ -3436,14 +3434,17 @@ PHOTO EDITING
         font-size:var(--fs-lg);
     }
 
+    /* ITEM #6 — matches the width of the "Let's Build Something
+       Meaningful Together" CTA box below it (full container width)
+       instead of capping narrower. */
     .contact-form-wrapper{
-        max-width:960px;
+        max-width:100%;
         margin:60px auto 0;
         padding:0;
     }
 
     .contact-form{
-        padding:56px 64px;
+        padding:56px 72px;
     }
 
     .form-row{
