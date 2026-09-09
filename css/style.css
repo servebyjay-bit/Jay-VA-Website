@@ -1759,41 +1759,6 @@ PHOTO EDITING
     background:var(--surface);
 }
 
-.photo-zoom-btn{
-    position:absolute;
-    bottom:14px;
-    right:14px;
-    width:44px;
-    height:44px;
-    border:none;
-    border-radius:50%;
-    background:rgba(0, 0, 0, 0.55);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:zoom-in;
-    opacity:1;
-}
-
-.zoom-icon{
-    width:16px;
-    height:16px;
-    border:2px solid #fff;
-    border-radius:50%;
-    position:relative;
-}
-
-.zoom-icon::after{
-    content:"";
-    position:absolute;
-    right:-6px;
-    bottom:-6px;
-    width:6px;
-    height:2px;
-    background:#fff;
-    transform:rotate(45deg);
-}
-
 .photo-lightbox{
     position:fixed;
     inset:0;
@@ -1848,6 +1813,115 @@ PHOTO EDITING
 
 .photo-lightbox-close:hover{
     background:rgba(255, 255, 255, 0.25);
+}
+
+/* Prev / next controls + counter for swiping through a gallery set
+   inside the lightbox. Hidden via the [hidden] attribute (toggled in
+   JS) whenever the opened image is the only one in its group. */
+.photo-lightbox-nav{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:48px;
+    height:48px;
+    border:none;
+    border-radius:50%;
+    background:rgba(255, 255, 255, 0.1);
+    color:#fff;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:background 0.25s ease, transform 0.25s ease;
+    z-index:2;
+}
+
+.photo-lightbox-nav:hover{
+    background:rgba(255, 255, 255, 0.25);
+}
+
+.photo-lightbox-nav:active{
+    transform:translateY(-50%) scale(0.94);
+}
+
+.photo-lightbox-prev{
+    left:16px;
+}
+
+.photo-lightbox-next{
+    right:16px;
+}
+
+.photo-lightbox-counter{
+    position:absolute;
+    bottom:22px;
+    left:50%;
+    transform:translateX(-50%);
+    color:#fff;
+    font-size:var(--fs-xs);
+    font-weight:700;
+    background:rgba(0, 0, 0, 0.45);
+    padding:6px 14px;
+    border-radius:999px;
+    letter-spacing:.03em;
+}
+
+@media(max-width:576px){
+    .photo-lightbox{
+        padding:20px;
+    }
+    .photo-lightbox-nav{
+        width:40px;
+        height:40px;
+    }
+    .photo-lightbox-prev{
+        left:6px;
+    }
+    .photo-lightbox-next{
+        right:6px;
+    }
+    .photo-lightbox-close{
+        top:14px;
+        right:14px;
+        width:40px;
+        height:40px;
+    }
+}
+
+/* Clickable gallery affordance — every mockup, screenshot, and social
+   showcase image in the portfolio opens the swipeable lightbox, so all
+   of them get the same zoom-in cursor and a subtle lift on hover to
+   signal they're interactive. */
+.niche-grid-item,
+.social-hero,
+.landscape-card{
+    cursor:zoom-in;
+    transition:transform .3s ease, box-shadow .3s ease;
+}
+
+@media(hover:hover) and (pointer:fine){
+    .niche-grid-item:hover,
+    .social-hero:hover,
+    .landscape-card:hover{
+        transform:translateY(-4px);
+        box-shadow:0 18px 36px rgba(15,23,42,.12);
+    }
+}
+
+.niche-grid-item:focus-visible,
+.social-hero:focus-visible,
+.landscape-card:focus-visible,
+.photo-card:focus-visible{
+    outline:3px solid rgba(10,102,194,.45);
+    outline-offset:3px;
+}
+
+@media(prefers-reduced-motion:reduce){
+    .niche-grid-item,
+    .social-hero,
+    .landscape-card{
+        transition:none;
+    }
 }
 
 /* ABOUT */
@@ -3939,4 +4013,105 @@ p,li,h1,h2,h3,h4,h5,h6,a,span,button{overflow-wrap:anywhere}
 
 @media(prefers-reduced-motion:reduce){
  html{scroll-behavior:auto}
+}
+
+/* MOBILE CTA DECLUTTER
+   On small screens each secondary/outline action (View My Work, View My
+   CV, Make an Inquiry) becomes a plain underlined text link instead of a
+   full bordered button. The primary "Book a Free Discovery Call" CTA
+   stays a real button in every section; everything else just needs to be
+   tappable, not another big block competing for attention next to it and
+   the floating call button. */
+@media(max-width:768px){
+    .hero-buttons .btn-secondary,
+    .about-buttons .btn-secondary,
+    .cta-buttons .btn-outline-light{
+        background:none;
+        border:none;
+        box-shadow:none;
+        color:var(--primary);
+        text-decoration:underline;
+        text-underline-offset:3px;
+        padding:10px 4px;
+        width:auto;
+        min-width:0;
+        min-height:0;
+    }
+
+    .cta-buttons .btn-outline-light{
+        color:#fff;
+    }
+
+    .hero-buttons .btn-secondary:hover,
+    .about-buttons .btn-secondary:hover,
+    .cta-buttons .btn-outline-light:hover{
+        transform:none;
+        box-shadow:none;
+        background:none;
+    }
+
+    .hero-buttons,
+    .about-buttons{
+        align-items:center;
+    }
+
+    .cta-buttons{
+        flex-direction:column;
+        gap:14px;
+    }
+}
+
+/* VIDEO EDITING — click-to-expand affordance + full-screen video lightbox */
+.portrait-video-card:not(.media-pending){
+    cursor:pointer;
+}
+
+.portrait-video-card:not(.media-pending):focus-visible{
+    outline:3px solid rgba(10,102,194,.45);
+    outline-offset:3px;
+}
+
+.video-play-overlay{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    background:linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%);
+    pointer-events:none;
+}
+
+.video-play-overlay svg{
+    width:56px;
+    height:56px;
+    padding:16px;
+    border-radius:50%;
+    background:rgba(0,0,0,.45);
+    backdrop-filter:blur(2px);
+    transition:transform .25s ease, background .25s ease;
+}
+
+@media(hover:hover) and (pointer:fine){
+    .portrait-video-card:not(.media-pending):hover .video-play-overlay svg{
+        transform:scale(1.08);
+        background:var(--primary);
+    }
+}
+
+.portrait-video-card.media-pending .video-play-overlay{
+    display:none;
+}
+
+/* The video lightbox reuses .photo-lightbox for its backdrop, close
+   button, nav arrows and counter styling; only the player itself needs
+   its own sizing rule since it replaces the <img>. */
+.video-lightbox-player{
+    max-width:min(92vw, 480px);
+    max-height:88vh;
+    width:auto;
+    height:auto;
+    border-radius:12px;
+    background:#000;
+    box-shadow:0 30px 80px rgba(0, 0, 0, 0.55);
 }

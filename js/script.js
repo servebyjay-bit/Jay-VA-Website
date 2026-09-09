@@ -214,14 +214,67 @@ document.querySelectorAll(".tool-card img").forEach(img => {
     const closeBtn =
         lightbox.querySelector(".photo-lightbox-close");
 
+    const prevBtn =
+        lightbox.querySelector(".photo-lightbox-prev");
+
+    const nextBtn =
+        lightbox.querySelector(".photo-lightbox-next");
+
+    const counter =
+        lightbox.querySelector(".photo-lightbox-counter");
+
     let lastFocused = null;
+    let currentGroup = [];
+    let currentIndex = 0;
+
+    // Group every clickable gallery item (photo edits, niche mockups,
+    // social-media showcases, site screenshots) by its data-lightbox-group
+    // so swiping / prev-next stays within that same set of images.
+    const groups = {};
+
+    document.querySelectorAll("[data-lightbox-group]").forEach(trigger => {
+        const group = trigger.getAttribute("data-lightbox-group");
+        if (!groups[group]) groups[group] = [];
+        groups[group].push(trigger);
+    });
+
+    function triggerImg(trigger) {
+        return trigger.tagName === "IMG" ? trigger : trigger.querySelector("img");
+    }
+
+    function show(index) {
+        if (!currentGroup.length) return;
+
+        currentIndex = (index + currentGroup.length) % currentGroup.length;
+
+        const img = triggerImg(currentGroup[currentIndex]);
+        if (!img) return;
+
+        lightboxImg.src = img.currentSrc || img.src;
+        lightboxImg.alt = img.alt || "";
+
+        const multi = currentGroup.length > 1;
+
+        if (prevBtn) prevBtn.hidden = !multi;
+        if (nextBtn) nextBtn.hidden = !multi;
+
+        if (counter) {
+            counter.hidden = !multi;
+            counter.textContent = multi
+                ? (currentIndex + 1) + " / " + currentGroup.length
+                : "";
+        }
+    }
 
 
-    function openLightbox(imgEl) {
+    function openLightbox(trigger) {
         lastFocused = document.activeElement;
 
-        lightboxImg.src = imgEl.src;
-        lightboxImg.alt = imgEl.alt || "";
+        const groupName = trigger.getAttribute("data-lightbox-group") || "";
+        currentGroup = groups[groupName] || [trigger];
+
+        const startIndex = currentGroup.indexOf(trigger);
+        show(startIndex === -1 ? 0 : startIndex);
 
         lightbox.classList.add("is-active");
 
@@ -254,19 +307,36 @@ document.querySelectorAll(".tool-card img").forEach(img => {
     }
 
 
-    document.querySelectorAll(".photo-card").forEach(card => {
-        const img = card.querySelector("img");
-        const zoomBtn = card.querySelector(".photo-zoom-btn");
-
-        card.addEventListener("click", () => {
-            openLightbox(img);
+    document.querySelectorAll("[data-lightbox-group]").forEach(trigger => {
+        trigger.addEventListener("click", () => {
+            openLightbox(trigger);
         });
 
-        zoomBtn.addEventListener("click", e => {
-            e.stopPropagation();
-            openLightbox(img);
+        // Keyboard-accessible: these triggers are plain divs/figures with
+        // role="button" + tabindex="0" in the markup, so Enter/Space opens
+        // them the same way a click would.
+        trigger.addEventListener("keydown", e => {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                openLightbox(trigger);
+            }
         });
     });
+
+
+    if (prevBtn) {
+        prevBtn.addEventListener("click", e => {
+            e.stopPropagation();
+            show(currentIndex - 1);
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener("click", e => {
+            e.stopPropagation();
+            show(currentIndex + 1);
+        });
+    }
 
 
     closeBtn.addEventListener(
@@ -286,13 +356,51 @@ document.querySelectorAll(".tool-card img").forEach(img => {
 
 
     document.addEventListener("keydown", e => {
-        if (
-            e.key === "Escape" &&
-            lightbox.classList.contains("is-active")
-        ) {
+        if (!lightbox.classList.contains("is-active")) return;
+
+        if (e.key === "Escape") {
             closeLightbox();
         }
+
+        if (e.key === "ArrowRight") {
+            show(currentIndex + 1);
+        }
+
+        if (e.key === "ArrowLeft") {
+            show(currentIndex - 1);
+        }
     });
+
+
+    // SWIPE - one-finger horizontal drag moves to the next/previous image
+    // in the current group; a mostly-vertical drag is ignored so it doesn't
+    // fight with the page's own scroll gesture.
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    lightbox.addEventListener("touchstart", e => {
+        if (e.touches.length !== 1) return;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    lightbox.addEventListener("touchend", e => {
+        if (!touchStartX && touchStartX !== 0) return;
+
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        const dy = e.changedTouches[0].clientY - touchStartY;
+
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
+            if (dx < 0) {
+                show(currentIndex + 1);
+            } else {
+                show(currentIndex - 1);
+            }
+        }
+
+        touchStartX = 0;
+        touchStartY = 0;
+    }, { passive: true });
 
 })();
 
@@ -618,5 +726,213 @@ window.addEventListener("resize", () => {
             }
         );
     }
+
+})();
+
+
+// ==========================================
+// VIDEO LIGHTBOX
+// Click any video card in Video Editing to play it full-screen, with
+// swipe / prev-next between the videos in that same group. Cards still
+// marked .media-pending (no real file uploaded yet) are inert.
+// ==========================================
+
+(function () {
+    const lightbox =
+        document.getElementById("video-lightbox");
+
+    if (!lightbox) return;
+
+    const player =
+        lightbox.querySelector(".video-lightbox-player");
+
+    const closeBtn =
+        lightbox.querySelector(".video-lightbox-close");
+
+    const prevBtn =
+        lightbox.querySelector(".video-lightbox-prev");
+
+    const nextBtn =
+        lightbox.querySelector(".video-lightbox-next");
+
+    const counter =
+        lightbox.querySelector(".video-lightbox-counter");
+
+    let lastFocused = null;
+    let currentGroup = [];
+    let currentIndex = 0;
+
+    const groups = {};
+
+    document.querySelectorAll("[data-video-group]").forEach(trigger => {
+        const group = trigger.getAttribute("data-video-group");
+        if (!groups[group]) groups[group] = [];
+        groups[group].push(trigger);
+    });
+
+    function sourceOf(trigger) {
+        const video = trigger.querySelector("video");
+        const source = video ? video.querySelector("source") : null;
+        return {
+            src: source ? source.src : "",
+            type: source ? source.getAttribute("type") : "video/mp4",
+            poster: video ? video.getAttribute("poster") : ""
+        };
+    }
+
+    function show(index) {
+        if (!currentGroup.length) return;
+
+        currentIndex = (index + currentGroup.length) % currentGroup.length;
+
+        const { src, type, poster } = sourceOf(currentGroup[currentIndex]);
+        if (!src) return;
+
+        player.pause();
+        player.innerHTML = "";
+
+        const source = document.createElement("source");
+        source.src = src;
+        source.type = type || "video/mp4";
+        player.appendChild(source);
+
+        if (poster) player.setAttribute("poster", poster);
+        player.load();
+        player.play().catch(() => {});
+
+        const multi = currentGroup.length > 1;
+
+        if (prevBtn) prevBtn.hidden = !multi;
+        if (nextBtn) nextBtn.hidden = !multi;
+
+        if (counter) {
+            counter.hidden = !multi;
+            counter.textContent = multi
+                ? (currentIndex + 1) + " / " + currentGroup.length
+                : "";
+        }
+    }
+
+
+    function openLightbox(trigger) {
+        lastFocused = document.activeElement;
+
+        const groupName = trigger.getAttribute("data-video-group") || "";
+        currentGroup = groups[groupName] || [trigger];
+
+        const startIndex = currentGroup.indexOf(trigger);
+        show(startIndex === -1 ? 0 : startIndex);
+
+        lightbox.classList.add("is-active");
+        lightbox.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+
+        closeBtn.focus();
+    }
+
+
+    function closeLightbox() {
+        lightbox.classList.remove("is-active");
+        lightbox.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+
+        player.pause();
+        player.removeAttribute("src");
+        player.innerHTML = "";
+        player.load();
+
+        if (lastFocused) {
+            lastFocused.focus();
+        }
+    }
+
+
+    document.querySelectorAll("[data-video-group]").forEach(trigger => {
+        // Cards that don't have a real file yet stay inert — no broken
+        // player pops up for a "Coming Soon" placeholder.
+        if (trigger.classList.contains("media-pending")) return;
+
+        trigger.addEventListener("click", () => {
+            openLightbox(trigger);
+        });
+
+        trigger.addEventListener("keydown", e => {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                openLightbox(trigger);
+            }
+        });
+    });
+
+
+    if (prevBtn) {
+        prevBtn.addEventListener("click", e => {
+            e.stopPropagation();
+            show(currentIndex - 1);
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener("click", e => {
+            e.stopPropagation();
+            show(currentIndex + 1);
+        });
+    }
+
+
+    closeBtn.addEventListener("click", closeLightbox);
+
+    lightbox.addEventListener("click", e => {
+        if (e.target === lightbox) {
+            closeLightbox();
+        }
+    });
+
+
+    document.addEventListener("keydown", e => {
+        if (!lightbox.classList.contains("is-active")) return;
+
+        if (e.key === "Escape") {
+            closeLightbox();
+        }
+
+        if (e.key === "ArrowRight") {
+            show(currentIndex + 1);
+        }
+
+        if (e.key === "ArrowLeft") {
+            show(currentIndex - 1);
+        }
+    });
+
+
+    // SWIPE — same horizontal-drag gesture as the photo lightbox, ignored
+    // on the player's own control bar so scrubbing still works normally.
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    lightbox.addEventListener("touchstart", e => {
+        if (e.touches.length !== 1) return;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    lightbox.addEventListener("touchend", e => {
+        if (!touchStartX && touchStartX !== 0) return;
+
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        const dy = e.changedTouches[0].clientY - touchStartY;
+
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
+            if (dx < 0) {
+                show(currentIndex + 1);
+            } else {
+                show(currentIndex - 1);
+            }
+        }
+
+        touchStartX = 0;
+        touchStartY = 0;
+    }, { passive: true });
 
 })();
