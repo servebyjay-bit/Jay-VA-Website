@@ -4418,79 +4418,52 @@ p,li,h1,h2,h3,h4,h5,h6,a,span,button{overflow-wrap:anywhere}
 }
 
 /* =========================================================
-   FINAL LOGO POSITION — ALIGN TO HERO HEADLINE EDGE
-   The logo sits on the exact left edge of the shared content
-   container, matching the Hero headline/tagline alignment.
+   FINAL UX / PERFORMANCE POLISH
+   Soft motion, stronger inquiry CTA hierarchy, and lighter
+   portfolio rendering without changing existing content.
    ========================================================= */
-.header .container,
-.footer .container{
-    position:relative;
+
+/* Match the inquiry CTA headline to the established section-headline
+   visual language, while keeping the CTA slightly more compact. */
+.cta-box h2{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:clamp(2.6rem,4.35vw,4.05rem);
+    font-weight:800;
+    line-height:1.06;
+    letter-spacing:-0.052em;
+    text-wrap:balance;
 }
 
-.header .logo,
-.footer .logo{
-    margin-left:0;
-    padding-left:0;
-    transform:translateX(-1px);
+/* Give portfolio blocks a smoother first paint and reduce the amount
+   of off-screen work the browser has to layout/paint before it is needed. */
+.portfolio-service{
+    content-visibility:auto;
+    contain:layout paint style;
+    contain-intrinsic-size:720px;
 }
 
-.header .logo-image{
-    display:block;
-    width:290px;
-    max-width:none;
-    height:auto;
-    max-height:76px;
-    flex:0 0 290px;
-    object-fit:contain;
-    object-position:left center;
-    margin:0;
+/* Keep media presentation smooth without adding heavy perpetual effects. */
+.portfolio-service img,
+.portfolio-service video,
+.portfolio-service iframe{
+    backface-visibility:hidden;
 }
 
-.footer .logo-image{
-    display:block;
-    width:320px;
-    max-width:none;
-    height:auto;
-    max-height:88px;
-    flex:0 0 320px;
-    object-fit:contain;
-    object-position:left center;
-    margin:0;
-}
-
-@media (min-width:1440px){
-    .header .logo-image{
-        width:310px;
-        flex-basis:310px;
+@media (max-width:768px){
+    .cta-box h2{
+        font-size:clamp(2.35rem,8.5vw,3.35rem);
+        line-height:1.08;
+        letter-spacing:-0.045em;
     }
-    .footer .logo-image{
-        width:340px;
-        flex-basis:340px;
-    }
-}
 
-@media (max-width:992px){
-    .header .logo-image{
-        width:230px;
-        max-height:64px;
-        flex-basis:230px;
-    }
-    .footer .logo-image{
-        width:270px;
-        max-height:76px;
-        flex-basis:270px;
+    .portfolio-service{
+        contain-intrinsic-size:560px;
     }
 }
 
 @media (max-width:520px){
-    .header .logo-image{
-        width:210px;
-        max-height:60px;
-        flex-basis:210px;
-    }
-    .footer .logo-image{
-        width:250px;
-        max-height:70px;
-        flex-basis:250px;
+    .cta-box h2{
+        font-size:clamp(2.15rem,10vw,2.9rem);
     }
 }
+
