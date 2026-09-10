@@ -986,6 +986,11 @@ window.addEventListener(
             ".video-lightbox-player"
         );
 
+    const iframeWrap =
+        lightbox.querySelector(
+            ".video-lightbox-iframe-wrap"
+        );
+
     const closeBtn =
         lightbox.querySelector(
             ".video-lightbox-close"
@@ -1032,6 +1037,40 @@ window.addEventListener(
         });
 
     function sourceOf(trigger) {
+        // ITEM #3 — Vimeo-embed ready: cards now declare their video via
+        // data-video-provider ("vimeo" or "mp4") + data-video-src, instead
+        // of a nested <video><source>. Older mp4 cards that still use the
+        // nested <video> markup keep working through the fallback below.
+        const provider =
+            trigger.getAttribute(
+                "data-video-provider"
+            );
+
+        if (provider === "vimeo") {
+            return {
+                provider: "vimeo",
+                src:
+                    trigger.getAttribute(
+                        "data-video-src"
+                    ) || ""
+            };
+        }
+
+        if (provider === "mp4") {
+            return {
+                provider: "mp4",
+                src:
+                    trigger.getAttribute(
+                        "data-video-src"
+                    ) || "",
+                poster:
+                    trigger.getAttribute(
+                        "data-video-poster"
+                    ) || ""
+            };
+        }
+
+        // Legacy fallback for cards still using <video><source>.
         const video =
             trigger.querySelector(
                 "video"
@@ -1045,15 +1084,11 @@ window.addEventListener(
                 : null;
 
         return {
+            provider: "mp4",
+
             src: source
                 ? source.src
                 : "",
-
-            type: source
-                ? source.getAttribute(
-                      "type"
-                  )
-                : "video/mp4",
 
             poster: video
                 ? video.getAttribute(
@@ -1074,8 +1109,8 @@ window.addEventListener(
             currentGroup.length;
 
         const {
+            provider,
             src,
-            type,
             poster
         } = sourceOf(
             currentGroup[
@@ -1085,35 +1120,88 @@ window.addEventListener(
 
         if (!src) return;
 
+        // Always fully reset both possible players before showing
+        // whichever one this card actually needs.
         player.pause();
-        player.innerHTML = "";
-
-        const source =
-            document.createElement(
-                "source"
-            );
-
-        source.src = src;
-
-        source.type =
-            type || "video/mp4";
-
-        player.appendChild(
-            source
+        player.removeAttribute(
+            "poster"
         );
+        player.innerHTML = "";
+        player.hidden = true;
 
-        if (poster) {
-            player.setAttribute(
-                "poster",
-                poster
-            );
+        if (iframeWrap) {
+            iframeWrap.innerHTML =
+                "";
+            iframeWrap.hidden = true;
         }
 
-        player.load();
+        if (
+            provider === "vimeo" &&
+            iframeWrap
+        ) {
+            const iframe =
+                document.createElement(
+                    "iframe"
+                );
 
-        player
-            .play()
-            .catch(() => {});
+            iframe.src =
+                src +
+                (src.indexOf("?") >
+                -1
+                    ? "&"
+                    : "?") +
+                "autoplay=1";
+
+            iframe.setAttribute(
+                "allow",
+                "autoplay; fullscreen; picture-in-picture; clipboard-write"
+            );
+
+            iframe.setAttribute(
+                "allowfullscreen",
+                ""
+            );
+
+            iframe.setAttribute(
+                "title",
+                "Video player"
+            );
+
+            iframeWrap.appendChild(
+                iframe
+            );
+
+            iframeWrap.hidden = false;
+        } else {
+            const source =
+                document.createElement(
+                    "source"
+                );
+
+            source.src = src;
+
+            source.type =
+                "video/mp4";
+
+            player.appendChild(
+                source
+            );
+
+            if (poster) {
+                player.setAttribute(
+                    "poster",
+                    poster
+                );
+            }
+
+            player.hidden = false;
+
+            player.load();
+
+            player
+                .play()
+                .catch(() => {});
+        }
 
         const multi =
             currentGroup.length >
@@ -1207,6 +1295,16 @@ window.addEventListener(
         player.innerHTML = "";
 
         player.load();
+
+        player.hidden = false;
+
+        if (iframeWrap) {
+            // Clearing the src (rather than just hiding it) is what
+            // actually stops a playing Vimeo video on close.
+            iframeWrap.innerHTML =
+                "";
+            iframeWrap.hidden = true;
+        }
 
         if (lastFocused) {
             lastFocused.focus();
