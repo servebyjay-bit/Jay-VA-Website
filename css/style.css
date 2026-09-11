@@ -2474,8 +2474,8 @@ PHOTO EDITING
 }
 
 .advantages-grid{
-    display:grid;
-    grid-template-columns:1fr;
+    display:flex;
+    flex-direction:column;
     gap:20px;
     max-width:1080px;
     margin:0 auto;
@@ -2483,8 +2483,15 @@ PHOTO EDITING
 
 @media(min-width:768px){
     .advantages-grid{
-        grid-template-columns:repeat(3,1fr);
+        flex-direction:row;
+        flex-wrap:wrap;
+        justify-content:center;
         gap:24px;
+    }
+
+    .advantage-card{
+        flex:1 1 300px;
+        max-width:340px;
     }
 }
 
@@ -4285,11 +4292,12 @@ section[id]{scroll-margin-top:125px}
  .hero{padding-top:132px}
 }
 
-/* Four advantage cards fit one compact row at this width instead of
-   a bulky 2x2 grid — keeps each card visually small and lets the
-   row read as a single feature strip rather than four big tiles. */
+/* Slightly tighter card padding at wide desktop widths. (Layout itself
+   is handled by the flexible .advantages-grid rule above — this used to
+   force a rigid 4-column grid, a leftover from when there were 4 cards
+   instead of today's 3, which is exactly what made the row inflexible.) */
 @media(min-width:1200px){
- .advantages-grid{grid-template-columns:repeat(4,1fr);gap:18px}
+ .advantages-grid{gap:18px}
  .advantage-card{padding:22px}
  .advantage-card h3{font-size:var(--fs-base)}
 }
@@ -4466,6 +4474,38 @@ p,li,h1,h2,h3,h4,h5,h6,a,span,button{overflow-wrap:anywhere}
 
 .portrait-video-card.media-pending .video-play-overlay{
     display:none;
+}
+
+/* Icon-only "view full" affordance for cards with a live inline embed —
+   the Vimeo iframe swallows clicks before they reach the card's own
+   lightbox trigger, so this sits above the iframe as a real, clickable
+   sibling element. No label, just the expand icon. */
+.video-expand-btn{
+    position:absolute;
+    top:10px;
+    right:10px;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:32px;
+    height:32px;
+    padding:0;
+    border:none;
+    border-radius:50%;
+    background:rgba(0,0,0,.55);
+    color:#fff;
+    backdrop-filter:blur(2px);
+    cursor:pointer;
+    pointer-events:auto;
+    transition:background .25s ease, transform .25s ease;
+}
+
+@media(hover:hover) and (pointer:fine){
+    .video-expand-btn:hover{
+        background:var(--primary);
+        transform:scale(1.08);
+    }
 }
 
 /* The video lightbox reuses .photo-lightbox for its backdrop, close
