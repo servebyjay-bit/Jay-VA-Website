@@ -587,9 +587,7 @@ button:focus-visible,
     position:absolute;
     inset:0;
     z-index:-2;
-    background-image:
-        linear-gradient(rgba(255,255,255,.15), rgba(255,255,255,.15)),
-        url(/images/hero-bg.webp);
+    background-image:url(/images/hero-bg.webp);
     background-size:cover;
     background-position:center 20%;
 }
@@ -4314,7 +4312,6 @@ p,li,h1,h2,h3,h4,h5,h6,a,span,button{overflow-wrap:anywhere}
    the floating call button. */
 @media(max-width:768px){
     .hero-buttons .btn-secondary,
-    .about-buttons .btn-secondary,
     .cta-buttons .btn-outline-light{
         background:none;
         border:none;
@@ -4333,7 +4330,6 @@ p,li,h1,h2,h3,h4,h5,h6,a,span,button{overflow-wrap:anywhere}
     }
 
     .hero-buttons .btn-secondary:hover,
-    .about-buttons .btn-secondary:hover,
     .cta-buttons .btn-outline-light:hover{
         transform:none;
         box-shadow:none;
@@ -4344,6 +4340,17 @@ p,li,h1,h2,h3,h4,h5,h6,a,span,button{overflow-wrap:anywhere}
     .about-buttons,
     .cta-buttons{
         align-items:center;
+    }
+
+    /* Resume CTA keeps its normal card look (background, border, icon
+       beside the label) on mobile instead of the plain-link treatment
+       above, and sits centered on its own row. */
+    .about-buttons{
+        justify-content:center;
+    }
+
+    .about-buttons .btn-secondary{
+        width:auto;
     }
 
     .cta-buttons{
