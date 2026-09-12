@@ -572,44 +572,34 @@ button:focus-visible,
 
 /* ITEM #1 — HERO BACKGROUND IMAGE (webp-ready)
    Full-bleed photo layer sitting behind everything else in the hero
-   (ambient glows, decor, portrait, copy). Point background-image at
-   your uploaded webp when it's ready — nothing breaks in the
-   meantime: if the file 404s the layer stays transparent and the
-   existing white/gradient .hero background shows through exactly as
-   it does today.
+   (ambient glows, copy). Point background-image at your uploaded
+   webp when it's ready — nothing breaks in the meantime: if the
+   file 404s the layer stays transparent and the existing
+   white/gradient .hero background shows through exactly as it does
+   today.
    The scrim on top guarantees the headline and body copy stay
    legible over any photo without you having to tune text color per
-   image — it fades from solid white on the text side to a soft
-   brand-blue tint, so the photo still reads through on the right. */
+   image. The copy is now centered (no more side-by-side portrait
+   column), so the scrim is brightest directly behind the text block
+   and eases off toward the edges/corners, letting the photo read
+   through where there's no copy sitting on top of it. */
 .hero-bg-photo{
     position:absolute;
     inset:0;
-    z-index:-3;
-    background-image:url("../images/hero-bg.webp");
+    z-index:-2;
+    background-image:
+        linear-gradient(rgba(255,255,255,.15), rgba(255,255,255,.15)),
+        url(/images/hero-bg.webp);
     background-size:cover;
-    background-position:center;
-}
-
-.hero-bg-photo::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:linear-gradient(100deg,
-        rgba(255,255,255,.97) 0%,
-        rgba(255,255,255,.92) 35%,
-        rgba(255,255,255,.72) 58%,
-        rgba(10,102,194,.22) 100%);
+    background-position:center 20%;
 }
 
 @media(max-width:992px){
-    .hero-bg-photo::after{
-        /* Stacked mobile layout puts copy above the portrait rather
-           than beside it, so the scrim fades top-to-bottom instead
-           of left-to-right. */
-        background:linear-gradient(180deg,
-            rgba(255,255,255,.97) 0%,
-            rgba(255,255,255,.90) 45%,
-            rgba(255,255,255,.75) 100%);
+    .hero-bg-photo{
+        /* Stacked mobile layout has no side-by-side split to protect,
+           so favor keeping Jay's face in frame over the same crop
+           used on desktop. */
+        background-position:75% 20%;
     }
 }
 
@@ -656,40 +646,6 @@ button:focus-visible,
     100%{ transform:translateY(0) scale(1); }
 }
 
-/* ITEM #2 — HERO SECTION BACKGROUND IMAGE
-   A decorative landscape graphic anchored to the lower-right corner
-   of the hero, sitting on the section's white background. It is a
-   separate absolutely-positioned layer (not the .hero::before/::after
-   ambient glows above, and not the .hero-visual portrait), so it can
-   scale independently.
-   - background-size uses a PERCENTAGE, so the image scales smoothly
-     with the section's own width on any screen — no extra mobile
-     media query needed for the resizing itself.
-   - Swap the URL below for your uploaded file once it's ready (keep
-     it a wide/landscape image; webp for best performance). Nothing
-     breaks if the file isn't there yet — the hero just stays plain
-     white, same as today. */
-.hero-bg-decor{
-    position:absolute;
-    inset:0;
-    z-index:0;
-    pointer-events:none;
-    background-image:url("../images/hero-bg.webp");
-    background-repeat:no-repeat;
-    background-position:bottom right;
-    background-size:min(46%, 620px) auto;
-}
-
-@media(max-width:768px){
-    .hero-bg-decor{
-        /* Smaller screens have less spare space beside the copy, so
-           the graphic sits a bit smaller relative to the section —
-           still bottom-right, still fully responsive. */
-        background-size:min(58%, 320px) auto;
-        opacity:.9;
-    }
-}
-
 .hero-grid{
     position:relative;
     z-index:1;
@@ -718,22 +674,17 @@ button:focus-visible,
     justify-content:center;
 }
 
-/* Two-column layout (copy left, portrait right) once there is
-   enough width for both to breathe side by side. */
+/* The hero photo has its subject positioned right-of-frame with
+   blank space on the left (see .hero-bg-photo) — once there's
+   enough width for that split to read clearly, the copy moves into
+   that space instead of sitting centered over it. */
 @media(min-width:993px){
-
-    .hero-grid{
-        flex-direction:row;
-        align-items:center;
-        gap:56px;
-    }
 
     .hero-content{
         align-items:flex-start;
         text-align:left;
-        max-width:640px;
+        max-width:600px;
         margin:0;
-        flex:1.2;
     }
 
     .hero-content h1,
@@ -744,45 +695,6 @@ button:focus-visible,
 
     .hero-buttons{
         justify-content:flex-start;
-    }
-
-    .hero-visual{
-        flex:.8;
-    }
-}
-
-.hero-visual{
-    position:relative;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:100%;
-    max-width:380px;
-    margin:0 auto;
-    animation:heroFadeUp .7s .1s cubic-bezier(.22,.61,.36,1) both;
-}
-
-.hero-visual-blob{
-    position:absolute;
-    width:88%;
-    aspect-ratio:1/1;
-    border-radius:50%;
-    background:radial-gradient(circle at 32% 28%, rgba(79,156,249,.85), rgba(10,102,194,.55) 55%, rgba(10,102,194,.15) 80%);
-    z-index:0;
-}
-
-.hero-portrait{
-    position:relative;
-    z-index:1;
-    width:100%;
-    height:auto;
-    display:block;
-    border-radius:28px;
-}
-
-@media (prefers-reduced-motion: reduce){
-    .hero-visual{
-        animation:none;
     }
 }
 
@@ -812,6 +724,7 @@ button:focus-visible,
     max-width:980px;
     margin-bottom:22px;
     text-wrap:balance;
+    text-shadow:0 2px 24px rgba(255,255,255,.5);
     animation:heroFadeUp .7s .08s cubic-bezier(.22,.61,.36,1) both;
 }
 
@@ -827,6 +740,7 @@ button:focus-visible,
     max-width:760px;
     margin-bottom:60px;
     text-wrap:balance;
+    text-shadow:0 2px 16px rgba(255,255,255,.6);
     animation:heroFadeUp .7s .16s cubic-bezier(.22,.61,.36,1) both;
 }
 
@@ -2586,7 +2500,11 @@ PHOTO EDITING
 .cta-box h2{
     color:white;
     font-size:var(--fs-cta-title);
+    font-weight:800;
+    line-height:1.15;
+    letter-spacing:-0.03em;
     margin:20px 0;
+    text-wrap:balance;
 }
 
 .cta-box p{
@@ -4306,9 +4224,8 @@ section[id]{scroll-margin-top:125px}
  .nav-links{gap:clamp(16px,1.8vw,26px)}
 }
 
-/* Only applies below the hero's two-column breakpoint (993px) —
-   above that, .hero-content already has its own max-width for the
-   side-by-side layout with .hero-visual. */
+/* Keeps the centered hero copy from stretching edge-to-edge on
+   tablet-width viewports. */
 @media(max-width:992px){
  .hero-content{max-width:860px}
 }
@@ -4424,7 +4341,8 @@ p,li,h1,h2,h3,h4,h5,h6,a,span,button{overflow-wrap:anywhere}
     }
 
     .hero-buttons,
-    .about-buttons{
+    .about-buttons,
+    .cta-buttons{
         align-items:center;
     }
 
