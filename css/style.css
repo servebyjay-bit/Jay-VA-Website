@@ -170,6 +170,16 @@ button:focus-visible,
     --hover-border:#D6E9FF;
     --hover-shadow:rgba(10,102,194,.10);
 
+    /* ITEM #1 — card surfaces now match the footer's dark navy instead
+       of light blue/white, so every card on the page reads as one
+       consistent, branded "dark card" component. Paired text tokens
+       keep contrast correct on that dark background. */
+    --card-bg:#0b1220;
+    --card-border:rgba(255,255,255,.08);
+    --card-heading:#ffffff;
+    --card-body:#cbd5e1;
+    --card-muted:#94a3b8;
+
     /* ---------------------------------------------------
        TYPE SCALE — fluid
        Every token scales smoothly from a mobile floor up to
@@ -803,18 +813,23 @@ button:focus-visible,
     margin:0 auto 36px;
 }
 
+/* ITEM #5 — the small eyebrow label ("WHAT I DO" etc.) is now its own
+   explicit, smaller size rather than sharing --fs-xs with unrelated
+   captions/meta text elsewhere on the site, and the h2 below it steps
+   up in size so the size contrast between label and title reads more
+   dramatically at every breakpoint. */
 .section-heading span{
     display:inline-block;
     color:var(--primary);
     font-weight:800;
-    font-size:var(--fs-xs);
+    font-size:clamp(0.6875rem, 0.6rem + 0.2vw, 0.75rem);
     letter-spacing:.14em;
     text-transform:uppercase;
     margin-bottom:10px;
 }
 
 .section-heading h2{
-    font-size:var(--fs-section-title);
+    font-size:clamp(2.125rem, 1rem + 3.75vw, 3.75rem);
     font-weight:800;
     line-height:1.05;
     letter-spacing:-0.035em;
@@ -829,8 +844,8 @@ button:focus-visible,
 
 .advantage-card:hover{
     transform:translateY(-10px);
-    border-color:var(--hover-border);
-    box-shadow:0 25px 50px var(--hover-shadow);
+    border-color:rgba(255,255,255,.18);
+    box-shadow:0 25px 50px rgba(0,0,0,.35);
 }
 
 /* =========================================================
@@ -933,8 +948,8 @@ button:focus-visible,
 .service-item{
     position:relative;
     padding:24px 22px;
-    background:#fff;
-    border:1px solid var(--border);
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
     border-radius:18px;
     transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
 }
@@ -942,8 +957,8 @@ button:focus-visible,
 @media(hover:hover) and (pointer:fine){
     .service-item:hover{
         transform:translateY(-6px);
-        border-color:var(--hover-border);
-        box-shadow:0 20px 40px var(--hover-shadow);
+        border-color:rgba(255,255,255,.18);
+        box-shadow:0 20px 40px rgba(0,0,0,.35);
     }
 }
 
@@ -954,8 +969,8 @@ button:focus-visible,
     width:44px;
     height:44px;
     border-radius:12px;
-    background:var(--surface);
-    color:var(--primary);
+    background:rgba(255,255,255,.08);
+    color:#8ec1ff;
     margin-bottom:16px;
 }
 
@@ -1008,17 +1023,17 @@ button:focus-visible,
     font-family:'Plus Jakarta Sans',sans-serif;
     font-size:var(--fs-md);
     font-weight:700;
-    color:var(--heading);
+    color:var(--card-heading);
     letter-spacing:-0.01em;
     transition:color .3s ease;
 }
 
 .service-item:hover .service-title h3{
-    color:var(--primary);
+    color:#8ec1ff;
 }
 
 .service-content p{
-    color:var(--body);
+    color:var(--card-body);
     line-height:1.8;
 }
 
@@ -1032,7 +1047,7 @@ button:focus-visible,
 .service-content li{
     position:relative;
     padding-left:24px;
-    color:var(--body);
+    color:var(--card-body);
     line-height:1.7;
 }
 
@@ -1041,7 +1056,7 @@ button:focus-visible,
     position:absolute;
     left:0;
     top:0;
-    color:var(--primary);
+    color:#8ec1ff;
     font-weight:700;
 }
 
@@ -1121,7 +1136,7 @@ button:focus-visible,
 
 .portfolio-service{
     position:relative;
-    background:#0b1220;
+    background:#fff;
     border:none;
     border-radius:24px;
     margin-bottom:16px;
@@ -1131,45 +1146,6 @@ button:focus-visible,
 
 .portfolio-service:last-child{
     margin-bottom:0;
-}
-
-/* ITEM #2 — portfolio cards now match the footer's dark background
-   (#0b1220), with text flipped to light colors for contrast. Most of
-   the text inside these cards is already styled through the
-   var(--heading)/var(--body)/var(--surface)/var(--border) design
-   tokens, so redefining those tokens right here is enough for it to
-   cascade to every description, list, tag chip and placeholder inside
-   automatically — the values mirror what the footer already uses for
-   its own text, so the two stay visually consistent. Headings get an
-   explicit override below because they're set with a hardcoded color
-   sitewide rather than a variable. */
-.portfolio-service{
-    color:rgb(215,215,215);
-    --heading:#fff;
-    --body:#cbd5e1;
-    --surface:rgba(255,255,255,.06);
-    --surface-strong:rgba(255,255,255,.12);
-    --border:rgba(255,255,255,.14);
-}
-
-.portfolio-service h1,
-.portfolio-service h2,
-.portfolio-service h3,
-.portfolio-service h4,
-.portfolio-service h5,
-.portfolio-service h6{
-    color:#fff;
-}
-
-/* The Video Editing and Website project cards each had their own
-   separate white background nested inside the (now dark) portfolio
-   card — matching them to the same dark navy keeps the card reading
-   as one continuous surface instead of white boxes floating inside a
-   dark one. Photo/screenshot tiles (niche grid, social hero, photo
-   cards) are left as-is — those are image mattes, not text surfaces. */
-.portfolio-service .video-showcase,
-.portfolio-service .site-project-card{
-    background:#0b1220;
 }
 
 .portfolio-service-header{
@@ -1294,9 +1270,9 @@ button:focus-visible,
 
 .deliverables h5,
 .project-highlights h5{
-    font-size:var(--fs-sm);
-    margin-bottom:14px;
-    color:var(--heading);
+    font-size:var(--fs-xs);
+    margin-bottom:12px;
+    color:var(--card-heading);
 }
 
 .deliverables ul{
@@ -1306,26 +1282,54 @@ button:focus-visible,
 .deliverables li{
     margin-bottom:10px;
     line-height:1.7;
-    color:var(--body);
+    color:var(--card-body);
 }
 
 .project-highlights{
     margin-top:28px;
 }
 
+/* ITEM #1 — highlight pills now match the footer's dark card surface.
+   ITEM #3 — locked to a strict 2-per-row grid on mobile (was flex-wrap,
+   which let pill width decide the wrap point and sometimes produced an
+   uneven 3+1 layout) and the label text is smaller/tighter to suit the
+   card's now-compact size. */
 .highlight-tags{
-    display:flex;
-    flex-wrap:wrap;
+    display:grid;
+    grid-template-columns:1fr 1fr;
     gap:8px;
 }
 
+@media(min-width:640px){
+    .highlight-tags{
+        display:flex;
+        flex-wrap:wrap;
+    }
+}
+
 .highlight-tags span{
-    background:var(--surface);
-    border:1px solid var(--border);
-    padding:7px 13px;
-    border-radius:999px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    color:var(--card-body);
+    padding:8px 10px;
+    min-height:38px;
+    border-radius:12px;
     font-size:var(--fs-2xs);
+    line-height:1.3;
     font-weight:600;
+}
+
+@media(min-width:640px){
+    .highlight-tags span{
+        display:inline-flex;
+        min-height:0;
+        padding:7px 13px;
+        border-radius:999px;
+    }
 }
 
 /* Consistent, smaller "Highlights" heading across every portfolio
@@ -1335,8 +1339,8 @@ button:focus-visible,
 .video-highlights h5,
 .photo-highlights h5,
 .social-highlights h5{
-    font-size:var(--fs-sm);
-    margin-bottom:12px;
+    font-size:var(--fs-xs);
+    margin-bottom:10px;
 }
 
 /* LIVE WEBSITE PROJECT CARDS */
@@ -1348,8 +1352,8 @@ button:focus-visible,
 
 .site-project-card{
     position:relative;
-    background:#fff;
-    border:1px solid var(--border);
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
     border-radius:20px;
     overflow:hidden;
     display:flex;
@@ -1367,13 +1371,14 @@ button:focus-visible,
     margin-top:20px;
     margin-bottom:16px;
     backdrop-filter:none;
-    background:var(--surface);
-    border-color:var(--border);
+    background:rgba(255,255,255,.08);
+    border-color:var(--card-border);
+    color:var(--card-body);
 }
 
 .site-project-category{
     display:block;
-    color:var(--primary);
+    color:#8ec1ff;
     font-weight:700;
     font-size:var(--fs-xs);
     letter-spacing:.5px;
@@ -1397,6 +1402,7 @@ button:focus-visible,
 .site-project-top h4{
     font-family:'Plus Jakarta Sans',sans-serif;
     font-size:var(--fs-lg, var(--fs-base));
+    color:var(--card-heading);
     margin:0;
 }
 
@@ -1405,7 +1411,7 @@ button:focus-visible,
 }
 
 .site-project-top > p{
-    color:var(--body);
+    color:var(--card-body);
     line-height:1.8;
     margin-bottom:22px;
 }
@@ -1420,7 +1426,7 @@ button:focus-visible,
 
 .site-project-bottom{
     padding:24px 28px 32px;
-    border-top:1px solid var(--border);
+    border-top:1px solid var(--card-border);
 }
 
 .site-project-bottom .deliverables{
@@ -1703,8 +1709,8 @@ GRAPHIC DESIGN
     aspect-ratio:2/3;
     border-radius:16px;
     overflow:hidden;
-    background:var(--surface);
-    border:1px solid var(--border);
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
 }
 
 .niche-grid-item img{
@@ -1733,10 +1739,10 @@ GRAPHIC DESIGN
     position:absolute;
     inset:0;
     padding:10px;
-    border:1.5px dashed var(--border);
+    border:1.5px dashed var(--card-border);
     border-radius:16px;
-    background:var(--surface);
-    color:var(--body);
+    background:var(--card-bg);
+    color:var(--card-muted);
     font-size:var(--fs-2xs);
     font-weight:600;
 }
@@ -1753,8 +1759,8 @@ GRAPHIC DESIGN
     aspect-ratio:16/9;
     border-radius:16px;
     overflow:hidden;
-    background:var(--surface);
-    border:1px solid var(--border);
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
 }
 
 .landscape-card img{
@@ -1776,10 +1782,10 @@ GRAPHIC DESIGN
     position:absolute;
     inset:0;
     padding:10px;
-    border:1.5px dashed var(--border);
+    border:1.5px dashed var(--card-border);
     border-radius:16px;
-    background:var(--surface);
-    color:var(--body);
+    background:var(--card-bg);
+    color:var(--card-muted);
     font-size:var(--fs-2xs);
     font-weight:600;
 }
@@ -1881,8 +1887,8 @@ VIDEO EDITING
     display:flex;
     align-items:center;
     justify-content:center;
-    border:1.5px dashed var(--border);
-    background:var(--surface);
+    border:1.5px dashed var(--card-border);
+    background:var(--card-bg);
 }
 
 .portrait-video-card.media-pending video,
@@ -1895,7 +1901,7 @@ VIDEO EDITING
     display:none;
     text-align:center;
     padding:10px;
-    color:var(--body);
+    color:var(--card-muted);
     font-size:var(--fs-2xs);
     font-weight:600;
 }
@@ -1965,9 +1971,9 @@ PHOTO EDITING
     margin:0;
     overflow:hidden;
     border-radius:18px;
-    cursor:zoom-in;
     isolation:isolate;
-    background:var(--surface);
+    cursor:zoom-in;
+    background:var(--card-bg);
 }
 
 .photo-card img{
@@ -1976,7 +1982,7 @@ PHOTO EDITING
     aspect-ratio:4/3;
     height:auto;
     object-fit:contain;
-    background:var(--surface);
+    background:var(--card-bg);
 }
 
 .photo-lightbox{
@@ -2108,24 +2114,16 @@ PHOTO EDITING
     }
 }
 
-/* Clickable gallery affordance — every mockup, screenshot, and social
-   showcase image in the portfolio opens the swipeable lightbox, so all
-   of them get the same zoom-in cursor and a subtle lift on hover to
-   signal they're interactive. */
+/* ITEM #2 — hover lift/shadow removed from all portfolio media (was
+   .niche-grid-item, .social-hero, .landscape-card translateY + box-shadow
+   on hover). The cursor:zoom-in affordance stays so it's still clear these
+   open the lightbox, but there's no more per-hover transition to
+   compute/repaint, which keeps portfolio scrolling light and fast,
+   especially on lower-powered mobile devices. */
 .niche-grid-item,
 .social-hero,
 .landscape-card{
     cursor:zoom-in;
-    transition:transform .3s ease, box-shadow .3s ease;
-}
-
-@media(hover:hover) and (pointer:fine){
-    .niche-grid-item:hover,
-    .social-hero:hover,
-    .landscape-card:hover{
-        transform:translateY(-4px);
-        box-shadow:0 18px 36px rgba(15,23,42,.12);
-    }
 }
 
 .niche-grid-item:focus-visible,
@@ -2134,14 +2132,6 @@ PHOTO EDITING
 .photo-card:focus-visible{
     outline:3px solid rgba(10,102,194,.45);
     outline-offset:3px;
-}
-
-@media(prefers-reduced-motion:reduce){
-    .niche-grid-item,
-    .social-hero,
-    .landscape-card{
-        transition:none;
-    }
 }
 
 /* ABOUT */
@@ -2442,8 +2432,8 @@ PHOTO EDITING
 }
 
 .advantage-card{
-    background:#fff;
-    border:1px solid var(--border);
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
     border-radius:18px;
     padding:28px 24px;
     transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
@@ -2452,8 +2442,8 @@ PHOTO EDITING
 @media(hover:hover) and (pointer:fine){
     .advantage-card:hover{
         transform:translateY(-6px);
-        border-color:var(--hover-border);
-        box-shadow:0 20px 40px var(--hover-shadow);
+        border-color:rgba(255,255,255,.18);
+        box-shadow:0 20px 40px rgba(0,0,0,.35);
     }
 }
 
@@ -2464,8 +2454,8 @@ PHOTO EDITING
     width:44px;
     height:44px;
     border-radius:12px;
-    background:var(--surface);
-    color:var(--primary);
+    background:rgba(255,255,255,.08);
+    color:#8ec1ff;
     margin-bottom:16px;
 }
 
@@ -2490,13 +2480,13 @@ PHOTO EDITING
     font-family:'Plus Jakarta Sans',sans-serif;
     font-size:var(--fs-md);
     font-weight:700;
-    color:var(--heading);
+    color:var(--card-heading);
     letter-spacing:-0.01em;
     margin-bottom:10px;
 }
 
 .advantage-card p{
-    color:var(--body);
+    color:var(--card-body);
     font-size:var(--fs-sm);
     line-height:1.75;
 }
@@ -2888,15 +2878,21 @@ PHOTO EDITING
     margin-top:-10px;
 }
 
+/* ITEM #4 — every footer text element steps down a size for a
+   quieter, more minimalistic footer (was inheriting body-copy-sized
+   text, which felt heavy this far down the page). */
 .footer p{
     color:#cbd5e1;
     margin-top:12px;
-    line-height:1.8;
+    line-height:1.75;
+    font-size:var(--fs-sm);
 }
 
 .footer h4{
-    margin-bottom:20px;
+    margin-bottom:16px;
     color:white;
+    font-size:var(--fs-sm);
+    letter-spacing:-0.01em;
 }
 
 .footer ul{
@@ -2904,7 +2900,8 @@ PHOTO EDITING
 }
 
 .footer li{
-    margin-bottom:12px;
+    margin-bottom:10px;
+    font-size:var(--fs-xs);
 }
 
 .footer a{
@@ -2930,14 +2927,14 @@ PHOTO EDITING
 }
 
 .footer-bottom > span{
-    font-size:var(--fs-xs);
+    font-size:var(--fs-2xs);
 }
 
 .footer-legal{
     display:flex;
     align-items:center;
     gap:10px;
-    font-size:var(--fs-xs);
+    font-size:var(--fs-2xs);
 }
 
 .footer-legal a{
@@ -3453,17 +3450,12 @@ PHOTO EDITING
 
 .hero-buttons{
     flex-direction:column;
-    align-items:flex-start;
-    gap:12px;
+    gap:14px;
 }
 
-/* ITEM #1 — compact, left-aligned CTAs on mobile instead of full-width
-   "cards": size to content (with a modest floor) rather than stretching
-   to fill the row. */
 .hero-buttons .btn-primary,
 .hero-buttons .btn-secondary{
-    width:auto;
-    padding:12px 22px;
+    width:100%;
     justify-content:center;
 }
 
@@ -3914,10 +3906,10 @@ iframe{
     flex-direction:column;
     min-height:390px;
     padding:34px 32px 30px;
-    background:rgba(255,255,255,.94);
-    border:1px solid #dfe8f2;
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
     border-radius:26px;
-    box-shadow:0 12px 38px rgba(15,23,42,.05);
+    box-shadow:0 12px 38px rgba(0,0,0,.25);
     overflow:hidden;
     isolation:isolate;
     /* No transform in the transition list — the card never lifts or shifts */
@@ -3934,7 +3926,7 @@ iframe{
     position:absolute;
     inset:0;
     z-index:-1;
-    background:radial-gradient(circle at 100% 0%,rgba(10,102,194,.075),transparent 52%);
+    background:radial-gradient(circle at 100% 0%,rgba(79,143,232,.16),transparent 52%);
     opacity:0;
     transition:opacity .35s ease;
 }
@@ -3944,7 +3936,7 @@ iframe{
     position:absolute;
     top:10px;
     right:24px;
-    color:rgba(10,102,194,.06);
+    color:rgba(255,255,255,.06);
     font-family:Georgia,serif;
     font-size:7rem;
     line-height:1;
@@ -3953,8 +3945,8 @@ iframe{
 
 .testimonial-card:hover{
     /* No translateY — border + shadow shift only, glow fades in below */
-    border-color:#c8dcef;
-    box-shadow:0 20px 44px rgba(10,102,194,.14);
+    border-color:rgba(255,255,255,.18);
+    box-shadow:0 20px 44px rgba(0,0,0,.4);
 }
 
 .testimonial-card:hover::before{
@@ -3999,7 +3991,7 @@ iframe{
     z-index:2;
     flex:1;
     margin:0 0 28px;
-    color:var(--body);
+    color:var(--card-body);
     font-size:var(--fs-sm);
     line-height:1.85;
 }
@@ -4009,12 +4001,12 @@ iframe{
     z-index:2;
     margin-top:auto;
     padding-top:22px;
-    border-top:1px solid #e6edf5;
+    border-top:1px solid var(--card-border);
 }
 
 .testimonial-author h3{
     margin:0 0 6px;
-    color:var(--heading);
+    color:var(--card-heading);
     font-family:'Plus Jakarta Sans',sans-serif;
     font-size:var(--fs-sm);
     font-weight:800;
@@ -4023,14 +4015,14 @@ iframe{
 
 .testimonial-author span{
     display:block;
-    color:var(--body);
+    color:var(--card-muted);
     font-size:var(--fs-xs);
     line-height:1.55;
 }
 
 .testimonial-location{
     margin:7px 0 0 !important;
-    color:var(--primary) !important;
+    color:#8ec1ff !important;
     font-size:var(--fs-2xs) !important;
     font-weight:700;
     line-height:1.4 !important;
@@ -4299,6 +4291,8 @@ section[id]{scroll-margin-top:125px}
  .hero-content{width:100%}
  .hero-content h1{line-height:1.1}
  .hero-content p{max-width:620px;margin-bottom:38px}
+ .hero-buttons{width:100%;justify-content:flex-start}
+ .hero-buttons .btn-primary,.hero-buttons .btn-secondary{width:auto;min-width:190px}
  .services,.process,.portfolio,.testimonials{padding-top:72px;padding-bottom:78px}
  .testimonial-grid,.site-project-grid,.portfolio-video-grid{grid-template-columns:1fr}
  .testimonial-card:last-child,.video-showcase--featured{grid-column:auto;width:100%;max-width:none}
@@ -4317,8 +4311,8 @@ section[id]{scroll-margin-top:125px}
  .hero-tag{max-width:100%;padding:9px 14px;text-align:center}
  .hero-content h1{letter-spacing:-.045em}
  .hero-content p{line-height:1.7}
- .hero-buttons{flex-direction:column;align-items:flex-start;width:100%;gap:10px}
- .hero-buttons .btn-primary,.hero-buttons .btn-secondary{width:auto;min-width:0}
+ .hero-buttons{flex-direction:column;width:100%;gap:10px}
+ .hero-buttons .btn-primary,.hero-buttons .btn-secondary{width:100%;min-width:0}
  .services,.process,.portfolio,.testimonials{padding-top:60px;padding-bottom:66px}
  .portfolio-service{border-radius:18px}
  .portfolio-service-header,.project-content,.video-showcase .project-content,.site-project-top,.site-project-bottom,.social-content,.social-highlights,.graphic-gallery,.graphic-highlights,.graphic-services{padding-left:14px;padding-right:14px}
@@ -4330,7 +4324,6 @@ section[id]{scroll-margin-top:125px}
  .testimonial-author{padding-right:44px}
  .testimonial-avatar{width:36px;height:36px;right:18px;bottom:20px}
  .btn-primary,.btn-secondary{width:100%;min-height:48px;padding:14px 20px}
- .hero-buttons .btn-primary,.hero-buttons .btn-secondary{width:auto;min-height:0;padding:12px 20px}
 }
 
 @media(max-width:380px){
