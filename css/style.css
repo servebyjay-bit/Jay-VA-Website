@@ -587,7 +587,7 @@ button:focus-visible,
     position:absolute;
     inset:0;
     z-index:-2;
-    background-image:url(/images/hero-bg.svg);
+    background-image:url(/images/hero-bg.webp);
     background-size:cover;
     background-position:center 20%;
 }
@@ -753,7 +753,8 @@ button:focus-visible,
    (parallel) on desktop instead of stretching wide. */
 .hero-buttons .btn-primary,
 .hero-buttons .btn-secondary,
-.about-buttons .btn-primary{
+.about-buttons .btn-primary,
+.about-buttons .btn-secondary{
     padding:14px 24px;
 }
 
@@ -783,48 +784,6 @@ button:focus-visible,
     .hero{
         padding:110px 0 56px;
         min-height:auto;
-    }
-}
-
-/* HERO — MOBILE SVG REFLOW (ITEM #1)
-   Below 993px the background graphic is no longer an absolute
-   full-bleed layer sitting behind the copy — it becomes a normal,
-   in-flow block that appears after the headline/paragraph/CTA
-   buttons, so the hero text always stays fully readable regardless
-   of what the graphic looks like. */
-@media (max-width:992px){
-
-    .hero{
-        display:flex;
-        flex-direction:column;
-        align-items:stretch;
-    }
-
-    .hero > .container{
-        order:1;
-        width:100%;
-    }
-
-    .hero-bg-photo{
-        order:2;
-        position:static;
-        inset:auto;
-        z-index:auto;
-        width:100%;
-        aspect-ratio:16/10;
-        margin-top:28px;
-        border-radius:20px;
-        background-size:contain;
-        background-repeat:no-repeat;
-        background-position:center;
-    }
-}
-
-@media (max-width:576px){
-    .hero-bg-photo{
-        aspect-ratio:4/3;
-        margin-top:22px;
-        border-radius:16px;
     }
 }
 
@@ -939,19 +898,16 @@ button:focus-visible,
     display:inline-flex;
     align-items:center;
     justify-content:center;
-    cursor:default;
 }
 
-/* ITEM #2 — "Explore My Services" is a plain label, not a link, so
-   it should never show button-hover feedback (lift, shadow, border
-   or background change). */
-.services-cta:hover,
-.services-cta:active,
-.services-cta:focus-visible{
+/* No hover lift/color-change on this one — it sits right under the
+   section intro copy rather than in a row of equal-weight actions, so
+   the usual .btn-secondary hover felt like unnecessary motion here. */
+.services-cta:hover{
+    border-color:var(--border);
+    background:#fff;
     transform:none;
     box-shadow:none;
-    border-color:transparent;
-    background:#fff;
 }
 
 @media(min-width:993px){
@@ -2559,19 +2515,16 @@ PHOTO EDITING
     text-wrap:balance;
 }
 
-/* ITEM #4 — on desktop these render inline as one heading, same as
-   before. On mobile they're forced onto their own line each, so the
-   heading always breaks as "Let's Build Something" / "Meaningful
-   Together." instead of wrapping wherever the viewport happens to
-   cut it. */
-.cta-box h2 .cta-line1,
-.cta-box h2 .cta-line2{
-    display:inline;
+/* Forces the CTA headline onto exactly 2 lines on mobile ("Let's Build
+   Something" / "Meaningful Together.") instead of wherever it happens to
+   wrap at a given width. Hidden by default so desktop keeps using
+   text-wrap:balance on its own. */
+.cta-title-break{
+    display:none;
 }
 
 @media(max-width:768px){
-    .cta-box h2 .cta-line1,
-    .cta-box h2 .cta-line2{
+    .cta-title-break{
         display:block;
     }
 }
@@ -2658,31 +2611,6 @@ PHOTO EDITING
 .btn-outline-light:hover{
     background:rgba(255,255,255,.1);
     transform:translateY(-3px);
-}
-
-/* ITEM #4 — smaller, tighter mobile card: less padding on the blue
-   box itself and a more minimal "Book Your Free Discovery Call"
-   button so it doesn't look like an oversized block on small screens. */
-@media(max-width:768px){
-    .cta-box{
-        padding:40px 22px;
-        border-radius:24px;
-    }
-
-    .cta-buttons .btn-light{
-        padding:12px 22px;
-    }
-}
-
-@media(max-width:480px){
-    .cta-box{
-        padding:32px 18px;
-        border-radius:20px;
-    }
-
-    .cta-buttons .btn-light{
-        padding:11px 18px;
-    }
 }
 
 /* CONV-FIX #3 — secondary-path microcopy under the CTA buttons */
@@ -3009,8 +2937,8 @@ PHOTO EDITING
 
 .floating-cta{
     position:fixed;
-    right:15px;
-    bottom:15px;
+    right:22px;
+    bottom:22px;
     display:flex;
     align-items:center;
     gap:8px;
@@ -3436,7 +3364,7 @@ PHOTO EDITING
         left:50%;
         right:auto;
         transform:translateX(-50%);
-        bottom:18px;
+        bottom:24px;
         padding:9px 16px;
         font-size:var(--fs-xs);
         border-radius:50px;
@@ -3499,20 +3427,14 @@ PHOTO EDITING
 }
 
 .hero-buttons{
-    flex-direction:row;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:10px;
+    flex-direction:column;
+    gap:14px;
 }
 
-/* ITEM #1 — minimal mobile CTA: buttons hug their own text instead
-   of stretching full-width, with tighter horizontal (wide) padding. */
 .hero-buttons .btn-primary,
 .hero-buttons .btn-secondary{
-    width:auto;
-    min-width:0;
+    width:100%;
     justify-content:center;
-    padding:11px 18px;
 }
 
 }
@@ -4348,7 +4270,7 @@ section[id]{scroll-margin-top:125px}
  .hero-content h1{line-height:1.1}
  .hero-content p{max-width:620px;margin-bottom:38px}
  .hero-buttons{width:100%;justify-content:center}
- .hero-buttons .btn-primary,.hero-buttons .btn-secondary{width:auto;min-width:0;padding:11px 18px}
+ .hero-buttons .btn-primary,.hero-buttons .btn-secondary{width:auto;min-width:190px}
  .services,.process,.portfolio,.testimonials{padding-top:72px;padding-bottom:78px}
  .testimonial-grid,.site-project-grid,.portfolio-video-grid{grid-template-columns:1fr}
  .testimonial-card:last-child,.video-showcase--featured{grid-column:auto;width:100%;max-width:none}
@@ -4367,8 +4289,8 @@ section[id]{scroll-margin-top:125px}
  .hero-tag{max-width:100%;padding:9px 14px;text-align:center}
  .hero-content h1{letter-spacing:-.045em}
  .hero-content p{line-height:1.7}
- .hero-buttons{flex-direction:row;flex-wrap:wrap;justify-content:center;width:100%;gap:10px}
- .hero-buttons .btn-primary,.hero-buttons .btn-secondary{width:auto;min-width:0;padding:10px 16px}
+ .hero-buttons{flex-direction:column;width:100%;gap:10px}
+ .hero-buttons .btn-primary,.hero-buttons .btn-secondary{width:100%;min-width:0}
  .services,.process,.portfolio,.testimonials{padding-top:60px;padding-bottom:66px}
  .portfolio-service{border-radius:18px}
  .portfolio-service-header,.project-content,.video-showcase .project-content,.site-project-top,.site-project-bottom,.social-content,.social-highlights,.graphic-gallery,.graphic-highlights,.graphic-services{padding-left:14px;padding-right:14px}
@@ -4406,11 +4328,11 @@ p,li,h1,h2,h3,h4,h5,h6,a,span,button{overflow-wrap:anywhere}
 }
 
 /* MOBILE CTA DECLUTTER
-   On small screens the "Make an Inquiry" outline action becomes a
-   plain underlined text link instead of a full bordered button. The
-   primary "Book a Free Discovery Call" CTA stays a real button in
-   every section. "View My Work" also stays a real bordered
-   button/card on mobile (see ITEM #1) — it isn't decluttered here. */
+   On small screens the "Make an Inquiry" outline action becomes a plain
+   underlined text link instead of a full bordered button. The primary
+   "Book a Free Discovery Call" CTA stays a real button in every section;
+   "View My Work" in the hero also keeps its full card/button look so it
+   reads as a clear second option next to the primary CTA. */
 @media(max-width:768px){
     .cta-buttons .btn-outline-light{
         background:none;
@@ -4444,6 +4366,14 @@ p,li,h1,h2,h3,h4,h5,h6,a,span,button{overflow-wrap:anywhere}
     .cta-buttons{
         flex-direction:column;
         gap:14px;
+    }
+
+    /* Smaller "card" for the Book a Free Discovery Call pill in the CTA
+       section — the desktop padding (16px 32px) reads oversized once the
+       button is stacked full-width-adjacent on a narrow screen. */
+    .cta-buttons .btn-light{
+        padding:12px 22px;
+        width:auto;
     }
 }
 
@@ -4489,10 +4419,26 @@ p,li,h1,h2,h3,h4,h5,h6,a,span,button{overflow-wrap:anywhere}
     display:none;
 }
 
-/* NOTE (ITEM #3): the corner "expand" icon button that used to sit
-   above the Vimeo iframe has been removed — visitors now use Vimeo's
-   own native player controls (including its built-in fullscreen
-   button) directly inside each card instead of a custom overlay. */
+/* Invisible full-card click-catcher for cards with a live inline embed —
+   the Vimeo iframe swallows clicks before they reach the card's own
+   lightbox trigger, so this sits above the iframe as a real, clickable
+   sibling element. No visible icon: it's purely a hit area, so tapping
+   anywhere on the video still opens the on-page lightbox instead of
+   landing on Vimeo's own inline controls. */
+.video-expand-btn{
+    position:absolute;
+    inset:0;
+    z-index:2;
+    width:100%;
+    height:100%;
+    padding:0;
+    margin:0;
+    border:none;
+    border-radius:0;
+    background:transparent;
+    cursor:pointer;
+    pointer-events:auto;
+}
 
 /* The video lightbox reuses .photo-lightbox for its backdrop, close
    button, nav arrows and counter styling; only the player itself needs
