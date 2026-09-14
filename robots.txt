@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jay-va-website.vercel.app/sitemap.xml
+Sitemap: https://jayva.vercel.app/sitemap.xml
