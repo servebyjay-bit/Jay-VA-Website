@@ -124,7 +124,7 @@
 
     <link rel="preload"
           as="image"
-          href="images/hero-bg.webp"
+          href="images/hero-bg.svg"
           fetchpriority="high">
 
     <link rel="preload"
@@ -231,11 +231,13 @@
     <!-- HERO SECTION -->
 <section class="hero" id="home">
 
-    <!-- ITEM #1 — full-bleed hero background photo, webp-ready.
-         Upload your image as images/hero-bg.webp (wide/landscape,
-         1920x1080 or similar works well) — until then this layer
-         stays invisible and the section looks exactly as it does
-         today. -->
+    <!-- ITEM #1 — hero background graphic, svg-ready.
+         Upload your image as images/hero-bg.svg. On desktop (≥993px)
+         this stays a full-bleed layer behind the copy, same as
+         before. On mobile (≤992px) it's pulled out of the background
+         and shown as its own block below the headline/CTA buttons
+         (see the "HERO — MOBILE SVG REFLOW" rules in style.css), so
+         it never sits behind or competes with the hero text. -->
     <div class="hero-bg-photo" aria-hidden="true"></div>
 
     <div class="container">
@@ -302,9 +304,9 @@
 
                     </div>
 
-                    <a href="#portfolio" class="btn-secondary services-cta">
-                        View My Work
-                    </a>
+                    <span class="btn-secondary services-cta">
+                        Explore My Services
+                    </span>
 
                 </div>
 
@@ -1120,11 +1122,6 @@
                         Let's Work Together
                     </a>
 
-                    <a href="resume/Jay%20Boy%20Olan-Olan_Resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-secondary">
-                        <svg width="16" height="16" class="icon-svg" viewBox="0 0 512 512" aria-hidden="true"><path d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L288 0 64 0zM256 0l0 128 128 0L256 0zM216 232c0-13.3 10.7-24 24-24s24 10.7 24 24l0 68.7 34.3-34.3c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-75.9 75.9c-4.5 4.5-10.6 7-17 7s-12.5-2.5-17-7L146.3 300.3c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L214.6 300.7 214.6 232c0-.1 0-.1 0 0z"/></svg>
-                        View My CV / Resume
-                    </a>
-
                 </div>
 
             </div>
@@ -1634,7 +1631,8 @@
             <span></span>
 
             <h2>
-                Let's Build Something Meaningful Together.
+                <span class="cta-line1">Let's Build Something</span>
+                <span class="cta-line2">Meaningful Together.</span>
             </h2>
 
             <p>
