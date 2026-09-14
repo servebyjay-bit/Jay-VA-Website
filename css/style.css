@@ -939,6 +939,19 @@ button:focus-visible,
     display:inline-flex;
     align-items:center;
     justify-content:center;
+    cursor:default;
+}
+
+/* ITEM #2 — "Explore My Services" is a plain label, not a link, so
+   it should never show button-hover feedback (lift, shadow, border
+   or background change). */
+.services-cta:hover,
+.services-cta:active,
+.services-cta:focus-visible{
+    transform:none;
+    box-shadow:none;
+    border-color:transparent;
+    background:#fff;
 }
 
 @media(min-width:993px){
@@ -4393,19 +4406,17 @@ p,li,h1,h2,h3,h4,h5,h6,a,span,button{overflow-wrap:anywhere}
 }
 
 /* MOBILE CTA DECLUTTER
-   On small screens each secondary/outline action (View My Work, View My
-   CV, Make an Inquiry) becomes a plain underlined text link instead of a
-   full bordered button. The primary "Book a Free Discovery Call" CTA
-   stays a real button in every section; everything else just needs to be
-   tappable, not another big block competing for attention next to it and
-   the floating call button. */
+   On small screens the "Make an Inquiry" outline action becomes a
+   plain underlined text link instead of a full bordered button. The
+   primary "Book a Free Discovery Call" CTA stays a real button in
+   every section. "View My Work" also stays a real bordered
+   button/card on mobile (see ITEM #1) — it isn't decluttered here. */
 @media(max-width:768px){
-    .hero-buttons .btn-secondary,
     .cta-buttons .btn-outline-light{
         background:none;
         border:none;
         box-shadow:none;
-        color:var(--primary);
+        color:#fff;
         text-decoration:underline;
         text-underline-offset:3px;
         padding:10px 4px;
@@ -4414,11 +4425,6 @@ p,li,h1,h2,h3,h4,h5,h6,a,span,button{overflow-wrap:anywhere}
         min-height:0;
     }
 
-    .cta-buttons .btn-outline-light{
-        color:#fff;
-    }
-
-    .hero-buttons .btn-secondary:hover,
     .cta-buttons .btn-outline-light:hover{
         transform:none;
         box-shadow:none;
@@ -4483,37 +4489,10 @@ p,li,h1,h2,h3,h4,h5,h6,a,span,button{overflow-wrap:anywhere}
     display:none;
 }
 
-/* Icon-only "view full" affordance for cards with a live inline embed —
-   the Vimeo iframe swallows clicks before they reach the card's own
-   lightbox trigger, so this sits above the iframe as a real, clickable
-   sibling element. No label, just the expand icon. */
-.video-expand-btn{
-    position:absolute;
-    top:10px;
-    right:10px;
-    z-index:2;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:32px;
-    height:32px;
-    padding:0;
-    border:none;
-    border-radius:50%;
-    background:rgba(0,0,0,.55);
-    color:#fff;
-    backdrop-filter:blur(2px);
-    cursor:pointer;
-    pointer-events:auto;
-    transition:background .25s ease, transform .25s ease;
-}
-
-@media(hover:hover) and (pointer:fine){
-    .video-expand-btn:hover{
-        background:var(--primary);
-        transform:scale(1.08);
-    }
-}
+/* NOTE (ITEM #3): the corner "expand" icon button that used to sit
+   above the Vimeo iframe has been removed — visitors now use Vimeo's
+   own native player controls (including its built-in fullscreen
+   button) directly inside each card instead of a custom overlay. */
 
 /* The video lightbox reuses .photo-lightbox for its backdrop, close
    button, nav arrows and counter styling; only the player itself needs
