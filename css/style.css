@@ -307,9 +307,6 @@ button:focus-visible,
     html{
         scroll-behavior:auto;
     }
-    .floating-cta{
-        animation:none;
-    }
 }
 
 /* ==========================================================
@@ -656,48 +653,24 @@ button:focus-visible,
 .hero-content{
     display:flex;
     flex-direction:column;
-    align-items:center;
-    text-align:center;
+    align-items:flex-start;
+    text-align:left;
     max-width:1040px;
-    margin:0 auto;
+    margin:0;
 }
 
 .hero-content h1,
 .hero-content p{
-    margin-left:auto;
-    margin-right:auto;
+    margin-left:0;
+    margin-right:0;
 }
 
 .hero-buttons{
-    justify-content:center;
+    justify-content:flex-start;
 }
 
-/* Hero copy is centered on mobile (stacked, narrow viewport) and
-   switches to left-aligned from 993px up — the same mobile-centered /
-   desktop-left-aligned pattern already used for .services-intro
-   elsewhere on this page, so alignment behavior stays consistent
-   across sections instead of the hero being the one section that's
-   centered everywhere. */
-
-@media(min-width:993px){
-
-    .hero-content{
-        align-items:flex-start;
-        text-align:left;
-        margin:0;
-    }
-
-    .hero-content h1,
-    .hero-content p{
-        margin-left:0;
-        margin-right:0;
-    }
-
-    .hero-buttons{
-        justify-content:flex-start;
-    }
-
-}
+/* ITEM #1 — hero copy is now left-aligned at every breakpoint
+   (mobile matches desktop) instead of centering on narrow viewports. */
 
 .hero-tag{
     display:inline-flex;
@@ -1148,7 +1121,7 @@ button:focus-visible,
 
 .portfolio-service{
     position:relative;
-    background:#fff;
+    background:#0b1220;
     border:none;
     border-radius:24px;
     margin-bottom:16px;
@@ -1158,6 +1131,45 @@ button:focus-visible,
 
 .portfolio-service:last-child{
     margin-bottom:0;
+}
+
+/* ITEM #2 — portfolio cards now match the footer's dark background
+   (#0b1220), with text flipped to light colors for contrast. Most of
+   the text inside these cards is already styled through the
+   var(--heading)/var(--body)/var(--surface)/var(--border) design
+   tokens, so redefining those tokens right here is enough for it to
+   cascade to every description, list, tag chip and placeholder inside
+   automatically — the values mirror what the footer already uses for
+   its own text, so the two stay visually consistent. Headings get an
+   explicit override below because they're set with a hardcoded color
+   sitewide rather than a variable. */
+.portfolio-service{
+    color:rgb(215,215,215);
+    --heading:#fff;
+    --body:#cbd5e1;
+    --surface:rgba(255,255,255,.06);
+    --surface-strong:rgba(255,255,255,.12);
+    --border:rgba(255,255,255,.14);
+}
+
+.portfolio-service h1,
+.portfolio-service h2,
+.portfolio-service h3,
+.portfolio-service h4,
+.portfolio-service h5,
+.portfolio-service h6{
+    color:#fff;
+}
+
+/* The Video Editing and Website project cards each had their own
+   separate white background nested inside the (now dark) portfolio
+   card — matching them to the same dark navy keeps the card reading
+   as one continuous surface instead of white boxes floating inside a
+   dark one. Photo/screenshot tiles (niche grid, social hero, photo
+   cards) are left as-is — those are image mattes, not text surfaces. */
+.portfolio-service .video-showcase,
+.portfolio-service .site-project-card{
+    background:#0b1220;
 }
 
 .portfolio-service-header{
@@ -1852,6 +1864,15 @@ VIDEO EDITING
     height:100%;
     border:0;
     display:block;
+    opacity:0;
+    transition:opacity .5s ease;
+}
+
+/* ITEM #2 — fades the Vimeo player in once it's actually loaded instead
+   of popping in the instant its src is set, so the swap from the dark
+   placeholder to the live embed reads as smooth rather than a flash. */
+.portrait-video-card iframe.is-loaded{
+    opacity:1;
 }
 
 /* Graceful placeholder for a card whose video hasn't been
@@ -2936,7 +2957,14 @@ PHOTO EDITING
     }
 }
 
-/* FLOATING CTA */
+/* FLOATING CTA
+   ITEM #4 — simplified to a single clean fade + slide-up on reveal/hide.
+   The old version ran a 4s infinite "bob" animation on the same
+   `transform` property used for the reveal transition and the hover
+   lift, so the three were constantly fighting each other (the bob
+   would snap the button back mid-transition and swallow the hover
+   lift), which read as janky/flickery. Removing the bob leaves
+   `transform` free for one job — sliding the button in/out. */
 
 .floating-cta{
     position:fixed;
@@ -2966,7 +2994,6 @@ PHOTO EDITING
     visibility:visible;
     transform:translateY(0);
     pointer-events:auto;
-    animation:floatCTA 4s ease-in-out infinite;
 }
 
 .floating-cta img{
@@ -2983,12 +3010,6 @@ PHOTO EDITING
 
 .floating-cta:hover img{
     transform:rotate(-8deg) scale(1.08);
-}
-
-@keyframes floatCTA{
-    0%{ transform:translateY(0); }
-    50%{ transform:translateY(-6px); }
-    100%{ transform:translateY(0); }
 }
 
 /* SCROLL REVEAL */
@@ -3364,9 +3385,10 @@ PHOTO EDITING
 
 @media (max-width:768px){
     .floating-cta{
-        left:50%;
-        right:auto;
-        transform:translateX(-50%);
+        left:0;
+        right:0;
+        margin-inline:auto;
+        width:max-content;
         bottom:24px;
         padding:9px 16px;
         font-size:var(--fs-xs);
@@ -3431,12 +3453,17 @@ PHOTO EDITING
 
 .hero-buttons{
     flex-direction:column;
-    gap:14px;
+    align-items:flex-start;
+    gap:12px;
 }
 
+/* ITEM #1 — compact, left-aligned CTAs on mobile instead of full-width
+   "cards": size to content (with a modest floor) rather than stretching
+   to fill the row. */
 .hero-buttons .btn-primary,
 .hero-buttons .btn-secondary{
-    width:100%;
+    width:auto;
+    padding:12px 22px;
     justify-content:center;
 }
 
@@ -4272,8 +4299,6 @@ section[id]{scroll-margin-top:125px}
  .hero-content{width:100%}
  .hero-content h1{line-height:1.1}
  .hero-content p{max-width:620px;margin-bottom:38px}
- .hero-buttons{width:100%;justify-content:center}
- .hero-buttons .btn-primary,.hero-buttons .btn-secondary{width:auto;min-width:190px}
  .services,.process,.portfolio,.testimonials{padding-top:72px;padding-bottom:78px}
  .testimonial-grid,.site-project-grid,.portfolio-video-grid{grid-template-columns:1fr}
  .testimonial-card:last-child,.video-showcase--featured{grid-column:auto;width:100%;max-width:none}
@@ -4292,8 +4317,8 @@ section[id]{scroll-margin-top:125px}
  .hero-tag{max-width:100%;padding:9px 14px;text-align:center}
  .hero-content h1{letter-spacing:-.045em}
  .hero-content p{line-height:1.7}
- .hero-buttons{flex-direction:column;width:100%;gap:10px}
- .hero-buttons .btn-primary,.hero-buttons .btn-secondary{width:100%;min-width:0}
+ .hero-buttons{flex-direction:column;align-items:flex-start;width:100%;gap:10px}
+ .hero-buttons .btn-primary,.hero-buttons .btn-secondary{width:auto;min-width:0}
  .services,.process,.portfolio,.testimonials{padding-top:60px;padding-bottom:66px}
  .portfolio-service{border-radius:18px}
  .portfolio-service-header,.project-content,.video-showcase .project-content,.site-project-top,.site-project-bottom,.social-content,.social-highlights,.graphic-gallery,.graphic-highlights,.graphic-services{padding-left:14px;padding-right:14px}
@@ -4305,6 +4330,7 @@ section[id]{scroll-margin-top:125px}
  .testimonial-author{padding-right:44px}
  .testimonial-avatar{width:36px;height:36px;right:18px;bottom:20px}
  .btn-primary,.btn-secondary{width:100%;min-height:48px;padding:14px 20px}
+ .hero-buttons .btn-primary,.hero-buttons .btn-secondary{width:auto;min-height:0;padding:12px 20px}
 }
 
 @media(max-width:380px){
@@ -4380,101 +4406,8 @@ p,li,h1,h2,h3,h4,h5,h6,a,span,button{overflow-wrap:anywhere}
     }
 }
 
-/* VIDEO EDITING — click-to-expand affordance + full-screen video lightbox */
-.portrait-video-card:not(.media-pending){
-    cursor:pointer;
-}
+/* ITEM #2 — cards now play inline with Vimeo's own default player UI
+   (no custom zoom/lightbox overlay and no click-catcher stealing the
+   click from the embed). */
 
-.portrait-video-card:not(.media-pending):focus-visible{
-    outline:3px solid rgba(10,102,194,.45);
-    outline-offset:3px;
-}
-
-.video-play-overlay{
-    position:absolute;
-    inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#fff;
-    background:linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%);
-    pointer-events:none;
-}
-
-.video-play-overlay svg{
-    width:56px;
-    height:56px;
-    padding:16px;
-    border-radius:50%;
-    background:rgba(0,0,0,.45);
-    backdrop-filter:blur(2px);
-    transition:transform .25s ease, background .25s ease;
-}
-
-@media(hover:hover) and (pointer:fine){
-    .portrait-video-card:not(.media-pending):hover .video-play-overlay svg{
-        transform:scale(1.08);
-        background:var(--primary);
-    }
-}
-
-.portrait-video-card.media-pending .video-play-overlay{
-    display:none;
-}
-
-/* Invisible full-card click-catcher for cards with a live inline embed —
-   the Vimeo iframe swallows clicks before they reach the card's own
-   lightbox trigger, so this sits above the iframe as a real, clickable
-   sibling element. No visible icon: it's purely a hit area, so tapping
-   anywhere on the video still opens the on-page lightbox instead of
-   landing on Vimeo's own inline controls. */
-.video-expand-btn{
-    position:absolute;
-    inset:0;
-    z-index:2;
-    width:100%;
-    height:100%;
-    padding:0;
-    margin:0;
-    border:none;
-    border-radius:0;
-    background:transparent;
-    cursor:pointer;
-    pointer-events:auto;
-}
-
-/* The video lightbox reuses .photo-lightbox for its backdrop, close
-   button, nav arrows and counter styling; only the player itself needs
-   its own sizing rule since it replaces the <img>. */
-.video-lightbox-player{
-    max-width:min(92vw, 480px);
-    max-height:88vh;
-    width:auto;
-    height:auto;
-    border-radius:12px;
-    background:#000;
-    box-shadow:0 30px 80px rgba(0, 0, 0, 0.55);
-}
-
-/* ITEM #3 — Vimeo embed player used inside the same lightbox as the
-   native <video> element above; JS swaps between the two depending
-   on each card's data-video-provider. */
-.video-lightbox-iframe-wrap{
-    position:relative;
-    width:min(92vw, 480px);
-    max-height:88vh;
-    aspect-ratio:9/16;
-    border-radius:12px;
-    overflow:hidden;
-    background:#000;
-    box-shadow:0 30px 80px rgba(0, 0, 0, 0.55);
-}
-
-.video-lightbox-iframe-wrap iframe{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    border:0;
-    display:block;
-}
+/* ITEM #2 — the video lightbox player/iframe-wrap rules were removed along with the video lightbox markup and script. */

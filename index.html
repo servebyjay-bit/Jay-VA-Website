@@ -146,7 +146,7 @@
     ========================================== -->
 
     <link rel="stylesheet"
-          href="css/style.min.css?v=20260915b">
+          href="css/style.min.css?v=20260914c">
 
     <!-- ==========================================
          SCHEMA.ORG (PERSONAL BRAND)
@@ -484,13 +484,7 @@
                             <div class="portrait-video-grid">
 
     <!-- <!-- VIDEO 1 — WANDERLUST.CO -->
-<div class="portrait-video-card"
-     data-video-group="video-editing"
-     data-video-provider="vimeo"
-     data-video-src="https://player.vimeo.com/video/1225875760?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;loop=1"
-     role="button"
-     tabindex="0"
-     aria-label="Play Wanderlust.Co video">
+<div class="portrait-video-card">
 
     <div class="vimeo-video-wrapper">
         <iframe
@@ -503,23 +497,11 @@
         </iframe>
     </div>
 
-    <button type="button"
-            class="video-expand-btn"
-            tabindex="-1"
-            aria-hidden="true">
-    </button>
-
 </div>
 
 
 <!-- VIDEO 2 — DENIM.CO -->
-<div class="portrait-video-card"
-     data-video-group="video-editing"
-     data-video-provider="vimeo"
-     data-video-src="https://player.vimeo.com/video/1225875799?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;loop=1"
-     role="button"
-     tabindex="0"
-     aria-label="Play Denim.Co video">
+<div class="portrait-video-card">
 
     <div class="vimeo-video-wrapper">
         <iframe
@@ -532,23 +514,11 @@
         </iframe>
     </div>
 
-    <button type="button"
-            class="video-expand-btn"
-            tabindex="-1"
-            aria-hidden="true">
-    </button>
-
 </div>
 
 
 <!-- VIDEO 3 — GJ REALTY.CO -->
-<div class="portrait-video-card"
-     data-video-group="video-editing"
-     data-video-provider="vimeo"
-     data-video-src="https://player.vimeo.com/video/1225875761?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;loop=1"
-     role="button"
-     tabindex="0"
-     aria-label="Play GJ Realty.Co video">
+<div class="portrait-video-card">
 
     <div class="vimeo-video-wrapper">
         <iframe
@@ -561,23 +531,11 @@
         </iframe>
     </div>
 
-    <button type="button"
-            class="video-expand-btn"
-            tabindex="-1"
-            aria-hidden="true">
-    </button>
-
 </div>
 
 
 <!-- VIDEO 4 — SOFTY SKIN SOLUTION -->
-<div class="portrait-video-card"
-     data-video-group="video-editing"
-     data-video-provider="vimeo"
-     data-video-src="https://player.vimeo.com/video/1226127912?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;loop=1"
-     role="button"
-     tabindex="0"
-     aria-label="Play Softy Skin Solution video">
+<div class="portrait-video-card">
 
     <div class="vimeo-video-wrapper">
         <iframe
@@ -589,12 +547,6 @@
             allowfullscreen>
         </iframe>
     </div>
-
-    <button type="button"
-            class="video-expand-btn"
-            tabindex="-1"
-            aria-hidden="true">
-    </button>
 
 </div>
 
@@ -892,21 +844,6 @@
     </button>
     <img class="photo-lightbox-img" src="" alt="">
     <span class="photo-lightbox-counter" hidden></span>
-</div>
-
-<div class="photo-lightbox video-lightbox" id="video-lightbox" aria-hidden="true">
-    <button type="button" class="photo-lightbox-close video-lightbox-close" aria-label="Close video">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    <button type="button" class="photo-lightbox-nav video-lightbox-prev" aria-label="Previous video" hidden>
-        <svg width="20" height="20" viewBox="0 0 320 512" aria-hidden="true" fill="currentColor"><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
-    </button>
-    <button type="button" class="photo-lightbox-nav video-lightbox-next" aria-label="Next video" hidden>
-        <svg width="20" height="20" viewBox="0 0 320 512" aria-hidden="true" fill="currentColor"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
-    </button>
-    <video class="video-lightbox-player" controls playsinline></video>
-    <div class="video-lightbox-iframe-wrap" hidden></div>
-    <span class="photo-lightbox-counter video-lightbox-counter" hidden></span>
 </div>
 
 <section class="about reveal" id="about">
@@ -1798,7 +1735,7 @@
         <span>Book A Free Discovery Call</span>
     </a>
 
-    <script src="js/script.js?v=20260915" defer></script>
+    <script src="js/script.js?v=20260914c" defer></script>
 
     <!-- ITEM #2 — deferred video loading.
          The 4 portfolio video-preview iframes now carry data-src instead of
@@ -1808,7 +1745,10 @@
          player is ready just before it's scrolled into view ("preload" in
          effect) without paying the cost for cards the visitor never reaches.
          Falls back to loading everything immediately if IntersectionObserver
-         isn't supported. -->
+         isn't supported. Once a player's iframe actually finishes loading,
+         it gets the .is-loaded class, which CSS fades in from opacity:0 —
+         so the swap from the dark placeholder to the live embed reads as a
+         smooth fade instead of a sudden pop. -->
     <script>
     (function(){
         var frames = document.querySelectorAll('.vimeo-video-wrapper iframe[data-src]');
@@ -1816,6 +1756,9 @@
 
         function loadFrame(frame){
             if(frame.src) return;
+            frame.addEventListener('load', function(){
+                frame.classList.add('is-loaded');
+            });
             frame.src = frame.dataset.src;
         }
 
@@ -1832,6 +1775,59 @@
             frames.forEach(function(frame){ io.observe(frame); });
         } else {
             frames.forEach(loadFrame);
+        }
+    })();
+    </script>
+
+    <!-- ITEM #3 — portfolio image preloader.
+         All ~33 images inside the Portfolio section still carry
+         loading="lazy" as a safety net, but native lazy-loading only
+         fetches an image once it's nearly in view, which is what was
+         reading as content "unloading"/popping in on scroll — every time
+         a card scrolled back into range the browser could still be
+         fetching or decoding it. This warms the browser's own HTTP cache
+         for every portfolio image in the background as soon as the
+         section is within ~1500px of the viewport (i.e. well before the
+         visitor actually reaches it), so by the time each <img> becomes
+         eligible to load, it renders instantly from cache instead of
+         popping in. Runs once; doesn't touch initial page load time. -->
+    <script>
+    (function(){
+        var portfolio = document.getElementById('portfolio');
+        if(!portfolio) return;
+
+        var urls = Array.prototype.map.call(
+            portfolio.querySelectorAll('img[src]'),
+            function(img){ return img.getAttribute('src'); }
+        ).filter(Boolean);
+
+        if(!urls.length) return;
+
+        var done = false;
+
+        function preloadAll(){
+            if(done) return;
+            done = true;
+            urls.forEach(function(src){
+                var im = new Image();
+                im.decoding = 'async';
+                im.src = src;
+            });
+        }
+
+        if('IntersectionObserver' in window){
+            var io = new IntersectionObserver(function(entries, observer){
+                entries.forEach(function(entry){
+                    if(entry.isIntersecting){
+                        preloadAll();
+                        observer.disconnect();
+                    }
+                });
+            }, { rootMargin: '1500px 0px' });
+
+            io.observe(portfolio);
+        } else {
+            preloadAll();
         }
     })();
     </script>
