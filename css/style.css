@@ -672,16 +672,18 @@ button:focus-visible,
     justify-content:center;
 }
 
-/* The hero photo has its subject positioned right-of-frame with
-   blank space on the left (see .hero-bg-photo) — once there's
-   enough width for that split to read clearly, the copy moves into
-   that space instead of sitting centered over it. */
+/* Hero copy is centered on mobile (stacked, narrow viewport) and
+   switches to left-aligned from 993px up — the same mobile-centered /
+   desktop-left-aligned pattern already used for .services-intro
+   elsewhere on this page, so alignment behavior stays consistent
+   across sections instead of the hero being the one section that's
+   centered everywhere. */
+
 @media(min-width:993px){
 
     .hero-content{
         align-items:flex-start;
         text-align:left;
-        max-width:600px;
         margin:0;
     }
 
@@ -694,6 +696,7 @@ button:focus-visible,
     .hero-buttons{
         justify-content:flex-start;
     }
+
 }
 
 .hero-tag{
@@ -735,7 +738,7 @@ button:focus-visible,
     color:var(--body);
     font-size:var(--fs-md);
     line-height:1.85;
-    max-width:760px;
+    max-width:840px;
     margin-bottom:60px;
     text-wrap:balance;
     text-shadow:0 2px 16px rgba(255,255,255,.6);
