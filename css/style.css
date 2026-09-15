@@ -1150,6 +1150,17 @@ button:focus-visible,
     margin-bottom:16px;
     overflow:hidden;
     box-shadow:0 12px 36px rgba(11,18,32,.18);
+    /* ITEM #1 — scoped layout/paint containment. Each portfolio card is a
+       big, self-contained chunk of DOM (an entire niche gallery or video
+       grid). Without `contain`, the browser has to consider the whole
+       document any time something inside one of these cards changes size,
+       which is part of what made scrolling through this section feel
+       heavy. `contain:layout paint` tells the browser these boxes never
+       affect layout outside themselves, so scroll-driven work (position
+       checks, repaints) stays local to whichever card is on screen —
+       unlike content-visibility:auto, this never skips or re-triggers
+       rendering, so it can't cause the pop-in/reload look on re-scroll. */
+    contain:layout paint;
 }
 
 .portfolio-service:last-child{

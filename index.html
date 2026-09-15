@@ -13,7 +13,7 @@
          PRIMARY SEO
     ========================================== -->
 
-    <title>Jay VA | Social Media Manager, Content Strategist & Website Designer</title>
+    <title>Jay Boy Olan-Olan | Social Media Manager & Content Strategist</title>
 
     <meta name="description"
           content="Social media management, content strategy, and website design that help businesses build a premium online presence and attract more clients.">
@@ -62,7 +62,7 @@
           content="website">
 
     <meta property="og:title"
-          content="Jay VA | Social Media Manager, Content Strategist & Website Designer">
+          content="Jay Boy Olan-Olan | Social Media Manager & Content Strategist">
 
     <meta property="og:description"
           content="Helping businesses grow through strategic social media management, content creation, website design, graphic design, and video editing.">
@@ -96,7 +96,7 @@
           content="summary_large_image">
 
     <meta name="twitter:title"
-          content="Jay VA | Social Media Manager & Website Designer">
+          content="Jay Boy Olan-Olan | Social Media Manager & Content Strategist">
 
     <meta name="twitter:description"
           content="Helping businesses build a premium online presence through strategic marketing, creative design, and high-converting content.">
@@ -146,7 +146,7 @@
     ========================================== -->
 
     <link rel="stylesheet"
-          href="css/style.min.css?v=20260915c">
+          href="css/style.min.css?v=20260915d">
 
     <!-- ==========================================
          SCHEMA.ORG (PERSONAL BRAND)
@@ -1735,7 +1735,7 @@
         <span>Book A Free Discovery Call</span>
     </a>
 
-    <script src="js/script.js?v=20260915c" defer></script>
+    <script src="js/script.js?v=20260915d" defer></script>
 
     <!-- ITEM #2 — deferred video loading.
          The 4 portfolio video-preview iframes now carry data-src instead of
@@ -1779,18 +1779,24 @@
     })();
     </script>
 
-    <!-- ITEM #3 — portfolio image preloader.
-         All ~33 images inside the Portfolio section still carry
-         loading="lazy" as a safety net, but native lazy-loading only
-         fetches an image once it's nearly in view, which is what was
-         reading as content "unloading"/popping in on scroll — every time
-         a card scrolled back into range the browser could still be
-         fetching or decoding it. This warms the browser's own HTTP cache
-         for every portfolio image in the background as soon as the
-         section is within ~1500px of the viewport (i.e. well before the
-         visitor actually reaches it), so by the time each <img> becomes
-         eligible to load, it renders instantly from cache instead of
-         popping in. Runs once; doesn't touch initial page load time. -->
+    <!-- ITEM #3 — portfolio image preloader (warm + fully decode, ahead of time).
+         All ~33 images inside the Portfolio section still carry loading="lazy"
+         as a safety net, but the old version only started warming the cache
+         once the section was within 1500px of the viewport. On a fast swipe,
+         or on a slower connection, the fetch (and the decode step after it)
+         could still be in flight the first time a card became visible —
+         which is what read as content "popping in" or "reloading" when the
+         visitor scrolled back to something they'd already seen a moment
+         earlier.
+         This version starts warming EVERY portfolio image as soon as the
+         browser is idle after the page finishes loading — not gated on
+         scroll position at all — so by the time the visitor reaches the
+         portfolio (in either direction) the images are already fetched
+         AND fully decoded, not just downloading. Requests are staggered in
+         small batches with fetchPriority "low" so they never compete with
+         anything still loading above the fold. Runs once; each image is
+         cached by the browser afterwards, so re-scrolling past it — forward
+         or backward — never re-fetches or re-decodes it. -->
     <script>
     (function(){
         var portfolio = document.getElementById('portfolio');
@@ -1804,30 +1810,50 @@
         if(!urls.length) return;
 
         var done = false;
+        var BATCH_SIZE = 4;
+        var BATCH_DELAY = 120; // ms between batches, keeps this off the critical path
+
+        function warm(src){
+            var im = new Image();
+            im.decoding = 'async';
+            if('fetchPriority' in im){ im.fetchPriority = 'low'; }
+            im.src = src;
+            // decode() fully rasterizes the image off the main render path,
+            // so when the <img> tag later reveals it there's no decode cost
+            // left to pay — it just paints. Errors are ignored on purpose:
+            // a failed decode() still leaves the fetch cached, which is all
+            // this preloader promises.
+            if(im.decode){ im.decode().catch(function(){}); }
+        }
 
         function preloadAll(){
             if(done) return;
             done = true;
-            urls.forEach(function(src){
-                var im = new Image();
-                im.decoding = 'async';
-                im.src = src;
-            });
+
+            var i = 0;
+            function nextBatch(){
+                var slice = urls.slice(i, i + BATCH_SIZE);
+                slice.forEach(warm);
+                i += BATCH_SIZE;
+                if(i < urls.length){
+                    setTimeout(nextBatch, BATCH_DELAY);
+                }
+            }
+            nextBatch();
         }
 
-        if('IntersectionObserver' in window){
-            var io = new IntersectionObserver(function(entries, observer){
-                entries.forEach(function(entry){
-                    if(entry.isIntersecting){
-                        preloadAll();
-                        observer.disconnect();
-                    }
-                });
-            }, { rootMargin: '1500px 0px' });
+        function schedule(){
+            if('requestIdleCallback' in window){
+                requestIdleCallback(preloadAll, { timeout: 3000 });
+            } else {
+                setTimeout(preloadAll, 1200);
+            }
+        }
 
-            io.observe(portfolio);
+        if(document.readyState === 'complete'){
+            schedule();
         } else {
-            preloadAll();
+            window.addEventListener('load', schedule);
         }
     })();
     </script>
