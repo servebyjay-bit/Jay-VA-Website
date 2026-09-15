@@ -1,0 +1,25 @@
+# Jay VA
+
+> Jay Boy Olan-Olan (Jay VA) is a Social Media Manager, Content Strategist, and Website Designer based in the Philippines, helping businesses build a premium online presence through strategic content, social media management, graphic design, video editing, and high-converting websites.
+
+Jay VA offers social media management, content strategy, graphic design, video editing, photo editing, and website/landing page design. Client work spans niches including boutique hotels, real estate, skincare, denim/fashion brands, and travel.
+
+## Site Sections
+
+- [Home](https://jayva.vercel.app/#home): Overview and value proposition
+- [Portfolio](https://jayva.vercel.app/#portfolio): Featured graphic design, video editing, photo editing, and website projects, including the live Villa Merced Hotel website
+- [Services](https://jayva.vercel.app/#services): Social media management, content strategy, graphic design, video & photo editing, website & landing page design
+- [About](https://jayva.vercel.app/#about): Background and working approach
+- [Contact](https://jayva.vercel.app/#contact): Inquiry form and direct contact channels
+
+## Contact
+
+- Email: servebyjay@gmail.com
+- LinkedIn: https://www.linkedin.com/in/jayboyolan-olan/
+- Instagram: https://www.instagram.com/jayb_va/
+- Book a call: https://calendly.com/getintouchwithjay/quick-discovery-call
+
+## Policies
+
+- [Privacy Policy](https://jayva.vercel.app/privacy.html)
+- [Terms of Use](https://jayva.vercel.app/terms.html)
