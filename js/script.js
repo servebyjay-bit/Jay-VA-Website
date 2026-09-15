@@ -157,19 +157,26 @@ window.addEventListener("load", onScroll);
 // FLOATING CTA
 
 const floatingCta = document.querySelector(".floating-cta");
-const portfolioSection = document.getElementById("portfolio");
+
+// ITEM #3 — the reveal point now tracks the "Video Editing" portfolio
+// card instead of the top of the whole Portfolio section, so the CTA
+// appears a bit later as the visitor scrolls into the portfolio.
+const videoEditingAnchor =
+    document.getElementById("service-video")?.closest(".portfolio-service") ||
+    document.getElementById("service-video") ||
+    document.getElementById("portfolio");
 const siteFooter = document.querySelector(".footer");
 
 function toggleFloatingCta() {
-    if (!floatingCta || !portfolioSection) return;
+    if (!floatingCta || !videoEditingAnchor) return;
 
-    const portfolioTop =
-        portfolioSection.getBoundingClientRect().top +
+    const videoEditingTop =
+        videoEditingAnchor.getBoundingClientRect().top +
         window.scrollY;
 
     const pastPortfolio =
         window.scrollY >=
-        portfolioTop - window.innerHeight * 0.5;
+        videoEditingTop - window.innerHeight * 0.5;
 
     // Once the footer starts entering the viewport, hide the CTA so
     // the copyright/legal row stays visible instead of being covered.
